@@ -1045,3 +1045,192 @@ button {
     animation: none !important;
   }
 }
+
+/*
+ * Landing language, applied on top of the components above: pill buttons
+ * with a red gradient, translucent cards with an inner highlight, mono red
+ * kickers, rounded controls.
+ */
+body {
+  font-family: var(--rh-sans);
+}
+
+::selection {
+  background: #fe0600;
+  color: #fff;
+}
+
+:focus-visible {
+  outline-color: #fe0600;
+}
+
+.rh-kicker {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  color: var(--rh-amber-text);
+}
+
+.rh-kicker--cyan {
+  color: var(--rh-ink);
+}
+
+.rh-dimension {
+  font-weight: 700;
+  letter-spacing: 1.1px;
+}
+
+.rh-panel {
+  border: 0;
+  background: var(--rh-card-bg);
+  box-shadow: var(--rh-glow);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+.rh-btn {
+  font-family: var(--rh-sans);
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  text-transform: none;
+  padding: 14px 28px;
+  border-radius: 52px;
+  background: var(--rh-btn-primary);
+  color: #fefefe;
+  box-shadow: var(--rh-glow);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+}
+
+.rh-btn:hover {
+  background: var(--rh-btn-primary-hover);
+  color: #fff;
+}
+
+.rh-btn--ghost,
+.rh-btn--quiet,
+.rh-btn--ghost.rh-btn--sm {
+  border: 0;
+  background: var(--rh-btn-secondary), rgba(255, 255, 255, 0.04);
+  color: #fefefe;
+  box-shadow: var(--rh-glow);
+}
+
+.rh-btn--ghost:hover,
+.rh-btn--quiet:hover {
+  background: rgba(13, 13, 13, 0.8);
+  color: #fff;
+}
+
+.rh-btn--danger {
+  background: linear-gradient(180deg, #e60300 0%, #aa0400 100%);
+}
+
+.rh-btn--sm,
+.rh-btn--quiet {
+  padding: 10px 18px;
+  font-size: 13px;
+  letter-spacing: 0.2px;
+}
+
+.rh-link {
+  font-family: var(--rh-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-transform: none;
+  color: #fefefe;
+  border-bottom-color: rgba(255, 255, 255, 0.3);
+}
+
+.rh-link:hover {
+  color: #ff3b35;
+  border-bottom-color: #fe0600;
+}
+
+.rh-chip {
+  border-radius: 999px;
+  padding: 5px 11px 5px 10px;
+  font-size: 10.5px;
+  letter-spacing: 1.1px;
+}
+
+.rh-input,
+.rh-select {
+  height: 46px;
+  border-radius: 14px;
+  border-color: rgba(255, 255, 255, 0.15);
+  background-color: rgba(0, 0, 0, 0.35);
+}
+
+.rh-input:focus,
+.rh-select:focus {
+  border-color: #fe0600;
+  box-shadow: 0 0 0 3px rgba(254, 6, 0, 0.18);
+}
+
+.rh-seg {
+  border-radius: 14px;
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.rh-seg button {
+  border-radius: 10px;
+}
+
+.rh-seg button[aria-pressed="true"][data-d="ALLOW"],
+.rh-seg button[aria-pressed="true"][data-d="REVIEW"] {
+  color: #000;
+}
+
+.rh-seg button[aria-pressed="true"][data-d="ALL"] {
+  background: #fefefe;
+  color: #000;
+}
+
+.rh-switch[aria-checked="true"] {
+  background: rgba(254, 6, 0, 0.2);
+  border-color: #fe0600;
+}
+
+.rh-switch[aria-checked="true"]::after {
+  background: #fe0600;
+}
+
+.rh-modal {
+  border: 0;
+  border-radius: 32px;
+  background: var(--rh-card-bg), #0d0d0d;
+  box-shadow: 0 65px 135px 18px rgba(254, 6, 0, 0.3), var(--rh-glow);
+}
+
+.rh-icon-btn {
+  border-radius: 12px;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+.rh-toast {
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 3px solid var(--c, #fe0600);
+  background: #0d0d0d;
+}
+
+.rh-toast[data-d="ALLOW"] {
+  --c: #fefefe;
+}
+
+.rh-mark__gate {
+  fill: #fe0600;
+}
+
+.rh-mark__chevron {
+  fill: #fefefe;
+}
+
+.rh-mark .rh-wordmark {
+  font-weight: 700;
+  letter-spacing: -0.6px;
+}

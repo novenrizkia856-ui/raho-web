@@ -8,8 +8,8 @@ import { pendingApprovals } from "../lib/raho/selectors.ts";
 import { getWallet, onWallet } from "../lib/wallet.ts";
 import { $, $$ } from "../shared/dom.ts";
 import { clock, duration } from "../shared/format.ts";
-import { syncModeButtons, toggleMode } from "../shared/theme.ts";
 import { handleAction } from "./actions.ts";
+import { openSimulator } from "./simulate.ts";
 import type { AppContext, View } from "./context.ts";
 import { svg } from "./ui.ts";
 import { activity } from "./views/activity.ts";
@@ -117,7 +117,6 @@ function render(): void {
   inner.innerHTML = view.render(ctx);
   viewEl.replaceChildren(inner);
   view.bind?.(inner, ctx);
-  syncModeButtons();
   renderChrome();
 
   if (changedRoute) {
@@ -155,7 +154,6 @@ function setNav(open: boolean): void {
 
 document.addEventListener("click", (event) => {
   const target = event.target as HTMLElement;
-  if (target.closest("[data-mode-toggle]")) return toggleMode();
   if (target.closest(".rh-side__link")) setNav(false);
   const el = target.closest<HTMLElement>("[data-action]");
   if (!el || (el as HTMLButtonElement).disabled) return;
@@ -192,3 +190,12 @@ window.addEventListener("hashchange", () => {
 
 render();
 setInterval(tick, 1000);
+
+// Landing links can open the simulator directly: #/overview?simulate=1
+function maybeSimulate(): void {
+  if (!parseHash().params.has("simulate")) return;
+  history.replaceState(null, "", "#/overview");
+  openSimulator(raho);
+}
+maybeSimulate();
+window.addEventListener("hashchange", maybeSimulate);

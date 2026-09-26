@@ -5,7 +5,6 @@ import { DemoAdapter } from "../lib/raho/demo-adapter.ts";
 import { connectWallet, disconnectWallet } from "../lib/wallet.ts";
 import { esc } from "../shared/dom.ts";
 import { describe } from "../shared/format.ts";
-import { toggleMode } from "../shared/theme.ts";
 import { openSimulator } from "./simulate.ts";
 import { confirmAction, openModal, toast } from "./ui.ts";
 
@@ -132,7 +131,5 @@ export async function handleAction(raho: RahoAdapter, el: HTMLElement, navigate:
     case "disconnect-wallet":
       disconnectWallet();
       return toast("Account forgotten on this page.");
-    case "toggle-mode":
-      return toggleMode();
   }
 }

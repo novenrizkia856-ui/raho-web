@@ -75,7 +75,6 @@ export const settings: View = {
           <p class="rh-caption">Agents, policies and history live in this browser only. Nothing is signed or sent onchain.</p>
           <div class="rh-card__actions">
             <button type="button" class="rh-btn rh-btn--sm rh-btn--ghost" data-action="reset-demo">Reset demo data</button>
-            <button type="button" class="rh-btn rh-btn--sm rh-btn--quiet" data-mode-toggle>Drawing</button>
           </div>
         </section>
       </div>`;

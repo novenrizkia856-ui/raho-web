@@ -20,6 +20,7 @@ import { contextFor, currentSession } from "./selectors.ts";
 import type { ActivityEntry, Policy, RahoState, Session, TxRequest } from "./types.ts";
 
 const STORAGE_KEY = "raho.demo.v1";
+const STALE_AFTER = 3 * 3_600_000;
 const clone = <T>(value: T): T => JSON.parse(JSON.stringify(value));
 
 let seq = 0;
@@ -79,7 +80,10 @@ export class DemoAdapter implements RahoAdapter {
 
   constructor(persist = true) {
     this.persist = persist;
-    this.state = (persist && load()) || seedState();
+    // A saved demo that has gone quiet for hours has only expired sessions left: start fresh.
+    const saved = persist ? load() : null;
+    const lastActivity = saved ? Math.max(0, ...saved.activity.map((e) => e.at)) : 0;
+    this.state = saved && Date.now() - lastActivity < STALE_AFTER ? saved : seedState();
   }
 
   getState(): RahoState {
