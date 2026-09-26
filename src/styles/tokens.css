@@ -91,8 +91,8 @@
   --rh-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
   --rh-wordmark: Figtree, ui-sans-serif, system-ui, sans-serif;
 
-  --rh-web-display: clamp(42px, 6.6vw, 78px);
-  --rh-web-hero: clamp(34px, 5.2vw, 56px);
+  --rh-web-display: clamp(40px, 7vw, 76px);
+  --rh-web-hero: clamp(36px, 5.5vw, 56px);
   --rh-web-section: clamp(30px, 4vw, 42px);
   --rh-subhead: 25px;
   --rh-card: 21px;
@@ -103,7 +103,7 @@
   --rh-gutter: 32px;
   --rh-radius: 14px;
   --rh-radius-sm: 10px;
-  --rh-header-h: 68px;
+  --rh-header-h: 76px;
 
   --rh-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
   --rh-ease-out: cubic-bezier(0.22, 1, 0.36, 1);

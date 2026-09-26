@@ -91,34 +91,30 @@ button {
   font-size: var(--rh-web-display);
   font-weight: 900;
   line-height: 1.02;
-  letter-spacing: -0.028em;
+  letter-spacing: -2px;
   color: var(--rh-ink);
-  text-wrap: balance;
 }
 
 .rh-web-hero {
   font-size: var(--rh-web-hero);
   font-weight: 900;
   line-height: 1.06;
-  letter-spacing: -0.026em;
+  letter-spacing: -1.6px;
   color: var(--rh-ink);
-  text-wrap: balance;
 }
 
 .rh-web-section {
   font-size: var(--rh-web-section);
   font-weight: 800;
   line-height: 1.1;
-  letter-spacing: -0.024em;
+  letter-spacing: -1px;
   color: var(--rh-ink);
-  text-wrap: balance;
 }
 
 .rh-subhead {
   font-size: var(--rh-subhead);
   font-weight: 800;
   line-height: 1.2;
-  letter-spacing: -0.01em;
   color: var(--rh-ink);
 }
 
@@ -130,7 +126,7 @@ button {
 }
 
 .rh-body {
-  font-size: 18px;
+  font-size: 19px;
   line-height: 1.55;
   color: var(--rh-body);
 }

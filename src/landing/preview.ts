@@ -1,55 +1,42 @@
-/** Transaction preview: the request, every check, and the reason for the decision. */
+/**
+ * Transaction preview as three tiers, one per decision, laid out like the
+ * reference offer section. Every value comes from the real engine.
+ */
 import type { Decision } from "../lib/raho/types.ts";
-import { chip } from "../shared/chip.ts";
-import { $, $$, esc } from "../shared/dom.ts";
-import { amount } from "../shared/format.ts";
+import { $, esc } from "../shared/dom.ts";
+import { describe } from "../shared/format.ts";
 import { PREVIEW_SAMPLES, run } from "./examples.ts";
 
-const RESULT_LABEL = { pass: "Pass", review: "Review", block: "Block", skip: "Skipped" } as const;
-
-export function renderPreviewCard(card: HTMLElement, d: Decision): void {
-  const sample = PREVIEW_SAMPLES[d];
-  const r = sample.request;
-  const result = run(r);
-  card.dataset.d = result.decision;
-  const fields: [string, string][] = [
-    ["Agent", sample.agent],
-    ["Action", r.action],
-    ["Asset", r.asset],
-    ["Amount", amount(r)],
-    [r.recipient ? "Recipient" : "Contract", r.recipient || r.contract],
-    ["Function", r.fn],
-  ];
-  card.innerHTML = `
-    <div class="rh-preview__fields">
-      <span class="rh-kicker rh-kicker--muted">Request</span>
-      <dl class="rh-kv">${fields.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd${k === "Function" ? ' class="rh-mono"' : ""}>${esc(v)}</dd></div>`).join("")}</dl>
-    </div>
-    <div class="rh-preview__trace">
-      <span class="rh-kicker rh-kicker--muted">Policy checks</span>
-      <ol class="rh-trace">${result.checks
-        .map(
-          (c, i) =>
-            `<li data-r="${c.result}" style="--i:${i}"><span class="rh-trace__n">${String(i + 1).padStart(2, "0")}</span><span class="rh-trace__label">${esc(c.label)}</span><span class="rh-trace__detail">${esc(c.result === "skip" ? "" : c.detail)}</span>${chip(c.result, RESULT_LABEL[c.result])}</li>`,
-        )
-        .join("")}</ol>
-    </div>
-    <div class="rh-preview__foot">
-      ${chip(result.decision, result.decision, "rh-chip--lg")}
-      <span class="rh-preview__reason">${esc(result.reason)}</span>
-      <span class="rh-preview__message">${esc(result.message)}</span>
-    </div>`;
-}
+const TIER: Record<Decision, { panel: string; card: string; kicker: string; outcome: string; target: string }> = {
+  ALLOW: { panel: "rh-panel--cyan", card: "cyan", kicker: "rh-kicker--cyan", outcome: "Passed to the signer", target: "To Approved Wallet" },
+  REVIEW: { panel: "rh-panel--amber", card: "amber", kicker: "", outcome: "Waits for your approval", target: "To Approved Wallet" },
+  BLOCK: { panel: "rh-panel--limit", card: "limit", kicker: "rh-kicker--limit", outcome: "Nothing is signed", target: "Spender Unknown Router" },
+};
 
 export function initPreview(): void {
-  const root = $("[data-preview]");
+  const root = $("[data-decisions]");
   if (!root) return;
-  const card = $("[data-preview-card]", root)!;
-  const tabs = $$<HTMLButtonElement>("[data-preview-tabs] button", root);
-  const select = (d: Decision) => {
-    for (const t of tabs) t.setAttribute("aria-pressed", String(t.dataset.d === d));
-    renderPreviewCard(card, d);
-  };
-  for (const t of tabs) t.addEventListener("click", () => select(t.dataset.d as Decision));
-  select("ALLOW");
+  root.innerHTML = (["ALLOW", "REVIEW", "BLOCK"] as const)
+    .map((d) => {
+      const sample = PREVIEW_SAMPLES[d];
+      const result = run(sample.request);
+      const t = TIER[d];
+      const passed = result.checks.filter((c) => c.result === "pass").length;
+      return `
+      <article class="rh-panel ${t.panel}" data-card="${t.card}">
+        <div class="rh-tier" data-d="${result.decision}">
+          <div class="rh-kicker ${t.kicker}">${result.decision} · ${esc(sample.agent)}</div>
+          <h3 class="rh-subhead">${esc(describe(sample.request))}</h3>
+          <p class="rh-caption">${esc(t.target)}. ${esc(result.message)}</p>
+          <ol class="rh-tier__checks" aria-label="${passed} of ${result.checks.length} checks passed">
+            ${result.checks.map((c) => `<li data-r="${c.result}" title="${esc(`${c.label}: ${c.result === "skip" ? "not reached" : c.detail}`)}"></li>`).join("")}
+          </ol>
+          <div class="rh-tier__foot">
+            <p class="rh-dimension">${esc(result.reason)} · ${passed} of ${result.checks.length} checks passed</p>
+            <span class="rh-tier__outcome">${esc(t.outcome)}</span>
+          </div>
+        </div>
+      </article>`;
+    })
+    .join("");
 }

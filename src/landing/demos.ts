@@ -1,5 +1,4 @@
 /** Small local demos: human review, a live session, and the emergency controls. */
-import { chip } from "../shared/chip.ts";
 import { $, $$ } from "../shared/dom.ts";
 import { clock } from "../shared/format.ts";
 
@@ -36,7 +35,7 @@ export function initSessionDemo(): void {
   if (!card) return;
   const LENGTH = 2 * 3_600_000;
   const clockEl = $("[data-session-clock]", card)!;
-  const ring = $<SVGCircleElement>("[data-session-ring]", card as unknown as ParentNode)!;
+  const bar = $("[data-session-bar]", card)!;
   const chipEl = $("[data-session-chip]", card)!;
   const rule = $("[data-session-rule]", card)!;
   const toggle = $<HTMLButtonElement>("[data-session-toggle]", card)!;
@@ -46,15 +45,15 @@ export function initSessionDemo(): void {
 
   const tick = () => {
     const left = revoked ? 0 : Math.max(0, expiresAt - Date.now());
-    clockEl.textContent = clock(left);
-    ring.style.strokeDashoffset = String(100 - (left / LENGTH) * 100);
+    clockEl.textContent = revoked ? "Revoked" : clock(left);
+    bar.style.transform = `scaleX(${left / LENGTH})`;
   };
 
   const render = () => {
     card.dataset.state = revoked ? "revoked" : "active";
     chipEl.dataset.d = revoked ? "revoked" : "active";
     chipEl.textContent = revoked ? "Revoked" : "Active";
-    rule.innerHTML = `New requests: ${revoked ? chip("BLOCK", "Block") : chip("ALLOW", "Checked")}`;
+    rule.textContent = revoked ? "New requests block" : "New requests are checked";
     toggle.textContent = revoked ? "Start new session" : "Revoke session";
     tick();
   };
