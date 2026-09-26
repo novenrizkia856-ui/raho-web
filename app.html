@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Raho · Control Center</title>
-    <meta name="description" content="Raho control center. Agents, policies, sessions, activity and approvals in one place." />
+    <title>Raho | Post Quantum Smart Account Migration</title>
+    <meta name="description" content="The migration layer for moving blockchain accounts to post quantum security." />
     <meta name="theme-color" content="#000000" />
     <meta name="robots" content="noindex" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -15,13 +15,13 @@
   <body class="rh-app">
     <a class="rh-skip" href="#view">Skip to content</a>
     <div class="rh-shell" data-nav="closed">
-      <aside class="rh-side" id="rh-side" aria-label="Control center">
+      <aside class="rh-side" id="rh-side" aria-label="Migration layer">
         <div class="rh-side__brand">
           <a class="rh-mark" href="/" aria-label="Raho home" data-arrive>
             <svg viewBox="0 0 100 50" width="44" height="22" aria-hidden="true"><path class="rh-mark__chevron" d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z" /><path class="rh-mark__gate" d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z" /></svg>
             <span class="rh-wordmark">raho</span>
           </a>
-          <span class="rh-dimension">Control center</span>
+          <span class="rh-dimension">Migration layer</span>
         </div>
         <nav class="rh-side__nav" aria-label="Sections" data-side-nav></nav>
         <div class="rh-side__foot">
@@ -35,12 +35,6 @@
       <div class="rh-scrim" data-action="close-nav" aria-hidden="true"></div>
 
       <div class="rh-main">
-        <div class="rh-lockbar" data-lockbar hidden>
-          <span class="rh-lockbar__pulse" aria-hidden="true"></span>
-          <strong>Emergency lock is on.</strong>
-          <span>Every agent request is blocked.</span>
-          <button type="button" class="rh-btn rh-btn--sm rh-btn--ghost" data-action="unlock">Release lock</button>
-        </div>
         <header class="rh-top">
           <button type="button" class="rh-icon-btn rh-top__burger" data-action="open-nav" aria-controls="rh-side" aria-expanded="false" aria-label="Open navigation">
             <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.5" /></svg>
@@ -52,7 +46,7 @@
           <div class="rh-top__actions">
             <span class="rh-demo-pill" data-demo-pill title="Local demo data. Nothing is signed or sent onchain.">Demo</span>
             <button type="button" class="rh-btn rh-btn--quiet rh-wallet-btn" data-action="connect-wallet" data-wallet-btn>Connect wallet</button>
-            <button type="button" class="rh-btn rh-btn--sm" data-action="simulate">Simulate request</button>
+            <a class="rh-btn rh-btn--sm" href="#/migrate">Open migration</a>
           </div>
         </header>
         <main class="rh-view" id="view" tabindex="-1" data-view></main>

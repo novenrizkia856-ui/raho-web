@@ -1,201 +1,86 @@
 import "../styles/tokens.css";
 import "../styles/base.css";
 import "../styles/app.css";
+import "../styles/migration.css";
 
 import { shortAddress } from "../config/index.ts";
 import { getRaho } from "../lib/raho/index.ts";
-import { pendingApprovals } from "../lib/raho/selectors.ts";
-import { getWallet, onWallet } from "../lib/wallet.ts";
-import { $, $$ } from "../shared/dom.ts";
-import { clock, duration } from "../shared/format.ts";
-import { handleAction } from "./actions.ts";
-import { openSimulator } from "./simulate.ts";
-import type { AppContext, View } from "./context.ts";
-import { svg } from "./ui.ts";
-import { activity } from "./views/activity.ts";
-import { agents } from "./views/agents.ts";
-import { approvals } from "./views/approvals.ts";
-import { controls } from "./views/controls.ts";
-import { overview } from "./views/overview.ts";
-import { policies } from "./views/policies.ts";
-import { sessions } from "./views/sessions.ts";
-import { settings } from "./views/settings.ts";
-
-const ROUTES: Record<string, View & { icon: Parameters<typeof svg>[0]; nav: string }> = {
-  overview: { ...overview, icon: "overview", nav: "Overview" },
-  agents: { ...agents, icon: "agents", nav: "Agents" },
-  policies: { ...policies, icon: "policies", nav: "Policies" },
-  sessions: { ...sessions, icon: "sessions", nav: "Sessions" },
-  activity: { ...activity, icon: "activity", nav: "Activity" },
-  approvals: { ...approvals, icon: "approvals", nav: "Approvals" },
-  controls: { ...controls, icon: "controls", nav: "Controls" },
-  settings: { ...settings, icon: "settings", nav: "Settings" },
-};
+import { connectWallet, getWallet, onWallet } from "../lib/wallet.ts";
+import { $ } from "../shared/dom.ts";
+import { renderView, routes, type Route } from "./views.ts";
 
 const raho = getRaho();
 const shell = $(".rh-shell")!;
-const viewEl = $("[data-view]")!;
-const sideNav = $("[data-side-nav]")!;
-
-let quiet = false;
-let lastRoute = "";
-
-function parseHash(): { route: string; params: URLSearchParams } {
-  const [path, query = ""] = location.hash.replace(/^#\/?/, "").split("?");
-  return { route: ROUTES[path] ? path : "overview", params: new URLSearchParams(query) };
-}
-
-const navigate = (path: string) => {
-  location.hash = `#${path.startsWith("/") ? path : `/${path}`}`;
+const view = $("[data-view]")!;
+const nav = $("[data-side-nav]")!;
+const known = new Set(routes.map((route) => route.id));
+const currentRoute = (): Route => {
+  const name = location.hash.replace(/^#\/?/, "").split("?")[0];
+  return known.has(name as Route) ? name as Route : "overview";
 };
 
-function context(params: URLSearchParams): AppContext {
-  return {
-    raho,
-    state: raho.getState(),
-    now: Date.now(),
-    params,
-    navigate,
-    async quietly(fn) {
-      quiet = true;
-      try {
-        await fn();
-      } finally {
-        quiet = false;
-      }
-      renderChrome();
-    },
-  };
-}
-
-function renderChrome(): void {
-  const state = raho.getState();
-  const { route } = parseHash();
-  const pending = pendingApprovals(state).length;
-  sideNav.innerHTML = Object.entries(ROUTES)
-    .map(
-      ([key, r]) =>
-        `<a class="rh-side__link" href="#/${key}"${key === route ? ' aria-current="page"' : ""}>${svg(r.icon)}<span>${r.nav}</span>${
-          key === "approvals" && pending ? `<span class="rh-badge" aria-label="${pending} waiting">${pending}</span>` : ""
-        }${key === "controls" && state.locked ? '<span class="rh-badge rh-badge--limit">Lock</span>' : ""}</a>`,
-    )
-    .join("");
-
-  const active = state.agents.filter((a) => a.status === "active").length;
-  $("[data-side-status]")!.innerHTML = `
-    <span class="rh-side__dot" data-level="${state.locked ? "locked" : "armed"}" aria-hidden="true"></span>
-    <span><strong>${state.locked ? "Locked" : "Armed"}</strong><span>${active} of ${state.agents.length} agents active</span></span>`;
-
-  const lockbar = $("[data-lockbar]")!;
-  lockbar.hidden = !state.locked;
-  shell.dataset.locked = String(state.locked);
-
-  const wallet = getWallet();
-  const btn = $<HTMLButtonElement>("[data-wallet-btn]")!;
-  btn.textContent = wallet.status === "connected" ? shortAddress(wallet.address) : wallet.status === "connecting" ? "Connecting" : "Connect wallet";
-  btn.dataset.action = wallet.status === "connected" ? "open-settings" : "connect-wallet";
-  btn.title = wallet.status === "connected" ? "Connected, read only. Open settings." : "";
-
-  $("[data-demo-pill]")!.hidden = raho.mode !== "demo";
-}
-
 function render(): void {
-  const { route, params } = parseHash();
-  const view = ROUTES[route];
-  const ctx = context(params);
-  const changedRoute = route !== lastRoute;
-  lastRoute = route;
-
-  document.title = `${view.nav} · Raho`;
-  $("[data-view-title]")!.textContent = view.title;
-  $("[data-view-kicker]")!.textContent = view.kicker;
-
-  // A fresh container each render, so listeners bound by the last view go with it.
-  const y = window.scrollY;
-  const inner = document.createElement("div");
-  inner.className = "rh-view__inner";
-  inner.innerHTML = view.render(ctx);
-  viewEl.replaceChildren(inner);
-  view.bind?.(inner, ctx);
-  renderChrome();
-
-  if (changedRoute) {
-    window.scrollTo({ top: 0 });
-    inner.classList.add("is-entering");
-  } else {
-    window.scrollTo({ top: y });
-  }
+  const route = currentRoute();
+  const state = raho.getState();
+  nav.innerHTML = routes.map((item) => `<a class="rh-side__link" href="#/${item.id}" ${route === item.id ? 'aria-current="page"' : ""}><span class="rm-nav-glyph" aria-hidden="true">${item.glyph}</span><span>${item.label}</span></a>`).join("");
+  $("[data-view-title]")!.textContent = routes.find((item) => item.id === route)!.label;
+  $("[data-view-kicker]")!.textContent = "RAHO / DEMO";
+  document.title = `${routes.find((item) => item.id === route)!.label} | Raho`;
+  view.innerHTML = `<div class="rh-view__inner is-entering">${renderView(route, state)}</div>`;
+  $("[data-side-status]")!.innerHTML = `<span class="rh-side__dot" aria-hidden="true"></span><span><strong>${state.stage === "ACTIVE" ? "Demo active" : "Migration layer"}</strong><span>${state.stage.replaceAll("_", " ").toLowerCase()}</span></span>`;
+  const wallet = getWallet();
+  $("[data-wallet-btn]")!.textContent = wallet.status === "connected" ? shortAddress(wallet.address) : wallet.status === "connecting" ? "Connecting" : "Connect wallet";
+  $("[data-demo-pill]")!.textContent = "DEMO MODE";
 }
 
-/* Once a second: countdowns, session rings, and a repaint when a session ends. */
-function tick(): void {
-  const now = Date.now();
-  let expired = false;
-  for (const el of $$("[data-countdown]")) {
-    const end = Number(el.dataset.countdown);
-    el.textContent = el.dataset.format === "clock" ? clock(end - now) : duration(end - now);
-    if (end <= now && !el.dataset.done) {
-      el.dataset.done = "1";
-      expired = true;
+function toast(message: string): void {
+  const host = $("[data-toasts]")!;
+  const el = document.createElement("div");
+  el.className = "rh-toast";
+  el.textContent = message;
+  host.append(el);
+  setTimeout(() => el.remove(), 4000);
+}
+
+async function runFlow(id: string): Promise<void> {
+  try {
+    switch (id) {
+      case "detect": await raho.detectAuthentication(); break;
+      case "prepare": await raho.preparePostQuantumKey(($<HTMLSelectElement>("#scheme")?.value) ?? raho.getState().selectedSchemeId); break;
+      case "compatibility": await raho.checkCompatibility(); break;
+      case "build": await raho.buildMigration(); break;
+      case "review": await raho.reviewMigration(); break;
+      case "execute": await raho.submitMigration(); toast("Demo state advanced. Nothing was sent onchain."); break;
+      case "verify": await raho.verifyMigration(); break;
+      case "activate": await raho.activatePostQuantumAuth(); break;
+      case "rotate": await raho.rotateKey(($<HTMLSelectElement>("#rotation-scheme")?.value) ?? raho.getState().selectedSchemeId); toast("Rotation intent prepared locally."); break;
+      case "reset": await raho.resetDemo(); location.hash = "#/overview"; toast("Demo data reset."); break;
     }
-  }
-  for (const el of $$("[data-ring-end]")) {
-    const start = Number(el.dataset.ringStart);
-    const end = Number(el.dataset.ringEnd);
-    if (end) el.style.setProperty("--p", String(Math.max(0, ((end - now) / (end - start)) * 100)));
-  }
-  if (expired && !document.querySelector("dialog[open]")) render();
+    if (id !== "reset") location.hash = id === "rotate" ? "#/keys" : "#/migrate";
+    render();
+  } catch (error) { toast(error instanceof Error ? error.message : "Action unavailable."); }
 }
 
-function setNav(open: boolean): void {
-  shell.dataset.nav = open ? "open" : "closed";
-  $("[data-action='open-nav']")?.setAttribute("aria-expanded", String(open));
-}
-
-document.addEventListener("click", (event) => {
+document.addEventListener("click", async (event) => {
   const target = event.target as HTMLElement;
-  if (target.closest(".rh-side__link")) setNav(false);
-  const el = target.closest<HTMLElement>("[data-action]");
-  if (!el || (el as HTMLButtonElement).disabled) return;
-  const action = el.dataset.action;
-  if (action === "open-nav") return setNav(true);
-  if (action === "close-nav") return setNav(false);
-  if (action === "open-settings") return navigate("/settings");
-  void handleAction(raho, el, navigate);
-});
-
-document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape" && shell.dataset.nav === "open") setNav(false);
-});
-
-raho.subscribe(() => {
-  if (quiet) return;
-  if (document.querySelector("dialog[open]")) {
-    // Let the dialog finish; repaint once it closes.
-    $("[data-modal]")!.addEventListener("close", render, { once: true });
-    return renderChrome();
+  if (target.closest(".rh-side__link")) shell.dataset.nav = "closed";
+  const flow = target.closest<HTMLElement>("[data-flow]");
+  if (flow) { await runFlow(flow.dataset.flow!); return; }
+  const action = target.closest<HTMLElement>("[data-action]")?.dataset.action;
+  if (action === "open-nav") shell.dataset.nav = "open";
+  if (action === "close-nav") shell.dataset.nav = "closed";
+  if (action === "connect-wallet") {
+    try {
+      const wallet = await connectWallet();
+      if (wallet.status === "connected") {
+        await raho.selectAccount(wallet.address);
+        toast("Wallet address selected. Authentication remains demo data.");
+      }
+    } catch { toast("Wallet connection unavailable."); }
   }
-  render();
 });
-
-onWallet(() => {
-  renderChrome();
-  if (["overview", "settings"].includes(parseHash().route)) render();
-});
-
-window.addEventListener("hashchange", () => {
-  render();
-  viewEl.focus({ preventScroll: true });
-});
-
+document.addEventListener("keydown", (event) => { if (event.key === "Escape") shell.dataset.nav = "closed"; });
+window.addEventListener("hashchange", () => { render(); view.focus({ preventScroll: true }); window.scrollTo(0, 0); });
+raho.subscribe(render);
+onWallet(render);
 render();
-setInterval(tick, 1000);
-
-// Landing links can open the simulator directly: #/overview?simulate=1
-function maybeSimulate(): void {
-  if (!parseHash().params.has("simulate")) return;
-  history.replaceState(null, "", "#/overview");
-  openSimulator(raho);
-}
-maybeSimulate();
-window.addEventListener("hashchange", maybeSimulate);

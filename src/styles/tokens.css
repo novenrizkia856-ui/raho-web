@@ -39,7 +39,7 @@
   --rh-shadow: 0 40px 100px -40px rgba(254, 6, 0, 0.45);
   --rh-glow: inset 0 1px 1px rgba(219, 137, 137, 0.46);
 
-  /* One accent. The old amber and cyan slots both resolve to it or to white. */
+  /* One accent, shared by migration views. */
   --rh-amber: #fe0600;
   --rh-amber-text: #ff3b35;
   --rh-amber-wash: rgba(254, 6, 0, 0.14);
@@ -52,16 +52,16 @@
   --rh-limit-wash: rgba(254, 6, 0, 0.14);
   --rh-on-accent: #fefefe;
 
-  /* Decisions: white passes, pale red waits, full red stops. */
-  --rh-allow: #fefefe;
-  --rh-allow-text: #fefefe;
-  --rh-allow-wash: rgba(255, 255, 255, 0.08);
-  --rh-review: #ff8f89;
-  --rh-review-text: #ff9f9a;
-  --rh-review-wash: rgba(255, 143, 137, 0.12);
-  --rh-block: #fe0600;
-  --rh-block-text: #ff3b35;
-  --rh-block-wash: rgba(254, 6, 0, 0.16);
+  /* State tones for migration interfaces. */
+  --rh-positive: #fefefe;
+  --rh-positive-text: #fefefe;
+  --rh-positive-wash: rgba(255, 255, 255, 0.08);
+  --rh-attention: #ff8f89;
+  --rh-attention-text: #ff9f9a;
+  --rh-attention-wash: rgba(255, 143, 137, 0.12);
+  --rh-negative: #fe0600;
+  --rh-negative-text: #ff3b35;
+  --rh-negative-wash: rgba(254, 6, 0, 0.16);
 
   --rh-card-bg: linear-gradient(180deg, rgba(254, 6, 0, 0) 43.71%, rgba(254, 6, 0, 0.39) 100.86%), rgba(13, 13, 13, 0.8);
   --rh-btn-primary: linear-gradient(180deg, #fe0600 0%, rgba(255, 26, 26, 0.24) 100%);

@@ -1,82 +1,31 @@
-# raho-web
+# Raho
 
-Static frontend for **Raho**, the firewall between AI agents and your wallet.
+Post Quantum Smart Account Migration Layer. Static Vite and TypeScript frontend.
 
-- `index.html` is the landing page: the supplied reference export itself, with its stylesheet kept and only copy, logo and Raho demos changed. Its licensed font, remote videos, investor logos, team claims and blog posts were removed or replaced.
-- `app.html` (served at `/app`) is the control center: overview, agents, policies, sessions, activity, approvals, emergency controls and settings.
-
-Vite and TypeScript, no framework, no backend. Everything runs in the browser.
-
-## Scripts
+## Run
 
 ```bash
-npm install
-npm run dev        # http://localhost:5173
-npm run build      # typecheck, then static build into dist/
-npm run preview    # serve dist/
-npm test           # policy engine and config tests
-npm run audit      # copy rules: no dashes in landing copy, 15 word sentences, no stray addresses
+npm ci
+npm run dev
+npm run check
+npm run build
 ```
 
-## Contract configuration
+Vercel uses `vercel.json` to build static files into `dist/`. `/app` serves `app.html`.
 
-Nothing is deployed yet, so every chain value is empty and the app runs on local demo data.
-When the contracts ship, edit **two files only**:
+## Migration demo
 
-| File | What goes in it |
-| --- | --- |
-| `src/config/chain.ts` | `chainId`, `chainName`, `rpcUrl`, `explorerUrl`, `nativeCurrency` |
-| `src/config/contracts.ts` | `firewall`, `policy`, `session`, `approvals`, `token` addresses, plus the `deployment` flags |
+The app offers Overview, Migrate, Accounts, Keys, History, and Settings. The guided flow moves through account selection, authentication detection, key preparation, compatibility, build, review, demo execution, verification, and activation. Key rotation and history remain available after activation.
 
-- `deployment.tokenLive = true` with a valid `contracts.token` replaces "Coming Soon" in the landing
-  page's Token Contract Address field and enables its copy button. Until then the button copies nothing.
-- `deployment.contractsLive = true` makes `getRaho()` pick the contract adapter, but only once the
-  chain id, RPC and the firewall, policy and session addresses are all set and well formed.
+Every result is controlled local demo data and persists in the browser. Connecting a wallet reads its address only. No signing, transaction submission, cryptographic key generation, or onchain verification occurs.
 
-Components never read these files directly. They go through `src/config/index.ts`, which treats
-anything malformed as "not deployed".
+## Future integration
 
-## Where contract integration plugs in
+- `src/config/chain.ts`: network details
+- `src/config/contracts.ts`: separate migration and token addresses with independent deployment flags
+- `src/config/schemes.ts`: extensible signature scheme descriptions
+- `src/lib/raho/adapter.ts`: interface used by the UI
+- `src/lib/raho/demo-adapter.ts`: current local implementation
+- `src/lib/raho/contract-adapter.ts`: future implementation boundary
 
-```
-src/lib/raho/
-  adapter.ts           RahoAdapter interface the UI talks to
-  demo-adapter.ts      working local implementation, used today
-  contract-adapter.ts  stub to implement against the deployed contracts
-  engine.ts            deterministic policy engine: BLOCK > REVIEW > ALLOW
-  selectors.ts         derived state (spend windows, sessions, pending approvals)
-  index.ts             getRaho(): picks the adapter from the config
-src/lib/wallet.ts      read only EIP-1193 connect, never signs
-```
-
-To go live, implement the methods in `contract-adapter.ts` (`checkPolicy`, `updatePolicy`,
-`createSession`, `revokeSession`, `pauseAgent`, `approveRequest`, `rejectRequest`, `getActivity`,
-`setEmergencyLock`, `resetLimits`), then flip `deployment.contractsLive`. The views and the landing
-page do not change.
-
-## Layout
-
-```
-index.html, app.html     page shells
-public/                  favicon, Geist fonts (OFL), boot.js
-src/config/              chain and contract configuration
-src/lib/                 domain logic and adapters, no DOM
-src/shared/              DOM helpers, formatting, theme
-src/landing/main.ts      landing runtime: blur in reveals, scroll pipeline, mobile menu, demos
-src/landing/raho.css     additions to the reference stylesheet (hero waves, mobile pipeline, Raho elements)
-src/app/                 control center shell, actions, simulator, views/
-src/styles/              tokens.css, base.css, app.css for the control center, in the landing design language
-tools/check-copy.mjs     copy audit
-test/engine.test.ts      engine, adapter and config tests
-```
-
-## Demo data
-
-The control center seeds four agents, their policies, sessions and a few hours of history, all
-evaluated by the real engine. Edits persist in `localStorage` for that browser. Settings has a
-reset. No transaction is signed or sent, and no hash or address is invented.
-
-## Deploy
-
-Vercel picks up `vercel.json`: `npm ci`, `npm run build`, output `dist/`, clean URLs so `/app`
-serves `app.html`. No environment variables are required.
+The landing page shows the token CA. It says Coming Soon until a valid deployed token address is configured. The copy button does not copy a placeholder or the migration contract address.

@@ -1,0 +1,41 @@
+.raho-section {
+  min-height: 0;
+  padding: 0 0 80px;
+  justify-content: flex-start;
+}
+
+.raho-eyebrow {
+  color: #fe0600;
+}
+
+#agents .raho-feature-card,
+#verification .raho-feature-card {
+  background: linear-gradient(180deg, #0b0b0b 0%, #0b0b0b 36%, rgba(122, 4, 4, .78) 100%);
+  border-color: rgba(255, 149, 149, .2);
+}
+
+#agents .raho-feature-card h3,
+#verification .raho-feature-card h3 { order: 1; }
+
+#agents .raho-feature-card__symbol,
+#verification .raho-feature-card__symbol {
+  order: 2;
+  align-self: center;
+  margin: 12px auto 0;
+}
+
+#agents .raho-feature-card__rows,
+#verification .raho-feature-card p { order: 3; }
+
+#agents .raho-feature-card > a,
+#verification .raho-feature-card > a {
+  order: 4;
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 14px 24px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fe0600, #a90000);
+  box-shadow: 0 12px 35px rgba(254, 6, 0, .22);
+  text-align: left;
+}
