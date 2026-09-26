@@ -1,19 +1,335 @@
-/* Raho additions to the existing landing design system. */
-.raho-sr{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-html{scroll-behavior:smooth;scroll-padding-top:82px}
-:focus-visible{outline:2px solid #fe0600;outline-offset:3px}
-.raho-menu{display:none}
-@media(max-width:1023.98px){[data-menu=open] .raho-menu{display:grid;gap:4px;padding:8px 16px 20px;border-top:1px solid rgba(255,255,255,.12)}.raho-menu>a:last-child{margin-top:12px}}
+/*
+ * Raho additions to the reference stylesheet. Only what the saved page lost
+ * (videos, mobile menu, mobile pipeline, runtime states) plus Raho elements.
+ */
+.raho-sr {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 82px;
+}
+
+:focus-visible {
+  outline: 2px solid #fe0600;
+  outline-offset: 3px;
+}
+
+/* Mobile menu */
+.raho-menu {
+  display: none;
+}
+
+@media (max-width: 1023.98px) {
+  [data-menu="open"] .raho-menu {
+    display: grid;
+    gap: 4px;
+    padding: 8px 16px 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .raho-menu > a:last-child {
+    margin-top: 12px;
+  }
+}
+
+/* Hero background, as in the last commit */
 .raho-hero-pattern{object-position:center center;transform:scale(1.015);animation:raho-hero-drift 24s ease-in-out infinite alternate}
-#top h1 + div p{max-width:320px;margin-inline:auto}
-@media(min-width:1024px){#top>.relative.z-10>.flex-1{transform:translateY(15px)}}
 @keyframes raho-hero-drift{to{transform:scale(1.055) translate(-.6%,.25%)}}
-.raho-verdict{margin-left:auto;transition:color .3s ease}
-[data-hero-outcome]{transition:color .3s ease,opacity .3s ease}
-.raho-ca{gap:12px}.raho-ca__text{display:grid;gap:3px;min-width:0}.raho-ca__text span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.raho-ca__toast{opacity:0;filter:blur(12px);transform:scale(1.08);background:rgba(0,0,0,.55);transition:opacity .35s ease,filter .35s ease,transform .35s ease}.raho-ca__toast.is-shown{opacity:1;filter:none;transform:none}
-@media(max-width:1023.98px){.raho-ca{padding-left:22px!important}.raho-ca .w-\[180px\]{width:116px;padding-left:22px}}
-@media(max-width:767.98px){.raho-ca__text span:first-child{white-space:normal;line-height:1.15}.raho-hero-pattern{object-position:42% center}#top>div:nth-child(2){opacity:.45}}
-.raho-outcomes span{display:inline-flex;align-items:center;justify-content:center;width:256px;height:242px;font-family:var(--font-muoto-mono),ui-monospace,monospace;font-size:34px;font-weight:700;letter-spacing:4px;text-transform:uppercase;color:var(--color-dark)}
-@media(max-width:767.98px){.raho-outcomes{gap:0 22px}.raho-outcomes span{width:auto;height:170px;font-size:20px;letter-spacing:2px}}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.raho-ca__toast{transition:none}.raho-hero-pattern{animation:none;transform:none}}
+@media(max-width:767.98px){.raho-hero-pattern{object-position:42% center}#top>div:nth-child(2){opacity:.45}}
+@media(prefers-reduced-motion:reduce){.raho-hero-pattern{animation:none;transform:none}}
+
+/* Hero card */
+.raho-verdict {
+  margin-left: auto;
+  transition: color 0.3s ease;
+}
+
+.raho-verdict[data-d="ALLOW"] {
+  color: #fefefe;
+}
+
+.raho-verdict[data-d="REVIEW"] {
+  color: #ffb3b0;
+}
+
+.raho-verdict[data-d="BLOCK"] {
+  color: #fe0600;
+}
+
+[data-hero-outcome] {
+  transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+.raho-ca {
+  gap: 12px;
+}
+
+.raho-ca__text {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.raho-ca__text span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.raho-ca__toast {
+  opacity: 0;
+  filter: blur(12px);
+  transform: scale(1.08);
+  background: rgba(0, 0, 0, 0.55);
+  transition: opacity 0.35s ease, filter 0.35s ease, transform 0.35s ease;
+}
+
+.raho-ca__toast.is-shown {
+  opacity: 1;
+  filter: none;
+  transform: none;
+}
+
+@media (max-width: 1023.98px) {
+  .raho-ca {
+    padding-left: 22px !important;
+  }
+
+  .raho-ca .w-\[180px\] {
+    width: 116px;
+    padding-left: 22px;
+  }
+}
+
+/* "Every request ends in" row, set where the logo row was */
+.raho-outcomes span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 256px;
+  height: 242px;
+  font-family: var(--font-muoto-mono), ui-monospace, monospace;
+  font-size: 34px;
+  font-weight: 700;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--color-dark);
+}
+
+@media (max-width: 767.98px) {
+  .raho-outcomes {
+    gap: 0 22px;
+  }
+
+  .raho-outcomes span {
+    width: auto;
+    height: 170px;
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+}
+
+/* Two column card grid (the saved copy only kept the desktop grid) */
+.raho-grid-2 {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+@media (min-width: 1024px) {
+  .raho-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+[data-review-card][data-state="approved"] {
+  box-shadow: inset 0 0 0 2px #fefefe;
+}
+
+[data-review-card][data-state="rejected"] {
+  box-shadow: inset 0 0 0 2px #fe0600;
+}
+
+/* Pipeline: scroll driven on desktop, a simple list on mobile */
+[data-pipe-item],
+[data-pipe-line],
+[data-pipe-vline] {
+  transition: opacity 0.5s ease, transform 0.5s ease, clip-path 0.6s ease;
+}
+
+[data-pipe-track] {
+  transition: transform 0.25s linear;
+  will-change: transform;
+}
+
+.raho-steps {
+  display: grid;
+  gap: 28px;
+  margin: 0 auto;
+  padding: 0 16px;
+  max-width: 420px;
+  list-style: none;
+}
+
+.raho-step {
+  display: grid;
+  gap: 12px;
+}
+
+.raho-step__body {
+  padding-left: 46px;
+}
+
+.raho-step__body > div {
+  width: fit-content;
+  max-width: 100%;
+}
+
+@media (max-width: 1023.98px) {
+  .raho-pipe {
+    height: auto !important;
+  }
+
+  .raho-pipe__stage {
+    position: relative;
+    top: 0;
+    height: auto;
+    padding: 80px 0;
+  }
+}
+
+/* Emergency lock strip icon */
+.raho-lock-icon {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+}
+
+/* Red glow in place of the decorative videos */
+.raho-orb {
+  width: 482px;
+  max-width: 100%;
+  height: 467px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(254, 6, 0, 0.9), rgba(254, 6, 0, 0.35) 45%, rgba(254, 6, 0, 0) 100%);
+  filter: blur(8px);
+  animation: raho-pulse 7s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.raho-orb--wide {
+  width: 650px;
+  height: 773px;
+  opacity: 0.6;
+}
+
+.raho-orb--screen {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  mix-blend-mode: screen;
+  opacity: 0.7;
+}
+
+@keyframes raho-pulse {
+  from {
+    scale: 0.92;
+    opacity: 0.75;
+  }
+  to {
+    scale: 1.05;
+    opacity: 1;
+  }
+}
+
+/* Emergency control buttons */
+[data-emergency][aria-pressed="true"] {
+  box-shadow: inset 0 0 0 2px #fe0600;
+}
+
+.is-engaged {
+  box-shadow: inset 0 0 0 2px #fe0600, 0 30px 90px -30px rgba(254, 6, 0, 0.8) !important;
+}
+
+/* Session card visual, where the blog image was */
+.raho-session-visual {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, rgba(254, 6, 0, 0.35), rgba(13, 13, 13, 0.4)) !important;
+}
+
+.raho-session-clock {
+  display: grid;
+  justify-items: center;
+  gap: 14px;
+  width: 78%;
+}
+
+.raho-session-clock span {
+  font-family: var(--font-muoto-mono), ui-monospace, monospace;
+  font-size: 40px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  font-variant-numeric: tabular-nums;
+  color: #fefefe;
+}
+
+.raho-session-clock i {
+  display: block;
+  width: 100%;
+  height: 4px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.15);
+  overflow: hidden;
+}
+
+.raho-session-clock b {
+  display: block;
+  height: 100%;
+  width: 100%;
+  background: #fe0600;
+  transition: width 1s linear;
+}
+
+.raho-session-clock small {
+  font-family: var(--font-muoto-mono), ui-monospace, monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.raho-session-clock--off span {
+  color: #fe0600;
+}
+
+.raho-status {
+  margin: 48px 0 0;
+  text-align: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .raho-orb {
+    animation: none;
+  }
+
+  [data-pipe-item],
+  [data-pipe-line],
+  [data-pipe-vline],
+  [data-pipe-track],
+  .raho-ca__toast {
+    transition: none;
+  }
+}
