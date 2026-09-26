@@ -39,66 +39,9 @@ html {
   }
 }
 
-/* Hero background: slow red waves in place of the remote video */
-.raho-hero-bg {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
+/* Hero background: the scale sphere canvas sits where the video was */
+[data-hero-scales] {
   background: #000;
-  pointer-events: none;
-}
-
-.raho-hero-bg i {
-  position: absolute;
-  width: 120vmax;
-  height: 42vmax;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(254, 6, 0, 0.95), rgba(160, 4, 0, 0.55) 55%, rgba(254, 6, 0, 0) 100%);
-  filter: blur(28px);
-  opacity: 0.55;
-  animation: raho-wave 22s ease-in-out infinite alternate;
-}
-
-.raho-hero-bg i:nth-child(1) {
-  left: -30vmax;
-  top: 8%;
-  transform: rotate(-14deg);
-}
-
-.raho-hero-bg i:nth-child(2) {
-  right: -40vmax;
-  top: 30%;
-  transform: rotate(12deg);
-  animation-duration: 26s;
-  animation-delay: -6s;
-}
-
-.raho-hero-bg i:nth-child(3) {
-  left: -20vmax;
-  top: 55%;
-  transform: rotate(-6deg);
-  animation-duration: 30s;
-  animation-delay: -12s;
-}
-
-.raho-hero-bg i:nth-child(4) {
-  right: -25vmax;
-  top: 72%;
-  transform: rotate(8deg);
-  opacity: 0.7;
-  animation-duration: 24s;
-  animation-delay: -3s;
-}
-
-@keyframes raho-wave {
-  from {
-    translate: -6vmax 0;
-    scale: 1 0.9;
-  }
-  to {
-    translate: 6vmax -3vmax;
-    scale: 1.08 1.1;
-  }
 }
 
 /* Hero card */
@@ -377,7 +320,6 @@ html {
     scroll-behavior: auto;
   }
 
-  .raho-hero-bg i,
   .raho-orb {
     animation: none;
   }

@@ -7,6 +7,7 @@ import { chainConfig, contractsReady, tokenDisplay } from "../config/index.ts";
 import { copyText } from "../shared/clipboard.ts";
 import { $, $$, reducedMotion } from "../shared/dom.ts";
 import { clock } from "../shared/format.ts";
+import { initHeroScales } from "./hero-scales.ts";
 
 const still = reducedMotion();
 
@@ -228,6 +229,7 @@ function initDeployment(): void {
   if (status) status.textContent = `Contracts live on ${chainConfig.chainName || "mainnet"}`;
 }
 
+initHeroScales();
 initMenu();
 initReveal();
 initPipeline();
