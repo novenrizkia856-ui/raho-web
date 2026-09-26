@@ -1,0 +1,118 @@
+/*
+ * Raho design tokens.
+ * Blueprint (dark) is the default. Drawing (light) is the paper variant,
+ * switched with [data-mode] on <html>.
+ */
+@font-face {
+  font-family: Figtree;
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/figtree-600-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root,
+:root[data-mode="blueprint"] {
+  color-scheme: dark;
+  --rh-ground: #0d1524;
+  --rh-ground-alt: #0b1220;
+  --rh-panel: #16223a;
+  --rh-panel-2: #1b2945;
+  --rh-ink: #edf2f9;
+  --rh-body: #a9b8cd;
+  --rh-muted: #8195b2;
+  --rh-faint: #808b9f;
+  --rh-rule: #3e4c66;
+  --rh-rule-soft: rgba(129, 149, 178, 0.18);
+  --rh-zebra: rgba(129, 149, 178, 0.06);
+  --rh-header: rgba(13, 21, 36, 0.88);
+  --rh-grid: rgba(129, 149, 178, 0.13);
+  --rh-grid-fine: rgba(129, 149, 178, 0.05);
+  --rh-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.6);
+
+  --rh-amber: #f2a93b;
+  --rh-amber-text: #f2a93b;
+  --rh-amber-wash: rgba(242, 169, 59, 0.12);
+  --rh-cyan: #59c3e8;
+  --rh-cyan-text: #59c3e8;
+  --rh-cyan-soft: rgba(89, 195, 232, 0.4);
+  --rh-cyan-wash: rgba(89, 195, 232, 0.1);
+  --rh-limit: #e4573d;
+  --rh-limit-text: #f07259;
+  --rh-limit-wash: rgba(228, 87, 61, 0.12);
+  --rh-on-accent: #0d1524;
+}
+
+:root[data-mode="drawing"] {
+  color-scheme: light;
+  --rh-ground: #f4f1e9;
+  --rh-ground-alt: #ece8dd;
+  --rh-panel: #fbfaf5;
+  --rh-panel-2: #ffffff;
+  --rh-ink: #0f1a2e;
+  --rh-body: #34425a;
+  --rh-muted: #56647c;
+  --rh-faint: #667085;
+  --rh-rule: #b5ae9e;
+  --rh-rule-soft: rgba(15, 26, 46, 0.14);
+  --rh-zebra: rgba(15, 26, 46, 0.035);
+  --rh-header: rgba(244, 241, 233, 0.9);
+  --rh-grid: rgba(15, 26, 46, 0.085);
+  --rh-grid-fine: rgba(15, 26, 46, 0.035);
+  --rh-shadow: 0 24px 60px -30px rgba(15, 26, 46, 0.35);
+
+  --rh-amber: #e0931c;
+  --rh-amber-text: #945300;
+  --rh-amber-wash: rgba(224, 147, 28, 0.14);
+  --rh-cyan: #1e93c0;
+  --rh-cyan-text: #0b5f82;
+  --rh-cyan-soft: rgba(30, 147, 192, 0.45);
+  --rh-cyan-wash: rgba(30, 147, 192, 0.1);
+  --rh-limit: #c9402a;
+  --rh-limit-text: #a3301d;
+  --rh-limit-wash: rgba(201, 64, 42, 0.1);
+  --rh-on-accent: #0f1a2e;
+}
+
+:root {
+  /* Decisions map onto the reference palette: go, attention, stop. */
+  --rh-allow: var(--rh-cyan);
+  --rh-allow-text: var(--rh-cyan-text);
+  --rh-allow-wash: var(--rh-cyan-wash);
+  --rh-review: var(--rh-amber);
+  --rh-review-text: var(--rh-amber-text);
+  --rh-review-wash: var(--rh-amber-wash);
+  --rh-block: var(--rh-limit);
+  --rh-block-text: var(--rh-limit-text);
+  --rh-block-wash: var(--rh-limit-wash);
+
+  --rh-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --rh-mono: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --rh-wordmark: Figtree, ui-sans-serif, system-ui, sans-serif;
+
+  --rh-web-display: clamp(42px, 6.6vw, 78px);
+  --rh-web-hero: clamp(34px, 5.2vw, 56px);
+  --rh-web-section: clamp(30px, 4vw, 42px);
+  --rh-subhead: 25px;
+  --rh-card: 21px;
+  --rh-kicker: 12px;
+  --rh-dim: 11px;
+
+  --rh-band: 1120px;
+  --rh-gutter: 32px;
+  --rh-radius: 14px;
+  --rh-radius-sm: 10px;
+  --rh-header-h: 68px;
+
+  --rh-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --rh-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --rh-gutter: 20px;
+    --rh-subhead: 22px;
+    --rh-card: 19px;
+  }
+}

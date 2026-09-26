@@ -1,0 +1,487 @@
+<!doctype html>
+<html lang="en" data-mode="blueprint">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Raho · The firewall between AI agents and your wallet</title>
+    <meta name="description" content="Raho checks every AI agent transaction against your rules. Allow, review or block before the wallet signs." />
+    <meta name="theme-color" content="#0d1524" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Raho" />
+    <meta property="og:title" content="Raho · The firewall between AI agents and your wallet" />
+    <meta property="og:description" content="Every transaction checked against your rules. Allow. Review. Block." />
+    <meta name="twitter:card" content="summary" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/fonts/figtree-600-latin.woff2" as="font" type="font/woff2" crossorigin />
+    <script src="/boot.js"></script>
+    <script type="module" src="/src/landing/main.ts"></script>
+  </head>
+  <body>
+    <a class="rh-skip" href="#main">Skip to content</a>
+
+    <header class="rh-header" data-menu="closed">
+      <div class="rh-inner rh-header__inner">
+        <a class="rh-mark" href="#top" aria-label="Raho home" data-arrive>
+          <svg viewBox="0 0 100 50" width="50" height="25" aria-hidden="true"><path class="rh-mark__chevron" d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z" /><path class="rh-mark__gate" d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z" /></svg>
+          <span class="rh-wordmark">raho</span>
+        </a>
+        <a class="rh-btn rh-header__cta" href="/app">Open App</a>
+        <button type="button" class="rh-header__burger" aria-controls="rh-menu" aria-expanded="false" aria-label="Open menu">
+          <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.5" /></svg>
+        </button>
+        <div class="rh-header__menu" id="rh-menu">
+          <nav aria-label="Main">
+            <a class="rh-navlink" href="#flow">Flow</a>
+            <a class="rh-navlink" href="#policy">Policy</a>
+            <a class="rh-navlink" href="#review">Review</a>
+            <a class="rh-navlink" href="#sessions">Sessions</a>
+            <a class="rh-navlink" href="#control">Control</a>
+          </nav>
+          <div class="rh-header__mode">
+            <span class="rh-dimension rh-header__mode-label">Mode</span>
+            <button type="button" class="rh-btn rh-btn--quiet rh-mode-toggle" data-mode-toggle>Drawing</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main id="main">
+      <nav class="rh-jump" aria-label="Jump to section">
+        <a href="#top" data-jump="top"><span class="rh-jump__label">Top</span><span class="rh-jump__tick"></span></a>
+        <a href="#problem" data-jump="problem"><span class="rh-jump__label">Problem</span><span class="rh-jump__tick"></span></a>
+        <a href="#flow" data-jump="flow"><span class="rh-jump__label">Flow</span><span class="rh-jump__tick"></span></a>
+        <a href="#policy" data-jump="policy"><span class="rh-jump__label">Policy</span><span class="rh-jump__tick"></span></a>
+        <a href="#preview" data-jump="preview"><span class="rh-jump__label">Preview</span><span class="rh-jump__tick"></span></a>
+        <a href="#review" data-jump="review"><span class="rh-jump__label">Review</span><span class="rh-jump__tick"></span></a>
+        <a href="#sessions" data-jump="sessions"><span class="rh-jump__label">Sessions</span><span class="rh-jump__tick"></span></a>
+        <a href="#keys" data-jump="keys"><span class="rh-jump__label">Keys</span><span class="rh-jump__tick"></span></a>
+        <a href="#control" data-jump="control"><span class="rh-jump__label">Control</span><span class="rh-jump__tick"></span></a>
+        <a href="#start" data-jump="start"><span class="rh-jump__label">Start</span><span class="rh-jump__tick"></span></a>
+      </nav>
+
+      <!-- Hero -->
+      <div class="rh-grid-plate rh-grid-plate--coarse rh-hero-plate">
+        <div data-shimmer aria-hidden="true"></div>
+        <section id="top" class="rh-hero" aria-labelledby="hero-title">
+          <div class="rh-hero__text">
+            <div class="rh-kicker" data-reveal style="--d: 60ms">Raho · Agent wallet firewall</div>
+            <h1 id="hero-title" class="rh-web-display rh-hero__title" data-reveal style="--d: 120ms">The firewall between AI agents and your wallet.</h1>
+            <p class="rh-body rh-hero__lede" data-reveal style="--d: 200ms">Every transaction checked against your rules. <br />Allowed, reviewed or blocked before anything is signed.</p>
+            <div class="rh-hero__ctas" data-reveal style="--d: 280ms">
+              <a class="rh-btn" href="/app">Open App</a>
+              <a class="rh-btn rh-btn--ghost" href="#flow">Explore Raho</a>
+            </div>
+            <div class="rh-ca" data-reveal style="--d: 360ms" data-contract-address>
+              <span class="rh-ca__label">Token Contract Address</span>
+              <code class="rh-ca__value" data-ca-value>Coming Soon</code>
+              <button type="button" class="rh-ca__copy" data-ca-copy aria-describedby="rh-ca-status">
+                <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8.5" height="8.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3" /><path d="M9.5 2.5V1H1v8.5h1.5" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
+                <span>Copy</span>
+              </button>
+              <span class="rh-ca__status" id="rh-ca-status" role="status" aria-live="polite"></span>
+            </div>
+          </div>
+
+          <figure class="rh-schematic" data-reveal style="--d: 260ms" aria-label="An AI agent request passes through Raho before it reaches the wallet and the blockchain.">
+            <div class="rh-schematic__grid" data-schematic>
+              <div class="rh-node rh-node--agent" data-node="agent">
+                <span class="rh-node__index">01</span>
+                <span class="rh-node__title">AI Agent</span>
+                <span class="rh-node__note">Proposes</span>
+              </div>
+              <div class="rh-wire rh-wire--v" data-wire="a"></div>
+
+              <div class="rh-term rh-term--stop" data-node="stop">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M8 8l8 8M16 8l-8 8" stroke="currentColor" stroke-width="1.5" /></svg>
+                <span>Stop</span>
+              </div>
+              <div class="rh-wire rh-wire--h rh-wire--left"></div>
+              <div class="rh-node rh-node--raho" data-node="raho">
+                <span class="rh-node__scan" aria-hidden="true"></span>
+                <span class="rh-node__index">02</span>
+                <span class="rh-node__title"><span class="rh-wordmark">raho</span></span>
+                <span class="rh-node__note">Firewall</span>
+                <span class="rh-node__stamp" data-stamp aria-hidden="true"></span>
+              </div>
+              <div class="rh-wire rh-wire--h rh-wire--right"></div>
+              <div class="rh-term rh-term--human" data-node="human">
+                <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="1.5" /><path d="M4 21c1.2-4.2 4.2-6 8-6s6.8 1.8 8 6" fill="none" stroke="currentColor" stroke-width="1.5" /></svg>
+                <span>You</span>
+              </div>
+
+              <div class="rh-wire rh-wire--v" data-wire="b"></div>
+              <div class="rh-node" data-node="wallet">
+                <span class="rh-node__index">03</span>
+                <span class="rh-node__title">Wallet</span>
+                <span class="rh-node__note">Signs</span>
+              </div>
+              <div class="rh-wire rh-wire--v" data-wire="c"></div>
+              <div class="rh-node" data-node="chain">
+                <span class="rh-node__index">04</span>
+                <span class="rh-node__title">Blockchain</span>
+                <span class="rh-node__note">Final</span>
+              </div>
+
+              <div class="rh-annot rh-annot--in" aria-hidden="true"><span>Untrusted</span></div>
+              <div class="rh-annot rh-annot--out" aria-hidden="true"><span>Only what passes</span></div>
+              <div class="rh-packet" data-packet aria-hidden="true"></div>
+            </div>
+            <figcaption class="rh-schematic__legend" aria-hidden="true">
+              <span class="rh-chip" data-d="ALLOW" data-legend="ALLOW">Allow</span>
+              <span class="rh-chip" data-d="REVIEW" data-legend="REVIEW">Review</span>
+              <span class="rh-chip" data-d="BLOCK" data-legend="BLOCK">Block</span>
+            </figcaption>
+          </figure>
+        </section>
+      </div>
+
+      <!-- Problem -->
+      <section id="problem" class="rh-band">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker">Why agents need a firewall</div>
+          <h2 class="rh-web-section rh-h2">Two ways to hand an agent a wallet. <br />Both break.</h2>
+          <div class="rh-routes" data-reveal style="--d: 120ms">
+            <div class="rh-route-col">
+              <div class="rh-route"><span class="rh-route__label">Route A</span><span class="rh-route__name">Give it the keys</span></div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">One bad output is final</h3>
+                <p class="rh-caption">A confused or manipulated agent can move anything. Onchain, there is no undo.</p>
+              </div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">No limits at all</h3>
+                <p class="rh-caption">Every asset, every contract, every amount. Forever.</p>
+              </div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">No record of intent</h3>
+                <p class="rh-caption">You see what happened. Never what it tried.</p>
+              </div>
+            </div>
+            <div class="rh-route-col">
+              <div class="rh-route"><span class="rh-route__label rh-route__label--alt">Route B</span><span class="rh-route__name">Sign everything yourself</span></div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">The agent waits on you</h3>
+                <p class="rh-caption">Every routine payment needs your click.</p>
+              </div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">Autonomy disappears</h3>
+                <p class="rh-caption">An agent that cannot act alone is only a suggestion.</p>
+              </div>
+              <div class="rh-panel" data-card>
+                <h3 class="rh-card-head">Fatigue wins</h3>
+                <p class="rh-caption">After the hundredth prompt, people approve without reading.</p>
+              </div>
+            </div>
+          </div>
+          <p class="rh-body rh-problem__verdict" data-reveal style="--d: 200ms">Raho is the third way: <br /><b>bounded authority, checked on every request.</b></p>
+        </div>
+      </section>
+
+      <!-- Flow -->
+      <section id="flow" class="rh-band rh-band--alt rh-grid-plate" style="--rh-clear: linear-gradient(to bottom, var(--rh-ground-alt) 0%, transparent 18%, transparent 82%, var(--rh-ground-alt) 100%)">
+        <div data-shimmer aria-hidden="true"></div>
+        <div class="rh-inner rh-inner--raised" data-reveal>
+          <div class="rh-kicker">How Raho decides</div>
+          <h2 class="rh-web-section rh-h2">Allow. Review. Block.</h2>
+          <div class="rh-flow" data-flow data-reveal style="--d: 120ms">
+            <div class="rh-flow__presets" role="group" aria-label="Send a sample request"></div>
+            <div class="rh-flow__track">
+              <div class="rh-flow__stage" data-stage="agent">
+                <span class="rh-dimension">Agent</span>
+                <strong class="rh-flow__value" data-flow-request>Transfer 50 USDC</strong>
+                <span class="rh-flow__sub" data-flow-agent>Payment Agent</span>
+              </div>
+              <div class="rh-flow__link" aria-hidden="true"><span></span></div>
+              <div class="rh-flow__stage rh-flow__stage--firewall" data-stage="firewall">
+                <span class="rh-dimension">Firewall</span>
+                <strong class="rh-flow__value">Decode</strong>
+                <span class="rh-flow__sub" data-flow-decoded>transfer()</span>
+              </div>
+              <div class="rh-flow__link" aria-hidden="true"><span></span></div>
+              <div class="rh-flow__stage rh-flow__stage--policy" data-stage="policy">
+                <span class="rh-dimension">Policy</span>
+                <ol class="rh-flow__checks" data-flow-checks></ol>
+              </div>
+              <div class="rh-flow__link" aria-hidden="true"><span></span></div>
+              <div class="rh-flow__stage rh-flow__stage--decision" data-stage="decision">
+                <span class="rh-dimension">Decision</span>
+                <span class="rh-flow__verdict" data-flow-verdict>Waiting</span>
+                <span class="rh-flow__sub rh-mono" data-flow-reason></span>
+              </div>
+              <div class="rh-flow__link rh-flow__link--gate" data-flow-gate aria-hidden="true"><span></span></div>
+              <div class="rh-flow__stage rh-flow__stage--wallet" data-stage="wallet">
+                <span class="rh-dimension">Wallet</span>
+                <strong class="rh-flow__value" data-flow-wallet>Closed</strong>
+                <span class="rh-flow__sub" data-flow-wallet-note>Nothing signed yet</span>
+              </div>
+            </div>
+            <p class="rh-flow__live rh-sr" aria-live="polite" data-flow-live></p>
+          </div>
+          <p class="rh-caption rh-flow__caption" data-reveal style="--d: 200ms">Checks run in order. The first hard stop ends it.</p>
+        </div>
+      </section>
+
+      <!-- Policy -->
+      <section id="policy" class="rh-band">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker">Policy controls</div>
+          <h2 class="rh-web-section rh-h2">Eight controls. One policy.</h2>
+          <ol class="rh-controls" data-controls data-reveal style="--d: 120ms">
+            <li class="rh-control" style="--i: 0"><span class="rh-control__n">01</span><span class="rh-control__name">Assets</span><span class="rh-control__value">USDC</span><span class="rh-chip" data-d="ALLOW">Allow</span></li>
+            <li class="rh-control" style="--i: 1"><span class="rh-control__n">02</span><span class="rh-control__name">Contracts</span><span class="rh-control__value">Unknown</span><span class="rh-chip" data-d="REVIEW">Review</span></li>
+            <li class="rh-control" style="--i: 2"><span class="rh-control__n">03</span><span class="rh-control__name">Functions</span><span class="rh-control__value rh-mono">upgrade()</span><span class="rh-chip" data-d="BLOCK">Block</span></li>
+            <li class="rh-control" style="--i: 3"><span class="rh-control__n">04</span><span class="rh-control__name">Recipients</span><span class="rh-control__value">Approved wallet</span><span class="rh-chip" data-d="ALLOW">Allow</span></li>
+            <li class="rh-control" style="--i: 4"><span class="rh-control__n">05</span><span class="rh-control__name">Per transaction</span><span class="rh-control__value rh-mono">$1,000</span><span class="rh-control__unit">Max</span></li>
+            <li class="rh-control" style="--i: 5"><span class="rh-control__n">06</span><span class="rh-control__name">Daily</span><span class="rh-control__value rh-mono">$500</span><span class="rh-control__unit">Max</span></li>
+            <li class="rh-control" style="--i: 6"><span class="rh-control__n">07</span><span class="rh-control__name">Sessions</span><span class="rh-control__value rh-mono">2h</span><span class="rh-control__unit">Expires</span></li>
+            <li class="rh-control" style="--i: 7"><span class="rh-control__n">08</span><span class="rh-control__name">Human approval</span><span class="rh-control__value rh-mono">&gt; $100</span><span class="rh-chip" data-d="REVIEW">Review</span></li>
+          </ol>
+
+          <div class="rh-split rh-limits" data-reveal style="--d: 180ms">
+            <div>
+              <h3 class="rh-subhead">Limits add up.</h3>
+              <p class="rh-caption rh-limits__note">A small request can still break the daily cap.</p>
+              <div class="rh-chart__legend">
+                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--spent"></span>Spent today</span>
+                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--request"></span>This request</span>
+                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--over"></span>Over limit</span>
+              </div>
+            </div>
+            <div class="rh-chart">
+              <div class="rh-chart__item">
+                <div class="rh-chart__row"><span class="rh-chart__name">Request $70</span><span class="rh-chip" data-d="ALLOW">Allow</span></div>
+                <div class="rh-chart__bar" role="img" aria-label="320 dollars spent today plus a 70 dollar request stays under the 500 dollar daily limit.">
+                  <div data-bar class="rh-seg--spent" style="width: 53.33%"></div>
+                  <div data-bar class="rh-seg--request" style="width: 11.67%; --d: 250ms"></div>
+                  <span class="rh-chart__limit" style="left: 83.33%"></span>
+                </div>
+              </div>
+              <div class="rh-chart__item">
+                <div class="rh-chart__row"><span class="rh-chart__name">Request $250</span><span class="rh-chip" data-d="BLOCK">Block</span></div>
+                <div class="rh-chart__bar" role="img" aria-label="320 dollars spent today plus a 250 dollar request passes the 500 dollar daily limit.">
+                  <div data-bar class="rh-seg--spent" style="width: 53.33%"></div>
+                  <div data-bar class="rh-seg--request" style="width: 30%; --d: 250ms"></div>
+                  <div data-bar class="rh-seg--over" style="width: 11.67%; --d: 500ms"></div>
+                  <span class="rh-chart__limit" style="left: 83.33%"></span>
+                </div>
+              </div>
+              <p class="rh-dimension rh-chart__axis"><span>$0</span><span class="rh-chart__axis-limit" style="left: 83.33%">$500 daily</span></p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Transaction preview -->
+      <section id="preview" class="rh-band rh-band--alt">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker">Transaction preview</div>
+          <h2 class="rh-web-section rh-h2">Every decision explained.</h2>
+          <div class="rh-preview" data-preview data-reveal style="--d: 120ms">
+            <div class="rh-seg rh-preview__tabs" role="group" aria-label="Example decision" data-preview-tabs>
+              <button type="button" data-d="ALLOW" aria-pressed="true">Allow</button>
+              <button type="button" data-d="REVIEW" aria-pressed="false">Review</button>
+              <button type="button" data-d="BLOCK" aria-pressed="false">Block</button>
+            </div>
+            <article class="rh-panel rh-preview__card" data-preview-card aria-live="polite"></article>
+          </div>
+        </div>
+      </section>
+
+      <!-- Human review -->
+      <section id="review" class="rh-band">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker">Human review</div>
+          <h2 class="rh-web-section rh-h2">Risky moves wait for you.</h2>
+          <div class="rh-review" data-reveal style="--d: 120ms">
+            <article class="rh-panel rh-panel--amber rh-review__card" data-review-card data-state="pending">
+              <div class="rh-review__head">
+                <span class="rh-kicker">Review request · Payment Agent</span>
+                <span class="rh-chip" data-d="pending" data-review-chip>Pending</span>
+              </div>
+              <h3 class="rh-review__title">500 USDC Transfer</h3>
+              <p class="rh-review__reason"><span aria-hidden="true">!</span>Amount exceeds automatic limit</p>
+              <dl class="rh-kv">
+                <div><dt>To</dt><dd>Approved Wallet</dd></div>
+                <div><dt>Function</dt><dd class="rh-mono">transfer()</dd></div>
+                <div><dt>Automatic limit</dt><dd class="rh-mono">$100</dd></div>
+              </dl>
+              <div class="rh-review__actions" data-review-actions>
+                <button type="button" class="rh-btn" data-review="approve">Approve</button>
+                <button type="button" class="rh-btn rh-btn--ghost" data-review="reject">Reject</button>
+              </div>
+              <div class="rh-review__result" data-review-result hidden>
+                <p data-review-outcome></p>
+                <button type="button" class="rh-link" data-review="reset">Show again</button>
+              </div>
+            </article>
+            <div class="rh-points">
+              <div class="rh-point"><h3 class="rh-card-head">The agent cannot approve itself.</h3><p class="rh-caption">Approval comes from you, on a separate path.</p></div>
+              <div class="rh-point"><h3 class="rh-card-head">Bound to one request.</h3><p class="rh-caption">Change the amount or target and it is checked again.</p></div>
+              <div class="rh-point"><h3 class="rh-card-head">Policy stays the same.</h3><p class="rh-caption">One approval never widens future permissions.</p></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Sessions -->
+      <section id="sessions" class="rh-band rh-band--alt rh-grid-plate" style="--rh-clear: linear-gradient(to bottom, var(--rh-ground-alt) 0%, transparent 22%, transparent 78%, var(--rh-ground-alt) 100%)">
+        <div class="rh-inner rh-inner--raised" data-reveal>
+          <div class="rh-kicker rh-kicker--cyan">Session permissions</div>
+          <h2 class="rh-web-section rh-h2">Temporary authority. <br />Never permanent.</h2>
+          <div class="rh-session" data-reveal style="--d: 120ms">
+            <article class="rh-panel rh-panel--cyan rh-session__card" data-session-card data-state="active">
+              <div class="rh-session__top">
+                <div>
+                  <span class="rh-dimension">Agent</span>
+                  <h3 class="rh-subhead">Research Agent</h3>
+                </div>
+                <span class="rh-chip" data-d="active" data-session-chip>Active</span>
+              </div>
+              <div class="rh-session__body">
+                <div class="rh-ring" aria-hidden="true">
+                  <svg viewBox="0 0 120 120"><circle class="rh-ring__track" cx="60" cy="60" r="52" /><circle class="rh-ring__fill" cx="60" cy="60" r="52" pathLength="100" data-session-ring /></svg>
+                  <div class="rh-ring__label"><span class="rh-mono" data-session-clock>2:00:00</span><span class="rh-dimension">Left</span></div>
+                </div>
+                <dl class="rh-kv rh-kv--stack">
+                  <div><dt>Assets</dt><dd>USDC</dd></div>
+                  <div><dt>Maximum</dt><dd class="rh-mono">$100</dd></div>
+                  <div><dt>Used</dt><dd class="rh-mono"><span data-session-used>$38</span><span class="rh-meter"><span style="width: 38%"></span></span></dd></div>
+                  <div><dt>Expires</dt><dd>2 hours</dd></div>
+                </dl>
+              </div>
+              <div class="rh-session__foot">
+                <p class="rh-session__rule" data-session-rule>New requests: <span class="rh-chip" data-d="ALLOW">Checked</span></p>
+                <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-session-toggle>Revoke session</button>
+              </div>
+            </article>
+            <ol class="rh-states">
+              <li><span class="rh-chip" data-d="active">Active</span><span>Scoped, capped, counting down.</span></li>
+              <li><span class="rh-chip" data-d="expired">Expired</span><span>Time is up. Requests block.</span></li>
+              <li><span class="rh-chip" data-d="revoked">Revoked</span><span>You ended it early.</span></li>
+              <li><span class="rh-chip" data-d="paused">Paused</span><span>The agent is on hold.</span></li>
+              <li class="rh-states__rule"><b>Only an active session can allow.</b></li>
+            </ol>
+          </div>
+        </div>
+      </section>
+
+      <!-- Keys vs sessions -->
+      <section id="keys" class="rh-band">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker">Keys versus sessions</div>
+          <h2 class="rh-web-section rh-h2">Give a budget, not your keys.</h2>
+          <div class="rh-table-scroll" data-reveal style="--d: 120ms">
+            <table class="rh-table rh-table--bare rh-compare">
+              <thead>
+                <tr>
+                  <th scope="col"><span class="rh-sr">Aspect</span></th>
+                  <th scope="col"><span class="rh-compare__them">A raw private key</span></th>
+                  <th scope="col"><span class="rh-compare__us"><span class="rh-wordmark">raho</span> session</span></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><th scope="row">Scope</th><td class="rh-compare__them">Everything in the wallet</td><td>Listed assets and contracts</td></tr>
+                <tr><th scope="row">Spending</th><td class="rh-compare__them">Unlimited</td><td>Capped per request and per day</td></tr>
+                <tr><th scope="row">Duration</th><td class="rh-compare__them">Forever</td><td>Expires on schedule</td></tr>
+                <tr><th scope="row">Sensitive actions</th><td class="rh-compare__them">Signed blindly</td><td>Sent to you first</td></tr>
+                <tr><th scope="row">Stopping it</th><td class="rh-compare__them">Move every asset</td><td>One click</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="rh-callout rh-callout--spaced" data-reveal style="--d: 200ms">Permission to request is not permission to execute.</div>
+        </div>
+      </section>
+
+      <!-- Emergency controls -->
+      <section id="control" class="rh-band rh-band--alt">
+        <div class="rh-inner" data-reveal>
+          <div class="rh-kicker rh-kicker--limit">Emergency controls</div>
+          <h2 class="rh-web-section rh-h2">One click stops everything.</h2>
+          <div class="rh-estatus" data-estatus data-reveal style="--d: 100ms" role="status" aria-live="polite">
+            <span class="rh-dimension">Firewall</span>
+            <span class="rh-estatus__value" data-estatus-value>Armed</span>
+            <span class="rh-estatus__detail" data-estatus-detail>Research Agent active · Session live · Limits default</span>
+          </div>
+          <div class="rh-emergency" data-reveal style="--d: 160ms">
+            <div class="rh-panel rh-ecard" data-card>
+              <div class="rh-ecard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5v14M16 5v14" stroke="currentColor" stroke-width="2" /></svg></div>
+              <h3 class="rh-card-head">Pause Agent</h3>
+              <p class="rh-caption">Stops new requests from one agent.</p>
+              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="pause" aria-pressed="false">Pause agent</button>
+            </div>
+            <div class="rh-panel rh-ecard" data-card>
+              <div class="rh-ecard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2" /><path d="M6.5 17.5l11-11" stroke="currentColor" stroke-width="2" /></svg></div>
+              <h3 class="rh-card-head">Revoke Session</h3>
+              <p class="rh-caption">Ends its current authority now.</p>
+              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="revoke" aria-pressed="false">Revoke session</button>
+            </div>
+            <div class="rh-panel rh-panel--limit rh-ecard rh-ecard--lock" data-card="limit">
+              <div class="rh-ecard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><rect x="5" y="10.5" width="14" height="10" rx="1.5" fill="none" stroke="currentColor" stroke-width="2" /><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5" fill="none" stroke="currentColor" stroke-width="2" /></svg></div>
+              <h3 class="rh-card-head">Emergency Lock</h3>
+              <p class="rh-caption">Blocks every agent at once.</p>
+              <button type="button" class="rh-btn rh-btn--danger rh-btn--sm" data-emergency="lock" aria-pressed="false">Engage lock</button>
+            </div>
+            <div class="rh-panel rh-ecard" data-card>
+              <div class="rh-ecard__icon" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M4.5 12a7.5 7.5 0 1 0 2.2-5.3" fill="none" stroke="currentColor" stroke-width="2" /><path d="M4 4v4h4" fill="none" stroke="currentColor" stroke-width="2" /></svg></div>
+              <h3 class="rh-card-head">Reset Limits</h3>
+              <p class="rh-caption">Restores conservative defaults.</p>
+              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="reset">Reset limits</button>
+            </div>
+          </div>
+          <p class="rh-dimension rh-emergency__note" data-reveal style="--d: 220ms">Demo controls · The agent cannot undo them</p>
+        </div>
+      </section>
+
+      <!-- Start -->
+      <section id="start" class="rh-band rh-grid-plate" style="--rh-clear: linear-gradient(to top, transparent 40%, var(--rh-ground) 100%)">
+        <div data-shimmer aria-hidden="true"></div>
+        <div class="rh-inner rh-inner--raised" data-reveal>
+          <div class="rh-kicker">Start here</div>
+          <h2 class="rh-web-hero rh-h2 rh-start__title">Control what your agent can do.</h2>
+          <div class="rh-start__dim" data-reveal style="--d: 120ms">
+            <div class="rh-dim"><div class="rh-dim__span"></div><span class="rh-dim__label">Not a wallet · Not custody · A policy layer</span></div>
+          </div>
+          <div class="rh-cards" data-reveal style="--d: 180ms">
+            <div class="rh-panel" data-card><div class="rh-kicker">01 · Set rules</div><p class="rh-body rh-card-body">Assets, contracts, functions and limits.</p></div>
+            <div class="rh-panel" data-card><div class="rh-kicker">02 · Open a session</div><p class="rh-body rh-card-body">Scoped, capped and set to expire.</p></div>
+            <div class="rh-panel rh-panel--cyan" data-card="cyan"><div class="rh-kicker rh-kicker--cyan">03 · Let it work</div><p class="rh-body rh-card-body">Routine moves pass. Risky ones wait for you.</p></div>
+          </div>
+          <div class="rh-start__cta" data-reveal style="--d: 240ms">
+            <a class="rh-btn" href="/app">Open App</a>
+            <p class="rh-dimension" data-deploy-status>Demo mode · Contracts not deployed yet</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="rh-band rh-band--alt rh-footer">
+      <div class="rh-inner rh-split" data-reveal>
+        <div>
+          <div class="rh-kicker">Status</div>
+          <p class="rh-body rh-footer__status" data-footer-status>Contracts are not deployed yet. <br />The app runs on local demo data.</p>
+          <div class="rh-footer__links">
+            <a class="rh-link" href="/app">Open App →</a>
+            <a class="rh-link" href="#top">Back to top ↑</a>
+          </div>
+        </div>
+        <div class="rh-titleblock">
+          <div class="rh-titleblock__firm">
+            <div class="rh-titleblock__brand">
+              <svg viewBox="0 0 100 50" width="36" height="18" aria-hidden="true"><path class="rh-mark__chevron" d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z" /><path class="rh-mark__gate" d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z" /></svg>
+              <span class="rh-wordmark">raho</span>
+            </div>
+            <div class="rh-dimension">Agent wallet firewall</div>
+          </div>
+          <div class="rh-titleblock__project">
+            <div class="rh-dimension">Project</div>
+            <div class="rh-titleblock__projectname">Landing</div>
+          </div>
+          <dl class="rh-titleblock__cells">
+            <div class="rh-titleblock__cell"><dt>Sheet</dt><dd>01 / 02</dd></div>
+            <div class="rh-titleblock__cell rh-titleblock__cell--rev"><dt>Rev</dt><dd>A</dd></div>
+            <div class="rh-titleblock__cell"><dt>Date</dt><dd>26 SEP 26</dd></div>
+          </dl>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
