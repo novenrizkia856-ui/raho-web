@@ -2,7 +2,7 @@
 
 Static frontend for **Raho**, the firewall between AI agents and your wallet.
 
-- `index.html` is the landing page.
+- `index.html` is the landing page: the architecture reference file itself, with its stylesheet kept verbatim and only the words, logo and Raho demos changed.
 - `app.html` (served at `/app`) is the control center: overview, agents, policies, sessions, activity, approvals, emergency controls and settings.
 
 Vite and TypeScript, no framework, no backend. Everything runs in the browser.
@@ -61,10 +61,10 @@ index.html, app.html     page shells
 public/                  favicon, font, boot.js (sets motion and colour mode before paint)
 src/config/              chain and contract configuration
 src/lib/                 domain logic and adapters, no DOM
-src/shared/              DOM helpers, motion, theme, token address field
-src/landing/             landing interactions: schematic, decision flow, preview, demos
+src/shared/              DOM helpers, formatting, theme
+src/landing/main.ts      landing runtime: reveal, shimmer, jump rail, menu, Drawing mode, demos
 src/app/                 control center shell, actions, simulator, views/
-src/styles/              tokens.css, base.css, landing.css, app.css
+src/styles/              tokens.css, base.css, app.css (the landing keeps its own inline stylesheet)
 tools/check-copy.mjs     copy audit
 test/engine.test.ts      engine, adapter and config tests
 ```

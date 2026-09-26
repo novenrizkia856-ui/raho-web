@@ -1,397 +1,381 @@
-<!doctype html>
-<html lang="en" data-mode="blueprint">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Raho · The firewall between AI agents and your wallet</title>
-    <meta name="description" content="Raho checks every AI agent transaction against your rules. Allow, review or block before the wallet signs." />
-    <meta name="theme-color" content="#0d1524" />
-    <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="Raho" />
-    <meta property="og:title" content="Raho · The firewall between AI agents and your wallet" />
-    <meta property="og:description" content="Every transaction checked against your rules. Allow. Review. Block." />
-    <meta name="twitter:card" content="summary" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preload" href="/fonts/figtree-600-latin.woff2" as="font" type="font/woff2" crossorigin />
-    <script src="/boot.js"></script>
-    <script type="module" src="/src/landing/main.ts"></script>
-  </head>
-  <body>
-    <a class="rh-skip" href="#main">Skip to content</a>
+<!DOCTYPE html>
+<html lang=en data-mode=blueprint style=--arc-header-h:76px>
+<head>
+<meta charset=utf-8>
+<meta name=viewport content="width=device-width, initial-scale=1">
+<title>Raho · The firewall between AI agents and your wallet</title>
+<meta name=description content="Raho sits between an AI agent and its wallet. Every transaction is checked against your rules: allow, review or block.">
+<meta name=theme-color content=#0D1524>
+<meta property=og:type content=website>
+<meta property=og:site_name content=Raho>
+<meta property=og:title content="Raho · The firewall between AI agents and your wallet">
+<meta property=og:description content="Every transaction checked against your rules. Allow. Review. Block.">
+<meta name=twitter:card content=summary>
+<link rel=icon href=/favicon.svg type=image/svg+xml>
+<style>:root{--arc-ground:#0D1524;--arc-panel:#16223A;--arc-ink:#EDF2F9;--arc-body:#A9B8CD;--arc-muted:#8195B2;--arc-faint:#808B9F;--arc-rule:#3E4C66;--arc-rule-soft:rgba(129,149,178,.18);--arc-zebra:rgba(129,149,178,.06);--arc-amber:#F2A93B;--arc-cyan:#59C3E8;--arc-limit:#E4573D;--arc-limit-wash:rgba(228,87,61,.12);--arc-sans:ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;--arc-mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;--arc-size-display:92px;--arc-size-hero:68px;--arc-size-section:50px;--arc-size-subhead:25px;--arc-size-card:21px;--arc-size-body:19px;--arc-size-caption:15px;--arc-size-kicker:13px;--arc-size-dimension:12px;--arc-canvas-w:1280px;--arc-canvas-h:720px;--arc-margin:96px;--arc-band:1088px;--arc-col-2:528px;--arc-col-3:340px;--arc-col-4:254px;--arc-radius:14px;--arc-radius-sm:10px}body{background:var(--arc-ground);font-family:var(--arc-sans)}.arc-subhead{font-size:var(--arc-size-subhead);font-weight:800;line-height:1.2;color:var(--arc-ink)}.arc-card-head{font-size:var(--arc-size-card);font-weight:700;line-height:1.2;color:var(--arc-ink)}.arc-body{font-size:var(--arc-size-body);font-weight:400;line-height:1.55;color:var(--arc-body)}.arc-caption{font-weight:400;line-height:1.5;color:var(--arc-muted)}.arc-kicker{font-family:var(--arc-mono);font-size:var(--arc-size-kicker);font-weight:600;letter-spacing:2.4px;text-transform:uppercase;color:var(--arc-amber)}.arc-kicker--delivery{color:var(--arc-cyan)}.arc-dimension{font-family:var(--arc-mono);font-size:var(--arc-size-dimension);font-weight:500;letter-spacing:1.2px;text-transform:uppercase;color:var(--arc-muted)}.arc-panel{background:var(--arc-panel);border:1px solid var(--arc-rule-soft);border-radius:var(--arc-radius);padding:28px}.arc-panel--definition{border:2px solid var(--arc-amber)}.arc-panel--delivery{border:2px solid var(--arc-cyan)}.arc-callout{background:var(--arc-limit-wash);border:1px solid var(--arc-limit);border-radius:var(--arc-radius-sm);padding:18px 28px}.arc-table{width:100%;border-collapse:collapse;font-size:16px;color:var(--arc-body);border-radius:12px;overflow:hidden}.arc-table th{background:var(--arc-amber);color:var(--arc-ground);font-weight:700;text-align:left;padding:14px 18px}.arc-table td{padding:14px 18px;border-top:1px solid var(--arc-rule-soft)}.arc-table tbody tr:nth-child(2n){background:var(--arc-zebra)}.arc-dim{position:relative;padding:28px 0 24px;text-align:center}.arc-dim__figure{display:block;margin-bottom:12px;font-family:var(--arc-mono);font-size:26px;font-weight:700;letter-spacing:-.5px;color:var(--arc-amber)}.arc-dim__span{position:relative;height:1.5px;background:var(--arc-ink)}.arc-dim__span:before,.arc-dim__span:after{content:"";position:absolute;top:-24px;width:1.5px;height:48px;background:var(--arc-ink)}.arc-dim__span:before{left:0}.arc-dim__span:after{right:0}.arc-dim__label{display:block;margin-top:14px;font-family:var(--arc-mono);font-size:var(--arc-size-dimension);font-weight:500;letter-spacing:1.4px;text-transform:uppercase;color:var(--arc-muted)}.arc-titleblock{display:grid;border:1.5px solid var(--arc-ink);background:var(--arc-panel);max-width:480px}.arc-titleblock__firm{grid-column:1;padding:16px 20px;border-bottom:1.5px solid var(--arc-ink)}.arc-titleblock__project{grid-column:1;padding:12px 20px 16px}.arc-titleblock__cells{grid-column:2;grid-row:1/span 2;border-left:1.5px solid var(--arc-ink)}.arc-titleblock__cell{padding:8px 16px;border-bottom:1.5px solid var(--arc-ink)}.arc-titleblock__cell:last-child{border-bottom:0}.arc-titleblock__cell dt{font-family:var(--arc-mono);font-size:9px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--arc-muted)}.arc-titleblock__cell dd{margin:2px 0 0;font-family:var(--arc-mono);font-size:13px;font-weight:600;color:var(--arc-ink)}.arc-titleblock__cell--rev dd{color:var(--arc-amber)}@keyframes arc-draw-in{to{stroke-dashoffset:0}}@keyframes arc-dash-march{to{stroke-dashoffset:-28}}:root{--arc-ground-alt:#0B1220;--arc-header:rgba(13,21,36,.88);--arc-rework:#B4584A;--arc-cyan-soft:rgba(89,195,232,.4);--arc-wordmark:Figtree,ui-sans-serif,system-ui,sans-serif;--arc-wordmark-weight:600;--arc-wordmark-tracking:-.5px;--arc-web-display:clamp(40px,7vw,76px);--arc-web-hero:clamp(36px,5.5vw,56px);--arc-web-section:clamp(30px,4vw,42px);--arc-web-subhead:25px;--arc-web-card:21px;--arc-web-body:18px;--arc-web-caption:15px;--arc-web-kicker:12px;--arc-web-dim:11px;--arc-band-web:1120px;--arc-gutter:32px;--arc-section-gap:96px}.arc-wordmark{font-family:var(--arc-wordmark);font-weight:var(--arc-wordmark-weight);letter-spacing:var(--arc-wordmark-tracking);color:var(--arc-ink)}.arc-web-display{font-size:var(--arc-web-display);font-weight:900;line-height:1.02;letter-spacing:-2px;color:var(--arc-ink)}.arc-web-hero{font-size:var(--arc-web-hero);font-weight:900;line-height:1.06;letter-spacing:-1.6px;color:var(--arc-ink)}.arc-web-section{font-size:var(--arc-web-section);font-weight:800;line-height:1.1;letter-spacing:-1px;color:var(--arc-ink)}.arc-section-band{border-top:1px solid var(--arc-rule)}.arc-section-band--alt{background:var(--arc-ground-alt)}.arc-section-inner{max-width:var(--arc-band-web);margin:0 auto;padding:var(--arc-section-gap) var(--arc-gutter)}.arc-btn{display:inline-block;font-family:var(--arc-mono);font-size:13px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;padding:17px 30px;border-radius:2px;border:0;cursor:pointer;background:var(--arc-amber);color:var(--arc-ground);transition:background .2s ease,color .2s ease}.arc-btn:hover{background:var(--arc-ink)}.arc-btn--ghost{background:transparent;color:var(--arc-ink);border:1.5px solid var(--arc-ink);padding:15.5px 28.5px}.arc-btn--ghost:hover{background:var(--arc-ink);color:var(--arc-ground)}.arc-btn:focus-visible,.arc-link:focus-visible{outline:2px solid var(--arc-amber);outline-offset:3px}.arc-link{font-family:var(--arc-mono);font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--arc-cyan);text-decoration:none;border-bottom:1px solid var(--arc-cyan-soft);padding-bottom:3px}.arc-link:hover{color:var(--arc-ink);border-bottom-color:var(--arc-ink)}.arc-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px}.arc-cards--2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}.arc-split{display:grid;gap:48px 64px}.arc-split>*{min-width:0}.arc-table-scroll{overflow-x:auto}.arc-table-scroll>.arc-table{min-width:640px}body{margin:0}@font-face{font-family:Figtree;font-style:normal;font-weight:600;src:url(data:font/woff2;base64,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)format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}.arc-titleblock__brand{display:flex;flex-wrap:wrap;min-width:0;align-items:center;gap:10px}.arc-titleblock__projectname{font-size:14px;font-weight:700;color:var(--arc-ink);margin-top:2px}.arc-header{position:sticky;top:0;z-index:10;background:var(--arc-header);backdrop-filter:blur(10px);border-bottom:1px solid var(--arc-rule-soft)}.arc-header__inner{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding-block:14px}.arc-header__inner nav{display:flex;gap:20px;flex-wrap:wrap}.arc-kicker--muted{color:var(--arc-muted)}.arc-routes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,360px),1fr));gap:28px}.arc-route-col{display:flex;flex-direction:column;gap:14px;min-width:0}.arc-route{display:flex;align-items:baseline;gap:12px;padding-bottom:12px;border-bottom:1.5px solid var(--arc-ink)}.arc-route__label{font-family:var(--arc-mono);font-size:11px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--arc-faint)}.arc-route__label--alt{color:var(--arc-amber)}.arc-route__name{font-size:19px;font-weight:800;letter-spacing:-.4px;color:var(--arc-ink)}.arc-chart__legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-family:var(--arc-mono);font-size:11px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--arc-muted)}.arc-chart__key{display:flex;align-items:center;gap:8px}.arc-chart__swatch{width:12px;height:12px;display:inline-block;flex-shrink:0}.arc-chart__row{display:flex;justify-content:space-between;align-items:baseline;gap:16px}.arc-chart__name{font-size:17px;font-weight:700;color:var(--arc-ink)}.arc-chart__total{font-family:var(--arc-mono);font-size:15px;color:var(--arc-muted)}.arc-chart__bar{display:flex;height:34px;margin-top:10px;border-radius:2px;overflow:hidden;background:var(--arc-zebra)}.arc-chart__inline{display:flex;align-items:center;padding-left:14px;font-family:var(--arc-mono);font-size:15px;font-weight:700;color:var(--arc-cyan);white-space:nowrap}.arc-seg--definition{background:var(--arc-amber)}.arc-seg--build{background:var(--arc-cyan)}.arc-seg--rework{background:var(--arc-rework)}.arc-table--bare th{background:transparent;color:var(--arc-muted);padding:0 18px 14px}.arc-table--bare tbody tr:nth-child(2n){background:transparent}.arc-thead--them{font-family:var(--arc-mono);font-size:12px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--arc-muted)}.arc-thead--us{font-size:15px;color:var(--arc-amber)}.arc-table td:first-child{color:var(--arc-ink);font-weight:700}.arc-table tbody th{background:transparent;color:var(--arc-ink);font-weight:700;text-align:left;padding:14px 18px;border-top:1px solid var(--arc-rule-soft)}.arc-cell--them{color:var(--arc-muted)}.arc-cell--us{color:var(--arc-ink)}.arc-cell--definition,.arc-cell--delivery{font-family:var(--arc-mono);font-size:14px}.arc-cell--definition{color:var(--arc-amber)}.arc-cell--delivery{color:var(--arc-cyan)}.arc-header__inner .arc-btn{font-size:12px;letter-spacing:1.4px;padding:12px 20px}.arc-header__inner .arc-btn--ghost{font-size:11px;padding:10px 14px}.arc-footer__links{display:flex;flex-wrap:wrap;gap:28px;margin-top:24px}:root{--arc-header-h:76px}section.arc-section-band{min-height:62vh;box-sizing:border-box;scroll-margin-top:var(--arc-header-h);display:flex;align-items:center}section.arc-section-band>.arc-section-inner{padding-block:clamp(96px,11vh,132px)}section.arc-section-band>.arc-section-inner{width:100%;min-width:0}.arc-hero-band{min-height:calc(100vh - var(--arc-header-h));box-sizing:border-box;display:flex;flex-direction:column;justify-content:center}html{scroll-behavior:smooth}@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}.arc-jump{position:fixed;right:28px;top:50%;transform:translateY(-50%);z-index:15;display:grid;gap:3px;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .2s ease,visibility .2s ease}.arc-jump a{display:flex;align-items:center;justify-content:flex-end;gap:10px;padding:3px 0;text-decoration:none}.arc-jump__label{font-family:var(--arc-mono);font-size:10px;font-weight:600;letter-spacing:1.4px;text-transform:uppercase;color:var(--arc-faint);transition:color .2s ease}.arc-jump__tick{width:16px;height:1.5px;background:var(--arc-rule);transition:width .2s ease,background .2s ease}.arc-jump a[aria-current] .arc-jump__label{color:var(--arc-amber)}.arc-jump a[aria-current] .arc-jump__tick{width:30px;background:var(--arc-amber)}@media (max-width:1410px){.arc-jump{right:18px}.arc-jump__label{display:none}}@media (max-width:1220px){.arc-jump{display:none}}@media (prefers-reduced-motion:reduce){.arc-jump,.arc-jump *{transition:none}}.arc-btn{text-decoration:none}.arc-callout--spaced{margin-top:32px}.arc-titleblock{grid-template-columns:minmax(0,1fr) clamp(110px,38%,180px)}.arc-hero-split{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,560px),1fr));gap:48px 64px}.arc-hero-split>*{min-width:0}.arc-navlink{font-family:var(--arc-mono);font-size:12px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;color:var(--arc-body);text-decoration:none}.arc-navlink:hover{color:var(--arc-ink)}.arc-navlink:focus-visible{outline:2px solid var(--arc-amber);outline-offset:3px}.arc-mode-toggle{border-color:var(--arc-rule);color:var(--arc-body)}.arc-mode-toggle:hover{background:transparent;border-color:var(--arc-ink);color:var(--arc-ink)}.arc-btn{line-height:normal}.arc-header__mark{display:inline-flex}@keyframes arc-arrow-arrive{0%{transform:translate(-56px);opacity:0}12%{transform:translate(-46px);opacity:1}to{transform:translate(0);opacity:1}}[data-logo-arrive]{position:relative;display:inline-flex}[data-logo-caret-top]{position:absolute;left:0;top:0;display:inline-flex;pointer-events:none}[data-logo-arrive] svg g path:nth-of-type(2){animation:arc-arrow-arrive 1.1s cubic-bezier(.22,1,.36,1)1 both}[data-logo-caret-top] svg g path:nth-of-type(2){animation:none!important;opacity:0!important}@media (prefers-reduced-motion:reduce){[data-logo-arrive] svg g path:nth-of-type(2){animation:none}}@media (min-width:900px){.arc-header__menu{display:contents}.arc-header__menu nav{order:1;margin-left:auto}.arc-header__mode{display:contents}.arc-mode-toggle{order:2}.arc-header__mode-label{display:none}.arc-header__cta{order:3}.arc-header__cta-short{display:none}}@media (max-width:899.98px){.arc-header__inner{gap:0 14px;padding-block:10px}.arc-header__cta{margin-left:auto}.arc-header__cta-long{display:none}.arc-header[data-menu] .arc-header__burger{display:inline-flex;align-items:center;justify-content:center;width:40px;height:38px;padding:0;background:transparent;border:1px solid var(--arc-rule);color:var(--arc-body);cursor:pointer}.arc-header__burger:hover{border-color:var(--arc-ink);color:var(--arc-ink)}.arc-header__burger:focus-visible{outline:2px solid var(--arc-amber);outline-offset:2px}.arc-header__menu{flex:0 0 100%;gap:4px;margin-top:10px;padding-top:14px;border-top:1px solid var(--arc-rule-soft)}.arc-header[data-menu=closed] .arc-header__menu{display:none}.arc-header__menu nav{flex-direction:column;gap:0}.arc-header__menu .arc-navlink{padding:13px 0}.arc-header__mode{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-top:6px;padding-top:14px;border-top:1px solid var(--arc-rule-soft)}.arc-header__mode-label{color:var(--arc-faint)}}.arc-split{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}@media (max-width:380px){.arc-header__inner{gap:0 10px;padding-inline:20px}.arc-header__mark svg{width:46px;height:23px}.arc-header__inner .arc-btn{padding:12px;letter-spacing:1px}.arc-header[data-menu] .arc-header__burger{width:36px}}:root{--arc-grid:rgba(129,149,178,.13);--arc-grid-fine:rgba(129,149,178,.05)}.arc-grid-plate{position:relative}.arc-grid-plate--hero{background-image:radial-gradient(ellipse 62% 70%at 28% 48%,var(--arc-ground) 0%,var(--arc-ground) 38%,transparent 100%),linear-gradient(to bottom,transparent 45%,var(--arc-ground) 100%),linear-gradient(var(--arc-grid) 1px,transparent 1px),linear-gradient(90deg,var(--arc-grid) 1px,transparent 1px);background-size:100% 100%,100% 100%,56px 56px,56px 56px;background-position:center top}.arc-grid-plate--method{background-image:linear-gradient(to bottom,var(--arc-ground-alt) 0%,transparent 18%,transparent 82%,var(--arc-ground-alt) 100%),linear-gradient(var(--arc-grid) 1px,transparent 1px),linear-gradient(90deg,var(--arc-grid) 1px,transparent 1px),linear-gradient(var(--arc-grid-fine) 1px,transparent 1px),linear-gradient(90deg,var(--arc-grid-fine) 1px,transparent 1px);background-size:100% 100%,56px 56px,56px 56px,14px 14px,14px 14px;background-position:center}.arc-grid-plate--start{background-image:linear-gradient(to top,transparent 40%,var(--arc-ground) 100%),linear-gradient(var(--arc-grid) 1px,transparent 1px),linear-gradient(90deg,var(--arc-grid) 1px,transparent 1px),linear-gradient(var(--arc-grid-fine) 1px,transparent 1px),linear-gradient(90deg,var(--arc-grid-fine) 1px,transparent 1px);background-size:100% 100%,56px 56px,56px 56px,14px 14px,14px 14px;background-position:center bottom}@keyframes arc-shimmer{0%{transform:translate(-60%);opacity:0}12%{opacity:1}88%{opacity:1}to{transform:translate(160%);opacity:0}}[data-shimmer]{position:absolute;inset:0;overflow:hidden;pointer-events:none}[data-shimmer]:before{content:"";position:absolute;top:0;bottom:0;left:0;width:60%;transform:translate(-60%);opacity:0;background:linear-gradient(100deg,transparent 0%,var(--arc-cyan-soft) 45%,var(--arc-amber) 52%,var(--arc-cyan-soft) 58%,transparent 100%);mask-image:linear-gradient(var(--arc-mask) 1px,transparent 1px),linear-gradient(90deg,var(--arc-mask) 1px,transparent 1px);mask-size:56px 56px;mask-position:center top;--arc-mask:#000}[data-shimmer]:after{content:"";position:absolute;inset:0;background-image:var(--arc-clear);background-size:100% 100%;opacity:.55}[data-shimmer].arc-run:before{animation:arc-shimmer 2.6s cubic-bezier(.4,0,.2,1)1}.js [data-reveal]{transition:opacity .7s cubic-bezier(.2,.7,.2,1),transform .7s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}.js [data-reveal].arc-in{opacity:1;transform:none}.js [data-bar]{transform-origin:left center;transition:transform 1.1s cubic-bezier(.2,.7,.2,1);transition-delay:var(--d,0ms)}.js .arc-in [data-bar]{transform:scaleX(1)}.js [data-bar-label]{transition:opacity .5s ease 1.1s}.js .arc-in [data-bar-label]{opacity:1}[data-card]{transition:border-color .22s ease,box-shadow .22s ease,transform .22s ease}[data-card]:hover{border-color:var(--arc-cyan-soft);box-shadow:inset 0 0 0 1px var(--arc-cyan-soft);transform:translateY(-2px)}[data-card=amber]:hover{border-color:var(--arc-amber);box-shadow:inset 0 0 0 1px var(--arc-amber)}[data-card=cyan]:hover{border-color:var(--arc-cyan);box-shadow:inset 0 0 0 1px var(--arc-cyan)}@media (prefers-reduced-motion:reduce){[data-shimmer]{display:none}[data-reveal],[data-bar],[data-bar-label],[data-card]{transition:none!important;opacity:1!important;transform:none!important}}</style>
+<style>
+/* Raho additions to the reference stylesheet: runtime states the saved copy lost, the Drawing mode, and the few Raho only elements. */
+.js [data-reveal]:not(.arc-in){opacity:0;transform:translateY(16px)}
+.js [data-bar]{transform:scaleX(0)}
+.js [data-bar-label]{opacity:0}
+.arc-jump.is-visible{opacity:1;visibility:visible;pointer-events:auto}
+.arc-header__burger svg{display:block}
+html[data-mode=drawing]{--arc-ground:#F4F1E9;--arc-ground-alt:#ECE8DD;--arc-panel:#FBFAF5;--arc-ink:#0F1A2E;--arc-body:#34425A;--arc-muted:#56647C;--arc-faint:#667085;--arc-rule:#B5AE9E;--arc-rule-soft:rgba(15,26,46,.14);--arc-zebra:rgba(15,26,46,.04);--arc-amber:#A85F00;--arc-cyan:#0B6F93;--arc-cyan-soft:rgba(11,111,147,.4);--arc-limit:#C23A24;--arc-limit-wash:rgba(194,58,36,.1);--arc-rework:#C9705F;--arc-header:rgba(244,241,233,.9);--arc-grid:rgba(15,26,46,.09);--arc-grid-fine:rgba(15,26,46,.035);color-scheme:light}
+html[data-mode=drawing] .arc-table th{color:#fff}
+.arc-cell--block{font-family:var(--arc-mono);font-size:14px;color:var(--arc-limit)}
+button.arc-link{background:none;border:0;border-bottom:1px solid var(--arc-cyan-soft);padding:0 0 3px;cursor:pointer}
+button.arc-link--limit{color:var(--arc-limit);border-bottom-color:var(--arc-limit-wash)}
+button.arc-link[aria-pressed=true]{color:var(--arc-amber);border-bottom-color:var(--arc-amber)}
+.arc-panel[data-state=on]{border-color:var(--arc-amber);box-shadow:inset 0 0 0 1px var(--arc-amber)}
+.arc-panel[data-state=locked]{border-color:var(--arc-limit);background:var(--arc-limit-wash)}
+.arc-panel[data-review=approved]{border-color:var(--arc-cyan)}
+.arc-panel[data-review=rejected]{border-color:var(--arc-limit)}
+.arc-actions{display:flex;flex-wrap:wrap;gap:20px}
+/* Token contract address: one title block cell */
+.arc-ca{position:relative;display:inline-grid;grid-template-columns:auto auto;align-items:stretch;margin-top:32px;border:1.5px solid var(--arc-ink);background:var(--arc-panel);max-width:100%}
+.arc-ca__cell{padding:8px 16px;min-width:0}
+.arc-ca__cell dt{font-family:var(--arc-mono);font-size:9px;font-weight:500;letter-spacing:1.6px;text-transform:uppercase;color:var(--arc-muted)}
+.arc-ca__cell dd{margin:2px 0 0;font-family:var(--arc-mono);font-size:13px;font-weight:600;color:var(--arc-ink);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.arc-ca__copy{border:0;border-left:1.5px solid var(--arc-ink);background:transparent;padding:0 18px;font-family:var(--arc-mono);font-size:11px;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--arc-body);cursor:pointer;transition:color .2s ease,background .2s ease}
+.arc-ca__copy:hover{background:var(--arc-ink);color:var(--arc-ground)}
+.arc-ca__copy:focus-visible{outline:2px solid var(--arc-amber);outline-offset:3px}
+.arc-ca__status{position:absolute;left:0;top:calc(100% + 8px);font-family:var(--arc-mono);font-size:11px;letter-spacing:1.2px;text-transform:uppercase;color:var(--arc-amber);opacity:0;transition:opacity .25s ease}
+.arc-ca__status.is-shown{opacity:1}
+/* Hero dimension line doubles as the request path */
+.arc-dim__gate{position:absolute;left:40%;top:-6px;width:13px;height:13px;margin-left:-6.5px;border:2px solid var(--arc-amber);background:var(--arc-ground);transition:border-color .25s ease,background .25s ease,box-shadow .25s ease}
+.arc-dim__gate[data-d=ALLOW]{border-color:var(--arc-cyan);box-shadow:0 0 0 5px rgba(89,195,232,.18)}
+.arc-dim__gate[data-d=REVIEW]{background:var(--arc-amber);box-shadow:0 0 0 5px rgba(242,169,59,.18)}
+.arc-dim__gate[data-d=BLOCK]{border-color:var(--arc-limit);background:var(--arc-limit);box-shadow:0 0 0 5px var(--arc-limit-wash)}
+.arc-dim__dot{position:absolute;left:0;top:-4.25px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:var(--arc-ink);opacity:0;z-index:1}
+.arc-dim__dot[data-d=ALLOW]{background:var(--arc-cyan)}
+.arc-dim__dot[data-d=REVIEW]{background:var(--arc-amber)}
+.arc-dim__dot[data-d=BLOCK]{background:var(--arc-limit)}
+.arc-dim__figure [data-d=ALLOW]{color:var(--arc-cyan)}
+.arc-dim__figure [data-d=BLOCK]{color:var(--arc-limit)}
+.arc-dim__figure .arc-dim__req{color:var(--arc-ink)}
+.arc-dim__remain{position:absolute;left:0;top:0;bottom:0;width:100%;background:var(--arc-amber);transform-origin:left center;transition:transform 1s linear}
+@media (max-width:480px){[data-hero-path] .arc-dim__figure{font-size:17px;white-space:nowrap}}
+@media (prefers-reduced-motion:reduce){.arc-dim__gate,.arc-dim__remain{transition:none}}
+</style>
+<script src=/boot.js></script>
+<script type=module src=/src/landing/main.ts></script>
+</head>
+<body class=arc-body>
+<header class=arc-header data-menu=closed>
+ <div class="arc-section-inner arc-header__inner">
+  <a class=arc-header__mark href=/ aria-label="Raho home">
+   <span data-logo-arrive>
+    <svg viewBox="0 0 100 50" width=62 height=31 role=img aria-label=Raho><g><path fill=var(--arc-amber) d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z"></path><path fill=var(--arc-cyan) d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z"></path></g></svg>
+    <span data-logo-caret-top aria-hidden=true><svg viewBox="0 0 100 50" width=62 height=31><g><path fill=var(--arc-amber) d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z"></path><path fill=var(--arc-cyan) d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z"></path></g></svg></span>
+   </span>
+  </a>
+  <a href=/app class="arc-btn arc-header__cta"><span class=arc-header__cta-long>Open the app</span><span class=arc-header__cta-short>Open app</span></a>
+  <button type=button class=arc-header__burger id=arc-menu-toggle aria-controls=arc-menu aria-expanded=false aria-label="Open menu"><svg width=18 height=12 viewBox="0 0 18 12" aria-hidden=true><path d="M0 1h18M0 6h18M0 11h18" stroke=currentColor stroke-width=1.5 /></svg></button>
+  <div class=arc-header__menu id=arc-menu>
+   <nav aria-label=Main>
+    <a class=arc-navlink href=#flow>Flow</a>
+    <a class=arc-navlink href=#policy>Policy</a>
+    <a class=arc-navlink href=#control>Control</a>
+    <a class=arc-navlink href=/app>App</a>
+   </nav>
+   <div class=arc-header__mode>
+    <span class="arc-dimension arc-header__mode-label">MODE</span>
+    <button type=button class="arc-btn arc-btn--ghost arc-mode-toggle" id=arc-mode-toggle aria-label="Switch to drawing (light) mode">Drawing</button>
+   </div>
+  </div>
+ </div>
+</header>
+<main>
+ <nav id=arc-jump class=arc-jump aria-label="Jump to section">
+  <a href=#top data-jump=top><span class=arc-jump__label>Top</span><span class=arc-jump__tick></span></a>
+  <a href=#problem data-jump=problem><span class=arc-jump__label>Problem</span><span class=arc-jump__tick></span></a>
+  <a href=#flow data-jump=flow><span class=arc-jump__label>Flow</span><span class=arc-jump__tick></span></a>
+  <a href=#limits data-jump=limits><span class=arc-jump__label>Limits</span><span class=arc-jump__tick></span></a>
+  <a href=#policy data-jump=policy><span class=arc-jump__label>Policy</span><span class=arc-jump__tick></span></a>
+  <a href=#sessions data-jump=sessions><span class=arc-jump__label>Sessions</span><span class=arc-jump__tick></span></a>
+  <a href=#keys data-jump=keys><span class=arc-jump__label>Keys</span><span class=arc-jump__tick></span></a>
+  <a href=#control data-jump=control><span class=arc-jump__label>Control</span><span class=arc-jump__tick></span></a>
+  <a href=#decisions data-jump=decisions><span class=arc-jump__label>Decisions</span><span class=arc-jump__tick></span></a>
+  <a href=#start data-jump=start><span class=arc-jump__label>Start</span><span class=arc-jump__tick></span></a>
+ </nav>
 
-    <header class="rh-header" data-menu="closed">
-      <div class="rh-inner rh-header__inner">
-        <a class="rh-mark" href="#top" aria-label="Raho home" data-arrive>
-          <svg viewBox="0 0 100 50" width="50" height="25" aria-hidden="true"><path class="rh-mark__chevron" d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z" /><path class="rh-mark__gate" d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z" /></svg>
-          <span class="rh-wordmark">raho</span>
-        </a>
-        <a class="rh-btn rh-header__cta" href="/app">Open App</a>
-        <button type="button" class="rh-header__burger" aria-controls="rh-menu" aria-expanded="false" aria-label="Open menu">
-          <svg width="18" height="12" viewBox="0 0 18 12" aria-hidden="true"><path d="M0 1h18M0 6h18M0 11h18" stroke="currentColor" stroke-width="1.5" /></svg>
-        </button>
-        <div class="rh-header__menu" id="rh-menu">
-          <nav aria-label="Main">
-            <a class="rh-navlink" href="#flow">Flow</a>
-            <a class="rh-navlink" href="#policy">Policy</a>
-            <a class="rh-navlink" href="#review">Review</a>
-            <a class="rh-navlink" href="#sessions">Sessions</a>
-            <a class="rh-navlink" href="#control">Control</a>
-          </nav>
-          <div class="rh-header__mode">
-            <span class="rh-dimension rh-header__mode-label">Mode</span>
-            <button type="button" class="rh-btn rh-btn--quiet rh-mode-toggle" data-mode-toggle>Drawing</button>
-          </div>
-        </div>
+ <div class="arc-grid-plate arc-grid-plate--hero" style="--arc-clear:radial-gradient(ellipse 62% 70%at 28% 48%,var(--arc-ground) 0%,var(--arc-ground) 38%,transparent 100%),linear-gradient(to bottom,transparent 45%,var(--arc-ground) 100%)">
+  <div data-shimmer aria-hidden=true></div>
+  <section id=top class=arc-hero-band style="position:relative;z-index:1;max-width:var(--arc-band-web);margin:0 auto;padding:112px var(--arc-gutter) 96px">
+   <div class=arc-kicker>RAHO · AGENT WALLET FIREWALL · POLICY FIRST</div>
+   <h1 class=arc-web-display style="margin:20px 0 0;max-width:14ch">Your agent acts.<br>Your rules decide.</h1>
+   <div class=arc-hero-split style=align-items:end;margin-top:48px>
+    <p class=arc-body style=margin:0;font-size:19px;max-width:min(64ch,100%)>The firewall between AI agents and your wallet.<br>Every transaction is checked against your rules before anything is signed.</p>
+    <div class=arc-dim data-hero-path>
+     <span class=arc-dim__figure data-path-figure>ALLOW · REVIEW · BLOCK</span>
+     <div class=arc-dim__span><i class=arc-dim__gate data-path-gate aria-hidden=true></i><i class=arc-dim__dot data-path-dot aria-hidden=true></i></div>
+     <span class=arc-dim__label>AI AGENT → RAHO → WALLET → BLOCKCHAIN · CHECKED BEFORE SIGNING</span>
+    </div>
+   </div>
+   <div style=display:flex;gap:16px;flex-wrap:wrap;margin-top:56px>
+    <a href=/app class=arc-btn>Open App</a>
+    <a href=#flow class="arc-btn arc-btn--ghost">Explore Raho</a>
+   </div>
+   <div>
+    <dl class=arc-ca data-contract-address>
+     <div class=arc-ca__cell><dt>Token Contract Address</dt><dd data-ca-value>Coming Soon</dd></div>
+     <button type=button class=arc-ca__copy data-ca-copy>Copy</button>
+     <span class=arc-ca__status role=status aria-live=polite></span>
+    </dl>
+   </div>
+  </section>
+ </div>
+
+ <section id=problem class=arc-section-band>
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>WHY AGENTS NEED A FIREWALL</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;--d:150ms" data-reveal>Two ways to hand an agent a wallet. Both break.</h2>
+   <div class=arc-routes style=margin-top:40px;--d:220ms data-reveal>
+    <div class=arc-route-col>
+     <div class=arc-route><span class=arc-route__label>Route A</span><span class=arc-route__name>Give it the keys</span></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">One bad output is final</h3><p class=arc-caption style=margin:0;font-size:15px>A confused or manipulated agent can move anything. Onchain, there is no undo.</p></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">Nothing is limited</h3><p class=arc-caption style=margin:0;font-size:15px>Every asset, every contract, every amount. The key does not know what the task was.</p></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">You only see the damage</h3><p class=arc-caption style=margin:0;font-size:15px>The chain records what happened. Nobody recorded what the agent tried, or why.</p></div>
+    </div>
+    <div class=arc-route-col>
+     <div class=arc-route><span class="arc-route__label arc-route__label--alt">Route B</span><span class=arc-route__name>Sign everything yourself</span></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">The agent waits on you</h3><p class=arc-caption style=margin:0;font-size:15px>Every routine payment needs your click. The autonomy you wanted is gone.</p></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">Fatigue wins</h3><p class=arc-caption style=margin:0;font-size:15px>After the hundredth prompt, people approve without reading. That is when it goes wrong.</p></div>
+     <div class=arc-panel data-card><h3 class=arc-card-head style="margin:0 0 8px">There are still no rules</h3><p class=arc-caption style=margin:0;font-size:15px>A tired click is not a policy. Nothing stops the next mistake by design.</p></div>
+    </div>
+   </div>
+   <p class=arc-body style="margin:32px 0px 0px;font-size:19px;color:var(--arc-ink);max-width:72ch;--d:290ms" data-reveal>One cause on both sides:<br><b>nobody wrote down what the agent may do.</b></p>
+  </div>
+ </section>
+
+ <section id=flow class="arc-section-band arc-section-band--alt arc-grid-plate arc-grid-plate--method" style="--arc-clear:linear-gradient(to bottom,var(--arc-ground-alt) 0%,transparent 18%,transparent 82%,var(--arc-ground-alt) 100%)">
+  <div data-shimmer aria-hidden=true></div>
+  <div class=arc-section-inner data-reveal style=position:relative;z-index:1>
+   <div class=arc-kicker data-reveal style=--d:80ms>HOW RAHO WORKS</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;--d:150ms" data-reveal>The agent proposes.<br>Your policy decides.</h2>
+   <div style=display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-top:52px;--d:220ms data-reveal>
+    <div style="flex:1 1 320px;min-width:0px;--d:300ms" data-reveal>
+     <div class="arc-panel arc-panel--definition" data-card=amber>
+      <div class=arc-kicker>YOUR POLICY</div>
+      <h3 class=arc-subhead style="margin:12px 0">You, once, in plain rules</h3>
+      <p class=arc-body style=margin:0;font-size:17px>Assets, contracts, functions, recipients, limits and sessions. Written before the agent acts.</p>
+     </div>
+    </div>
+    <div style="flex:0 0 auto;color:var(--arc-faint);font-size:24px;--d:360ms" data-reveal>→</div>
+    <div style="flex:1 1 320px;min-width:0px;--d:420ms" data-reveal>
+     <div class="arc-panel arc-panel--delivery" data-card=cyan>
+      <div class="arc-kicker arc-kicker--delivery">EVERY REQUEST</div>
+      <h3 class=arc-subhead style="margin:12px 0">Raho, instantly, every time</h3>
+      <p class=arc-body style=margin:0;font-size:17px>Each transaction is checked against that policy. Allow, review or block, always with a reason.</p>
+     </div>
+    </div>
+   </div>
+   <p class=arc-caption style="margin:36px 0px 0px;font-size:17px;max-width:80ch;font-weight:700;--d:290ms" data-reveal>The agent never holds unrestricted authority over the wallet.<br>It can only request. The policy decides what happens next.</p>
+  </div>
+ </section>
+
+ <section id=limits class=arc-section-band>
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>WHERE THE LIMITS BITE</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;--d:150ms" data-reveal>Small requests still add up.</h2>
+   <div class=arc-split style=align-items:start;margin-top:52px;--d:220ms data-reveal>
+    <div>
+     <div class=arc-chart__legend>
+      <span class=arc-chart__key><span class="arc-chart__swatch arc-seg--definition"></span>Spent today</span>
+      <span class=arc-chart__key><span class="arc-chart__swatch arc-seg--build"></span>This request</span>
+      <span class=arc-chart__key><span class="arc-chart__swatch arc-seg--rework"></span>Over the daily cap</span>
+     </div>
+     <div style=margin-top:32px>
+      <div class=arc-chart__row><span class=arc-chart__name>A $250 request</span><span class=arc-chart__total>$570 of $500 · Block</span></div>
+      <div class=arc-chart__bar role=img aria-label="320 dollars spent today plus a 250 dollar request goes over the 500 dollar daily cap, so it is blocked.">
+       <div data-bar class=arc-seg--definition style=width:53.3%></div>
+       <div data-bar class=arc-seg--build style=width:30%;--d:250ms></div>
+       <div data-bar class=arc-seg--rework style=width:11.7%;--d:500ms></div>
       </div>
-    </header>
-
-    <main id="main">
-      <nav class="rh-jump" aria-label="Jump to section">
-        <a href="#top" data-jump="top"><span class="rh-jump__label">Top</span><span class="rh-jump__tick"></span></a>
-        <a href="#problem" data-jump="problem"><span class="rh-jump__label">Problem</span><span class="rh-jump__tick"></span></a>
-        <a href="#flow" data-jump="flow"><span class="rh-jump__label">Flow</span><span class="rh-jump__tick"></span></a>
-        <a href="#decisions" data-jump="decisions"><span class="rh-jump__label">Decisions</span><span class="rh-jump__tick"></span></a>
-        <a href="#policy" data-jump="policy"><span class="rh-jump__label">Policy</span><span class="rh-jump__tick"></span></a>
-        <a href="#limits" data-jump="limits"><span class="rh-jump__label">Limits</span><span class="rh-jump__tick"></span></a>
-        <a href="#review" data-jump="review"><span class="rh-jump__label">Review</span><span class="rh-jump__tick"></span></a>
-        <a href="#sessions" data-jump="sessions"><span class="rh-jump__label">Sessions</span><span class="rh-jump__tick"></span></a>
-        <a href="#keys" data-jump="keys"><span class="rh-jump__label">Keys</span><span class="rh-jump__tick"></span></a>
-        <a href="#control" data-jump="control"><span class="rh-jump__label">Control</span><span class="rh-jump__tick"></span></a>
-        <a href="#start" data-jump="start"><span class="rh-jump__label">Start</span><span class="rh-jump__tick"></span></a>
-      </nav>
-
-      <!-- Hero -->
-      <div class="rh-grid-plate rh-grid-plate--coarse rh-hero-plate">
-        <div data-shimmer aria-hidden="true"></div>
-        <section id="top" class="rh-hero" aria-labelledby="hero-title">
-          <div class="rh-kicker" data-reveal style="--d: 60ms">Raho · Agent wallet firewall</div>
-          <h1 id="hero-title" class="rh-web-display rh-hero__title" data-reveal style="--d: 120ms">The firewall between AI agents and your wallet.</h1>
-          <div class="rh-hero-split" data-reveal style="--d: 200ms">
-            <p class="rh-body rh-hero__lede">Every transaction checked against your rules. <br />Allowed, reviewed or blocked before anything is signed.</p>
-            <figure class="rh-dim rh-dim--flow" data-schematic aria-label="An AI agent request stops at Raho before it can reach the wallet and the blockchain.">
-              <span class="rh-dim__figure" data-flow-figure>Allow · Review · Block</span>
-              <div class="rh-dim__span">
-                <span class="rh-dim__stop" style="--x: 0%" data-stop="agent"><i></i><b>AI Agent</b></span>
-                <span class="rh-dim__stop rh-dim__stop--gate" style="--x: 40%" data-stop="raho"><i></i><b>Raho</b></span>
-                <span class="rh-dim__stop" style="--x: 72%" data-stop="wallet"><i></i><b>Wallet</b></span>
-                <span class="rh-dim__stop" style="--x: 100%" data-stop="chain"><i></i><b><span class="rh-only-wide">Block</span>chain</b></span>
-                <span class="rh-dim__packet" data-packet aria-hidden="true"></span>
-              </div>
-              <figcaption class="rh-dim__label">Agent proposes · Raho decides · Wallet signs only what passes</figcaption>
-            </figure>
-          </div>
-          <div class="rh-hero__ctas" data-reveal style="--d: 280ms">
-            <a class="rh-btn" href="/app">Open App</a>
-            <a class="rh-btn rh-btn--ghost" href="#flow">Explore Raho</a>
-          </div>
-          <div class="rh-ca" data-reveal style="--d: 340ms" data-contract-address>
-            <span class="rh-ca__label">Token Contract Address</span>
-            <code class="rh-ca__value" data-ca-value>Coming Soon</code>
-            <button type="button" class="rh-ca__copy" data-ca-copy aria-describedby="rh-ca-status">
-              <svg width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><rect x="4.5" y="4.5" width="8.5" height="8.5" rx="1" fill="none" stroke="currentColor" stroke-width="1.3" /><path d="M9.5 2.5V1H1v8.5h1.5" fill="none" stroke="currentColor" stroke-width="1.3" /></svg>
-              <span>Copy</span>
-            </button>
-            <span class="rh-ca__status" id="rh-ca-status" role="status" aria-live="polite"></span>
-          </div>
-        </section>
+     </div>
+     <div style=margin-top:28px>
+      <div class=arc-chart__row><span class=arc-chart__name>A $70 request</span></div>
+      <div class=arc-chart__bar role=img aria-label="320 dollars spent today plus a 70 dollar request stays under the 500 dollar daily cap, so it is allowed.">
+       <div data-bar class=arc-seg--definition style=width:53.3%></div>
+       <div data-bar class=arc-seg--build style=width:11.7%;--d:250ms></div>
+       <span data-bar-label class=arc-chart__inline aria-hidden=true>Allow · $390 of $500</span>
       </div>
+     </div>
+     <p class=arc-dimension style="margin:24px 0 0;color:var(--arc-faint)">ROLLING 24 HOURS · $500 DAILY CAP · SAME SCALE</p>
+    </div>
+    <div>
+     <p class=arc-body style=margin:0;font-size:17px>Every request is checked against every limit at once. A request well under the per transaction cap can still cross the daily one.</p>
+     <p class=arc-caption style="margin:20px 0 0;font-size:14px;color:var(--arc-faint)">Per request, per hour, per day and per session. The strictest limit wins. Demo figures.</p>
+    </div>
+   </div>
+  </div>
+ </section>
 
-      <!-- Problem -->
-      <section id="problem" class="rh-band">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Why agents need a firewall</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Two ways to hand an agent a wallet. Both break.</h2>
-          <div class="rh-routes" data-reveal style="--d: 220ms">
-            <div class="rh-route-col">
-              <div class="rh-route"><span class="rh-route__label">Route A</span><span class="rh-route__name">Give it the keys</span></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">One bad output is final</h3><p class="rh-caption">A confused or manipulated agent can move anything. Onchain, there is no undo.</p></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">No limits at all</h3><p class="rh-caption">Every asset, every contract, every amount. Forever.</p></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">No record of intent</h3><p class="rh-caption">You see what happened. Never what it tried.</p></div>
-            </div>
-            <div class="rh-route-col">
-              <div class="rh-route"><span class="rh-route__label rh-route__label--alt">Route B</span><span class="rh-route__name">Sign everything yourself</span></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">The agent waits on you</h3><p class="rh-caption">Every routine payment needs your click. Autonomy disappears.</p></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">Fatigue wins</h3><p class="rh-caption">After the hundredth prompt, people approve without reading.</p></div>
-              <div class="rh-panel" data-card><h3 class="rh-card-head">Still no rules</h3><p class="rh-caption">A tired click is not a policy. Nothing stops the next mistake.</p></div>
-            </div>
-          </div>
-          <p class="rh-body rh-problem__verdict" data-reveal style="--d: 290ms">One fix for both sides: <br /><b>bounded authority, checked on every request.</b></p>
-        </div>
-      </section>
+ <section id=policy class="arc-section-band arc-section-band--alt">
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>WHAT A POLICY CONTROLS</div>
+   <h2 class=arc-web-section style="margin:16px 0px 44px;--d:150ms" data-reveal>Eight controls. One policy.</h2>
+   <div class=arc-table-scroll data-reveal style=--d:220ms>
+    <table class=arc-table>
+     <thead><tr><th scope=col>Control<th scope=col>The rule you set<th scope=col>Example</thead>
+     <tbody>
+      <tr><td>Assets<td>Which tokens the agent may move<td><span class=arc-cell--delivery>USDC · Allow</span>
+      <tr><td>Contracts<td>Where the agent may interact<td><span class=arc-cell--definition>Unknown · Review</span>
+      <tr><td>Functions<td>Which calls it may make on those contracts<td><span class=arc-cell--block>upgrade() · Block</span>
+      <tr><td>Recipients<td>Who may receive value or allowance<td><span class=arc-cell--delivery>Approved wallet · Allow</span>
+      <tr><td>Per transaction<td>The largest single request<td><span class=arc-cell--block>Over $1,000 · Block</span>
+      <tr><td>Daily<td>Total spend across a rolling day<td><span class=arc-cell--block>Over $500 · Block</span>
+      <tr><td>Sessions<td>How long the agent's authority lasts<td><span class=arc-cell--block>Expired · Block</span>
+      <tr><td>Human approval<td>What waits for you before it moves<td><span class=arc-cell--definition>Above $100 · Review</span>
+     </tbody>
+    </table>
+   </div>
+   <p class=arc-body style="margin:28px 0px 0px;font-size:17px;color:var(--arc-muted);--d:290ms" data-reveal>Anything not listed falls back to review or block. Nothing becomes allowed on its own.</p>
+  </div>
+ </section>
 
-      <!-- Flow: panels joined by arrows, as in the reference method section -->
-      <section id="flow" class="rh-band rh-band--alt rh-grid-plate" style="--rh-clear: linear-gradient(to bottom, var(--rh-ground-alt) 0%, transparent 18%, transparent 82%, var(--rh-ground-alt) 100%)">
-        <div data-shimmer aria-hidden="true"></div>
-        <div class="rh-inner rh-inner--raised" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">How Raho decides</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Allow. Review. Block.</h2>
-          <div class="rh-flow" data-flow data-reveal style="--d: 220ms">
-            <div class="rh-flow__presets" role="group" aria-label="Send a sample request"></div>
-            <div class="rh-flow__row">
-              <div class="rh-panel rh-panel--amber rh-flow__panel" data-card="amber" data-stage="request">
-                <div class="rh-kicker">Request</div>
-                <h3 class="rh-subhead rh-flow__title" data-flow-request>Transfer 50 USDC</h3>
-                <p class="rh-body rh-flow__text"><span data-flow-agent>Payment Agent</span> calls <code class="rh-mono" data-flow-fn>transfer()</code></p>
-              </div>
-              <div class="rh-flow__arrow" aria-hidden="true">→</div>
-              <div class="rh-panel rh-flow__panel" data-card data-stage="policy">
-                <div class="rh-kicker rh-kicker--muted">Policy</div>
-                <ol class="rh-flow__checks" data-flow-checks></ol>
-              </div>
-              <div class="rh-flow__arrow" aria-hidden="true">→</div>
-              <div class="rh-panel rh-panel--cyan rh-flow__panel rh-flow__decision" data-card="cyan" data-stage="decision">
-                <div class="rh-kicker rh-kicker--cyan" data-flow-kicker>Decision</div>
-                <h3 class="rh-subhead rh-flow__title rh-flow__verdict" data-flow-verdict>Waiting</h3>
-                <p class="rh-body rh-flow__text" data-flow-message>Checks run in order.</p>
-                <p class="rh-dimension rh-flow__wallet" data-flow-wallet>Wallet closed</p>
-              </div>
-            </div>
-            <p class="rh-sr" aria-live="polite" data-flow-live></p>
-          </div>
-          <p class="rh-caption rh-flow__caption" data-reveal style="--d: 290ms">Unknown is never allowed. The first hard stop ends the check. <br />Nothing reaches the wallet until the decision says so.</p>
-        </div>
-      </section>
+ <section id=sessions class=arc-section-band>
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>SESSIONS</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;max-width:34ch;--d:150ms" data-reveal>The agent gets a session.<br>It never gets your keys.</h2>
+   <div style=max-width:640px;margin-top:48px;--d:220ms data-reveal>
+    <div class=arc-dim data-session>
+     <span class=arc-dim__figure data-session-clock>2:00:00</span>
+     <div class=arc-dim__span><i class=arc-dim__remain data-session-remain aria-hidden=true></i></div>
+     <span class=arc-dim__label data-session-label>RESEARCH AGENT · ACTIVE · USDC ONLY · $100 MAX · EXPIRES IN 2 HOURS</span>
+    </div>
+   </div>
+   <div class=arc-cards style=margin-top:48px;--d:290ms data-reveal>
+    <div style="border-top:2px solid var(--arc-cyan);padding-top:20px"><h3 class=arc-card-head style="margin:0 0 10px">Scoped</h3><p class=arc-caption style=margin:0;font-size:16px>Only the assets and contracts you list, for the task in front of it.</p></div>
+    <div style="border-top:2px solid var(--arc-cyan);padding-top:20px"><h3 class=arc-card-head style="margin:0 0 10px">Capped</h3><p class=arc-caption style=margin:0;font-size:16px>A spending ceiling for the whole session, not just each request.</p></div>
+    <div style="border-top:2px solid var(--arc-cyan);padding-top:20px"><h3 class=arc-card-head style="margin:0 0 10px">Expiring</h3><p class=arc-caption style=margin:0;font-size:16px>When time is up, every new request blocks. Only an active session can allow.</p></div>
+   </div>
+  </div>
+ </section>
 
-      <!-- Decisions: three tiers, as in the reference offer section -->
-      <section id="decisions" class="rh-band">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Transaction preview</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Every decision explained.</h2>
-          <div class="rh-cards rh-tiers" data-decisions data-reveal style="--d: 220ms"></div>
-          <p class="rh-caption rh-tiers__note" data-reveal style="--d: 290ms">Each decision carries a reason code and the full list of checks behind it.</p>
-        </div>
-      </section>
+ <section id=keys class="arc-section-band arc-section-band--alt">
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>HOW THIS DIFFERS</div>
+   <h2 class=arc-web-section style="margin:16px 0px 44px;--d:150ms" data-reveal>Against how agents usually get a wallet.</h2>
+   <div class=arc-table-scroll data-reveal style=--d:220ms>
+    <table class="arc-table arc-table--bare">
+     <thead><tr><th scope=col><th scope=col><span class=arc-thead--them>A raw private key</span><th scope=col><span class="arc-wordmark arc-thead--us">raho</span></thead>
+     <tbody>
+      <tr><th scope=row>Authority<td><span class=arc-cell--them>Everything in the wallet</span><td><span class=arc-cell--us>Listed assets, contracts and functions</span>
+      <tr><th scope=row>Spending<td><span class=arc-cell--them>Unlimited</span><td><span class=arc-cell--us>Capped per request, per day and per session</span>
+      <tr><th scope=row>Duration<td><span class=arc-cell--them>Forever</span><td><span class=arc-cell--us>A session that expires on schedule</span>
+      <tr><th scope=row>Sensitive actions<td><span class=arc-cell--them>Signed blindly</span><td><span class=arc-cell--us>Held for your approval</span>
+      <tr><th scope=row>Stopping it<td><span class=arc-cell--them>Move every asset, fast</span><td><span class=arc-cell--us>Pause, revoke or lock in one click</span>
+     </tbody>
+    </table>
+   </div>
+   <div class="arc-callout arc-callout--spaced" data-reveal style=--d:290ms>Permission to request is not permission to execute. Raho keeps those two apart.</div>
+  </div>
+ </section>
 
-      <!-- Policy: the amber header table from the reference phases section -->
-      <section id="policy" class="rh-band rh-band--alt">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Policy controls</div>
-          <h2 class="rh-web-section rh-h2 rh-h2--table" data-reveal style="--d: 150ms">Eight controls. One policy.</h2>
-          <div class="rh-table-scroll" data-reveal style="--d: 220ms">
-            <table class="rh-table rh-policy-table">
-              <thead><tr><th scope="col">Control</th><th scope="col">Example rule</th><th scope="col">Result</th></tr></thead>
-              <tbody>
-                <tr><td>Assets</td><td>USDC</td><td><span class="rh-cell" data-d="ALLOW">Allow</span></td></tr>
-                <tr><td>Contracts</td><td>Unknown contracts</td><td><span class="rh-cell" data-d="REVIEW">Review</span></td></tr>
-                <tr><td>Functions</td><td><code class="rh-mono">upgrade()</code></td><td><span class="rh-cell" data-d="BLOCK">Block</span></td></tr>
-                <tr><td>Recipients</td><td>Approved wallet</td><td><span class="rh-cell" data-d="ALLOW">Allow</span></td></tr>
-                <tr><td>Per transaction</td><td>Up to $1,000</td><td><span class="rh-cell">Limit</span></td></tr>
-                <tr><td>Daily</td><td>Up to $500 across all requests</td><td><span class="rh-cell">Limit</span></td></tr>
-                <tr><td>Sessions</td><td>Two hours, then it expires</td><td><span class="rh-cell">Expires</span></td></tr>
-                <tr><td>Human approval</td><td>Anything above $100</td><td><span class="rh-cell" data-d="REVIEW">Review</span></td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p class="rh-body rh-muted-note" data-reveal style="--d: 290ms">Anything not listed falls back to review or block. Never to allow.</p>
-        </div>
-      </section>
+ <section id=control class=arc-section-band>
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>EMERGENCY CONTROLS</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;--d:150ms" data-reveal>You can stop the agent. It cannot stop you.</h2>
+   <div class="arc-cards arc-cards--2" style=margin-top:48px;--d:220ms data-reveal>
+    <div class=arc-panel data-card data-control=pause><h3 class=arc-card-head style="margin:0 0 10px">Pause Agent</h3><p class=arc-caption style="margin:0 0 20px;font-size:16px">New requests from that agent are blocked. Everything else keeps running.</p><button type=button class=arc-link data-emergency=pause aria-pressed=false>Pause agent →</button></div>
+    <div class=arc-panel data-card data-control=revoke><h3 class=arc-card-head style="margin:0 0 10px">Revoke Session</h3><p class=arc-caption style="margin:0 0 20px;font-size:16px">Its current authority ends now. A new session is needed before it can act.</p><button type=button class=arc-link data-emergency=revoke aria-pressed=false>Revoke session →</button></div>
+    <div class=arc-panel data-card data-control=lock><h3 class=arc-card-head style="margin:0 0 10px">Emergency Lock</h3><p class=arc-caption style="margin:0 0 20px;font-size:16px">Every agent is blocked at once. It overrides every allow rule and session.</p><button type=button class="arc-link arc-link--limit" data-emergency=lock aria-pressed=false>Engage lock →</button></div>
+    <div class=arc-panel data-card data-control=reset><h3 class=arc-card-head style="margin:0 0 10px">Reset Limits</h3><p class=arc-caption style="margin:0 0 20px;font-size:16px">Conservative defaults come back after anything unusual. The agent cannot undo any of this.</p><button type=button class=arc-link data-emergency=reset aria-pressed=false>Reset limits →</button></div>
+   </div>
+   <p class=arc-dimension style="margin:24px 0 0;color:var(--arc-faint)" data-reveal data-control-status role=status aria-live=polite>FIREWALL ARMED · DEMO CONTROLS · NOTHING IS SENT ONCHAIN</p>
+  </div>
+ </section>
 
-      <!-- Limits: the bar chart from the reference time section -->
-      <section id="limits" class="rh-band">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Spending limits</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Limits add up.</h2>
-          <div class="rh-split rh-limits" data-reveal style="--d: 220ms">
-            <div>
-              <div class="rh-chart__legend">
-                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--spent"></span>Spent today</span>
-                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--request"></span>This request</span>
-                <span class="rh-chart__key"><span class="rh-chart__swatch rh-seg--over"></span>Over the cap</span>
-              </div>
-              <div class="rh-chart__item">
-                <div class="rh-chart__row"><span class="rh-chart__name">Request of $70</span><span class="rh-chart__total" data-d="ALLOW">Allow</span></div>
-                <div class="rh-chart__bar" role="img" aria-label="320 dollars spent today plus a 70 dollar request stays under the 500 dollar daily cap.">
-                  <div data-bar class="rh-seg--spent" style="width: 53.33%"></div>
-                  <div data-bar class="rh-seg--request" style="width: 11.67%; --d: 250ms"></div>
-                  <span class="rh-chart__limit" style="left: 83.33%"></span>
-                </div>
-              </div>
-              <div class="rh-chart__item">
-                <div class="rh-chart__row"><span class="rh-chart__name">Request of $250</span><span class="rh-chart__total" data-d="BLOCK">Block</span></div>
-                <div class="rh-chart__bar" role="img" aria-label="320 dollars spent today plus a 250 dollar request passes the 500 dollar daily cap.">
-                  <div data-bar class="rh-seg--spent" style="width: 53.33%"></div>
-                  <div data-bar class="rh-seg--request" style="width: 30%; --d: 250ms"></div>
-                  <div data-bar class="rh-seg--over" style="width: 11.67%; --d: 500ms"></div>
-                  <span class="rh-chart__limit" style="left: 83.33%"></span>
-                </div>
-              </div>
-              <p class="rh-dimension rh-chart__foot">Rolling 24 hours · $500 daily cap</p>
-            </div>
-            <div>
-              <p class="rh-body rh-limits__text">Every request is checked against every limit at once. A small one can still cross the daily cap.</p>
-              <p class="rh-caption rh-limits__small">Per request, per hour, per day and per session. The strictest one wins.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Human review -->
-      <section id="review" class="rh-band rh-band--alt">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Human review</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Risky moves wait for you.</h2>
-          <div class="rh-review" data-reveal style="--d: 220ms">
-            <article class="rh-panel rh-panel--amber rh-review__card" data-card="amber" data-review-card data-state="pending">
-              <div class="rh-review__head">
-                <span class="rh-kicker">Review · Payment Agent</span>
-                <span class="rh-chip" data-d="pending" data-review-chip>Pending</span>
-              </div>
-              <h3 class="rh-subhead rh-review__title">500 USDC Transfer</h3>
-              <p class="rh-body rh-review__reason">Amount exceeds automatic limit.</p>
-              <p class="rh-dimension rh-review__meta">To Approved Wallet · transfer() · Auto limit $100</p>
-              <div class="rh-review__actions" data-review-actions>
-                <button type="button" class="rh-btn" data-review="approve">Approve</button>
-                <button type="button" class="rh-btn rh-btn--ghost" data-review="reject">Reject</button>
-              </div>
-              <div class="rh-review__result" data-review-result hidden>
-                <p data-review-outcome></p>
-                <button type="button" class="rh-link" data-review="reset">Show again</button>
-              </div>
-            </article>
-            <div class="rh-points">
-              <div class="rh-point"><h3 class="rh-card-head">The agent cannot approve itself</h3><p class="rh-caption">Approval comes from you, on a separate path.</p></div>
-              <div class="rh-point"><h3 class="rh-card-head">Bound to one request</h3><p class="rh-caption">Change the amount or target and it is checked again.</p></div>
-              <div class="rh-point"><h3 class="rh-card-head">Policy stays the same</h3><p class="rh-caption">One approval never widens future permissions.</p></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Sessions: a live dimension line and the reference ownership cards -->
-      <section id="sessions" class="rh-band">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker rh-kicker--cyan" data-reveal style="--d: 80ms">Session permissions</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">Temporary authority. <br />Never permanent.</h2>
-          <div class="rh-session" data-session-card data-state="active" data-reveal style="--d: 220ms">
-            <div class="rh-dim rh-dim--session">
-              <span class="rh-dim__figure" data-session-clock>2:00:00</span>
-              <div class="rh-dim__span"><span class="rh-dim__left" data-session-bar></span></div>
-              <span class="rh-dim__label" data-session-label>Research Agent · USDC only · $100 max · Two hour session</span>
-            </div>
-            <div class="rh-session__controls">
-              <span class="rh-chip" data-d="active" data-session-chip>Active</span>
-              <span class="rh-session__rule" data-session-rule>New requests are checked</span>
-              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-session-toggle>Revoke session</button>
-            </div>
-          </div>
-          <div class="rh-cards" data-reveal style="--d: 290ms">
-            <div class="rh-point"><h3 class="rh-card-head">Scoped</h3><p class="rh-caption">Only the assets and contracts you list.</p></div>
-            <div class="rh-point"><h3 class="rh-card-head">Capped</h3><p class="rh-caption">A spending ceiling for the whole session.</p></div>
-            <div class="rh-point"><h3 class="rh-card-head">Expires</h3><p class="rh-caption">When time is up, every request blocks. Only an active session can allow.</p></div>
-          </div>
-        </div>
-      </section>
-
-      <!-- Keys versus sessions -->
-      <section id="keys" class="rh-band rh-band--alt">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Keys versus sessions</div>
-          <h2 class="rh-web-section rh-h2 rh-h2--table" data-reveal style="--d: 150ms">Give a budget, not your keys.</h2>
-          <div class="rh-table-scroll" data-reveal style="--d: 220ms">
-            <table class="rh-table rh-table--bare rh-compare">
-              <thead>
-                <tr>
-                  <th scope="col"><span class="rh-sr">Aspect</span></th>
-                  <th scope="col"><span class="rh-compare__them">A raw private key</span></th>
-                  <th scope="col"><span class="rh-compare__us"><span class="rh-wordmark">raho</span> session</span></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr><th scope="row">Scope</th><td class="rh-compare__them">Everything in the wallet</td><td>Listed assets and contracts</td></tr>
-                <tr><th scope="row">Spending</th><td class="rh-compare__them">Unlimited</td><td>Capped per request and per day</td></tr>
-                <tr><th scope="row">Duration</th><td class="rh-compare__them">Forever</td><td>Expires on schedule</td></tr>
-                <tr><th scope="row">Sensitive actions</th><td class="rh-compare__them">Signed blindly</td><td>Sent to you first</td></tr>
-                <tr><th scope="row">Stopping it</th><td class="rh-compare__them">Move every asset</td><td>One click</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="rh-callout rh-callout--spaced" data-reveal style="--d: 290ms">Permission to request is not permission to execute.</div>
-        </div>
-      </section>
-
-      <!-- Emergency controls: the reference risk grid -->
-      <section id="control" class="rh-band">
-        <div class="rh-inner" data-reveal>
-          <div class="rh-kicker rh-kicker--limit" data-reveal style="--d: 80ms">Emergency controls</div>
-          <h2 class="rh-web-section rh-h2" data-reveal style="--d: 150ms">One click stops everything.</h2>
-          <p class="rh-dimension rh-estatus" data-estatus data-reveal style="--d: 200ms" role="status" aria-live="polite">Firewall <span class="rh-estatus__value" data-estatus-value>Armed</span> <span data-estatus-detail>Research Agent active · Session live · Limits default</span></p>
-          <div class="rh-cards rh-cards--2 rh-emergency" data-reveal style="--d: 220ms">
-            <div class="rh-panel rh-ecard" data-card>
-              <h3 class="rh-card-head">Pause Agent</h3>
-              <p class="rh-caption">Stops new requests from one agent. Everything else keeps running.</p>
-              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="pause" aria-pressed="false">Pause agent</button>
-            </div>
-            <div class="rh-panel rh-ecard" data-card>
-              <h3 class="rh-card-head">Revoke Session</h3>
-              <p class="rh-caption">Ends its current authority now. A new session is needed to act.</p>
-              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="revoke" aria-pressed="false">Revoke session</button>
-            </div>
-            <div class="rh-panel rh-panel--limit rh-ecard rh-ecard--lock" data-card="limit">
-              <h3 class="rh-card-head">Emergency Lock</h3>
-              <p class="rh-caption">Blocks every agent at once. Overrides every allow rule.</p>
-              <button type="button" class="rh-btn rh-btn--danger rh-btn--sm" data-emergency="lock" aria-pressed="false">Engage lock</button>
-            </div>
-            <div class="rh-panel rh-ecard" data-card>
-              <h3 class="rh-card-head">Reset Limits</h3>
-              <p class="rh-caption">Restores conservative defaults after anything unusual.</p>
-              <button type="button" class="rh-btn rh-btn--ghost rh-btn--sm" data-emergency="reset">Reset limits</button>
-            </div>
-          </div>
-          <p class="rh-caption rh-emergency__note" data-reveal style="--d: 290ms">The agent cannot disable, bypass or undo any of these. Demo controls, nothing is sent.</p>
-        </div>
-      </section>
-
-      <!-- Start -->
-      <section id="start" class="rh-band rh-grid-plate" style="--rh-clear: linear-gradient(to top, transparent 40%, var(--rh-ground) 100%)">
-        <div data-shimmer aria-hidden="true"></div>
-        <div class="rh-inner rh-inner--raised" data-reveal>
-          <div class="rh-kicker" data-reveal style="--d: 80ms">Start here</div>
-          <h2 class="rh-web-hero rh-h2 rh-start__title" data-reveal style="--d: 150ms">Control what your agent can do. <br />Your rules. Your wallet.</h2>
-          <div class="rh-start__dim" data-reveal style="--d: 220ms">
-            <div class="rh-dim"><div class="rh-dim__span"></div><span class="rh-dim__label">Not a wallet · Not custody · A policy layer</span></div>
-          </div>
-          <div class="rh-cards rh-start__cards" data-reveal style="--d: 290ms">
-            <div class="rh-panel" data-card><div class="rh-kicker">Step one</div><p class="rh-body rh-card-body">Set rules for assets, contracts, functions and limits.</p></div>
-            <div class="rh-panel" data-card><div class="rh-kicker">Step two</div><p class="rh-body rh-card-body">Open a session. Scoped, capped and set to expire.</p></div>
-            <div class="rh-panel rh-panel--cyan" data-card="cyan"><div class="rh-kicker rh-kicker--cyan">Then</div><p class="rh-body rh-card-body">Routine moves pass. Risky ones wait for you.</p></div>
-          </div>
-          <div class="rh-start__cta" data-reveal style="--d: 360ms">
-            <a class="rh-btn" href="/app">Open App</a>
-            <p class="rh-dimension" data-deploy-status>Demo mode · Contracts not deployed yet</p>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="rh-band rh-band--alt rh-footer">
-      <div class="rh-inner rh-split" data-reveal>
-        <div>
-          <div class="rh-kicker">Status</div>
-          <p class="rh-body rh-footer__status" data-footer-status>Contracts are not deployed yet. <br />The app runs on local demo data.</p>
-          <div class="rh-footer__links">
-            <a class="rh-link" href="/app">Open App →</a>
-            <a class="rh-link" href="#top">Back to top ↑</a>
-          </div>
-        </div>
-        <div class="rh-titleblock">
-          <div class="rh-titleblock__firm">
-            <div class="rh-titleblock__brand">
-              <svg viewBox="0 0 100 50" width="36" height="18" aria-hidden="true"><path class="rh-mark__chevron" d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z" /><path class="rh-mark__gate" d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z" /></svg>
-              <span class="rh-wordmark">raho</span>
-            </div>
-            <div class="rh-dimension">Agent wallet firewall</div>
-          </div>
-          <div class="rh-titleblock__project">
-            <div class="rh-dimension">Project</div>
-            <div class="rh-titleblock__projectname">Landing</div>
-          </div>
-          <dl class="rh-titleblock__cells">
-            <div class="rh-titleblock__cell"><dt>Sheet</dt><dd>01 / 02</dd></div>
-            <div class="rh-titleblock__cell rh-titleblock__cell--rev"><dt>Rev</dt><dd>A</dd></div>
-            <div class="rh-titleblock__cell"><dt>Date</dt><dd>26 SEP 26</dd></div>
-          </dl>
-        </div>
+ <section id=decisions class="arc-section-band arc-section-band--alt">
+  <div class=arc-section-inner data-reveal>
+   <div class=arc-kicker data-reveal style=--d:80ms>EVERY DECISION</div>
+   <h2 class=arc-web-section style="margin:16px 0px 0px;--d:150ms" data-reveal>Three outcomes. Always a reason.</h2>
+   <div class=arc-cards style=margin-top:48px;--d:220ms data-reveal>
+    <div class="arc-panel arc-panel--delivery" data-card=cyan>
+     <div style=display:flex;flex-direction:column;height:100%>
+      <div class="arc-kicker arc-kicker--delivery">ALLOW · PAYMENT AGENT</div>
+      <h3 class=arc-subhead style="margin:12px 0">50 USDC Transfer</h3>
+      <p class=arc-caption style="margin:0 0 20px;font-size:16px">To an approved wallet. Asset, recipient, limits and session all pass.</p>
+      <div style="margin-top:auto;border-top:1px solid var(--arc-rule-soft);padding-top:16px;display:grid;gap:6px">
+       <p class=arc-dimension>POLICY_SATISFIED</p>
+       <span style=font-family:var(--arc-mono);font-size:15px;font-weight:700;color:var(--arc-cyan)>Passed to the signer</span>
       </div>
-    </footer>
-  </body>
+     </div>
+    </div>
+    <div class="arc-panel arc-panel--definition" data-card=amber data-review-card>
+     <div style=display:flex;flex-direction:column;height:100%>
+      <div class=arc-kicker>REVIEW · WAITS FOR YOU</div>
+      <h3 class=arc-subhead style="margin:12px 0">500 USDC Transfer</h3>
+      <p class=arc-caption style="margin:0 0 20px;font-size:16px">Amount exceeds automatic limit. The agent cannot approve its own request.</p>
+      <div style="margin-top:auto;border-top:1px solid var(--arc-rule-soft);padding-top:16px;display:grid;gap:6px">
+       <p class=arc-dimension data-review-code>AMOUNT_ABOVE_AUTO_LIMIT</p>
+       <div class=arc-actions data-review-actions>
+        <button type=button class=arc-link data-review=approve>Approve →</button>
+        <button type=button class="arc-link arc-link--limit" data-review=reject>Reject →</button>
+       </div>
+      </div>
+     </div>
+    </div>
+    <div class=arc-panel data-card>
+     <div style=display:flex;flex-direction:column;height:100%>
+      <div class="arc-kicker arc-kicker--muted">BLOCK · TREASURY AGENT</div>
+      <h3 class=arc-subhead style="margin:12px 0">Unlimited approve()</h3>
+      <p class=arc-caption style="margin:0 0 20px;font-size:16px">An unknown contract asked for an unlimited allowance. Stopped before signing.</p>
+      <div style="margin-top:auto;border-top:1px solid var(--arc-rule-soft);padding-top:16px;display:grid;gap:6px">
+       <p class=arc-dimension>UNLIMITED_APPROVAL</p>
+       <span style=font-family:var(--arc-mono);font-size:15px;font-weight:700;color:var(--arc-limit)>Nothing is signed</span>
+      </div>
+     </div>
+    </div>
+   </div>
+   <p class=arc-caption style="margin:28px 0px 0px;font-size:17px;--d:290ms" data-reveal>Approving one request never widens the policy. Change the request and it is checked again.</p>
+  </div>
+ </section>
+
+ <section id=start class="arc-section-band arc-grid-plate arc-grid-plate--start" style="--arc-clear:linear-gradient(to top,transparent 40%,var(--arc-ground) 100%)">
+  <div data-shimmer aria-hidden=true></div>
+  <div class=arc-section-inner data-reveal style=position:relative;z-index:1>
+   <div class=arc-kicker data-reveal style=--d:80ms>START HERE</div>
+   <h2 class=arc-web-hero style="margin:20px 0px 0px;max-width:34ch;--d:150ms" data-reveal>Control what your agent can do.<br>Your rules. Your wallet.</h2>
+   <div style=max-width:640px;margin-top:48px;--d:220ms data-reveal>
+    <div class=arc-dim><div class=arc-dim__span></div><span class=arc-dim__label>NOT A WALLET · NOT CUSTODY · A POLICY LAYER BEFORE SIGNING</span></div>
+   </div>
+   <div class=arc-cards style=margin-top:56px;--d:290ms data-reveal>
+    <div class=arc-panel data-card><div class=arc-kicker>STEP ONE</div><p class=arc-body style="margin:14px 0 0;font-size:16px">Write the policy. Assets, contracts, functions, recipients and limits.</p></div>
+    <div class=arc-panel data-card><div class=arc-kicker>STEP TWO</div><p class=arc-body style="margin:14px 0 0;font-size:16px">Open a session for the agent. Scoped, capped and set to expire.</p></div>
+    <div class="arc-panel arc-panel--delivery" data-card=cyan><div class="arc-kicker arc-kicker--delivery">THEN</div><p class=arc-body style="margin:14px 0 0;font-size:16px">Routine requests pass. Risky ones wait for you. The rest are blocked.</p></div>
+   </div>
+   <div style=display:flex;gap:16px;flex-wrap:wrap;align-items:center;margin-top:48px;--d:360ms data-reveal>
+    <a href=/app class=arc-btn data-reveal style=--d:440ms>Open App</a>
+    <p class=arc-dimension data-reveal style=--d:500ms data-deploy-status>DEMO MODE · CONTRACTS NOT DEPLOYED YET</p>
+   </div>
+  </div>
+ </section>
+</main>
+<footer class="arc-section-band arc-section-band--alt">
+ <div class="arc-section-inner arc-split" data-reveal style=align-items:start>
+  <div data-reveal style=--d:80ms>
+   <div class=arc-kicker>STATUS</div>
+   <p class=arc-body style="margin:16px 0 0;font-size:19px;max-width:52ch" data-footer-status>Contracts are not deployed yet.<br>The app runs on local demo data.</p>
+   <div class=arc-footer__links><a class=arc-link href=/app>Open App →</a><a class=arc-link href=#top>Back to top →</a></div>
+  </div>
+  <div class=arc-titleblock data-reveal style=--d:150ms>
+   <div class=arc-titleblock__firm>
+    <div class=arc-titleblock__brand>
+     <svg viewBox="0 0 100 50" width=38 height=19 role=img aria-label=Raho><g><path fill=var(--arc-amber) d="M0 50V8a8 8 0 0 1 8-8h32a8 8 0 0 1 8 8v42H34V14H14v36Z"></path><path fill=var(--arc-cyan) d="M56 4 100 22.5v9L56 50V36.5L81 27 56 17.5Z"></path></g></svg>
+     <div class=arc-wordmark>raho</div>
+    </div>
+    <div class=arc-dimension>AGENT WALLET FIREWALL</div>
+   </div>
+   <div class=arc-titleblock__project><div class=arc-dimension>PROJECT</div><div class=arc-titleblock__projectname>Home</div></div>
+   <dl class=arc-titleblock__cells>
+    <div class=arc-titleblock__cell><dt>Sheet<dd>01 / 01</div>
+    <div class="arc-titleblock__cell arc-titleblock__cell--rev"><dt>Rev<dd>A</div>
+    <div class=arc-titleblock__cell><dt>Date<dd>26 SEP 26</div>
+   </dl>
+  </div>
+ </div>
+</footer>
+</body>
 </html>

@@ -58,7 +58,7 @@ const walk = (dir) => {
 walk(root);
 
 const LEFTOVERS = [
-  /architecture\.dev/i, /definition sprint/i, /strategic engineering/i, /fixed price/i, /intro call/i, /\barc-/,
+  /architecture\.dev/i, /definition sprint/i, /strategic engineering/i, /fixed price/i, /intro call/i, /book a call/i, /\bweeks?\b.*\brework\b/i,
   /lorem ipsum/i, /\bTODO\b/, /\bFIXME\b/, /tokenomics/i, /presale/i, /airdrop/i,
   /revolutionary/i, /game changing/i, /\bto the moon\b/i, /\b100x\b/i, /financial freedom/i, /next big thing/i,
 ];
