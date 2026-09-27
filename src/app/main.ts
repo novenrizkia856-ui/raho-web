@@ -7,7 +7,7 @@ import { shortAddress } from "../config/index.ts";
 import { getRaho } from "../lib/raho/index.ts";
 import { connectWallet, getWallet, onWallet } from "../lib/wallet.ts";
 import { $ } from "../shared/dom.ts";
-import { renderView, routes, type Route } from "./views.ts";
+import { icon, renderView, routes, type Route } from "./views.ts";
 
 const raho = getRaho();
 const shell = $(".rh-shell")!;
@@ -22,7 +22,7 @@ const currentRoute = (): Route => {
 function render(): void {
   const route = currentRoute();
   const state = raho.getState();
-  nav.innerHTML = routes.map((item) => `<a class="rh-side__link" href="#/${item.id}" ${route === item.id ? 'aria-current="page"' : ""}><span class="rm-nav-glyph" aria-hidden="true">${item.glyph}</span><span>${item.label}</span></a>`).join("");
+  nav.innerHTML = routes.map((item) => `<a class="rh-side__link" href="#/${item.id}" ${route === item.id ? 'aria-current="page"' : ""}>${icon(item.id, 18, "rm-nav-glyph")}<span>${item.label}</span></a>`).join("");
   $("[data-view-title]")!.textContent = routes.find((item) => item.id === route)!.label;
   $("[data-view-kicker]")!.textContent = "RAHO / DEMO";
   document.title = `${routes.find((item) => item.id === route)!.label} | Raho`;

@@ -155,52 +155,19 @@ html {
   box-shadow: inset 0 0 0 2px #fe0600;
 }
 
-/* Pipeline: scroll driven on desktop, a simple list on mobile */
-[data-pipe-item],
-[data-pipe-line],
-[data-pipe-vline] {
-  transition: opacity 0.5s ease, transform 0.5s ease, clip-path 0.6s ease;
-}
-
-[data-pipe-track] {
-  transition: transform 0.25s linear;
-  will-change: transform;
-}
-
-.raho-steps {
-  display: grid;
-  gap: 28px;
+/* Pipeline below 1024px: the track hangs from a centre axis, as in the reference */
+.raho-mpipe__axis {
+  width: 1px;
   margin: 0 auto;
-  padding: 0 16px;
-  max-width: 420px;
-  list-style: none;
 }
 
-.raho-step {
-  display: grid;
-  gap: 12px;
+.raho-mpipe__rail {
+  width: max-content;
 }
 
-.raho-step__body {
-  padding-left: 46px;
-}
-
-.raho-step__body > div {
-  width: fit-content;
-  max-width: 100%;
-}
-
-@media (max-width: 1023.98px) {
-  .raho-pipe {
-    height: auto !important;
-  }
-
-  .raho-pipe__stage {
-    position: relative;
-    top: 0;
-    height: auto;
-    padding: 80px 0;
-  }
+[data-pipe-track],
+[data-mpipe-track] {
+  will-change: transform;
 }
 
 /* Emergency lock strip icon */
