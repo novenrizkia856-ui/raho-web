@@ -178,42 +178,23 @@ html {
   place-items: center;
 }
 
-/* Red glow in place of the decorative videos */
-.raho-orb {
-  width: 482px;
+/* Section artwork: live shaders in the slots where the reference plays videos */
+/* max-width as the reference's videos get it; no display here, so max-lg:hidden still applies */
+.raho-art {
   max-width: 100%;
-  height: 467px;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(254, 6, 0, 0.9), rgba(254, 6, 0, 0.35) 45%, rgba(254, 6, 0, 0) 100%);
-  filter: blur(8px);
-  animation: raho-pulse 7s ease-in-out infinite alternate;
   pointer-events: none;
+  background: #000;
 }
 
-.raho-orb--wide {
-  width: 650px;
+.raho-art--rings {
+  flex: none;
+  width: 773px;
   height: 773px;
-  opacity: 0.6;
 }
 
-.raho-orb--screen {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  translate: -50% -50%;
-  mix-blend-mode: screen;
-  opacity: 0.7;
-}
-
-@keyframes raho-pulse {
-  from {
-    scale: 0.92;
-    opacity: 0.75;
-  }
-  to {
-    scale: 1.05;
-    opacity: 1;
-  }
+/* Without WebGL, a still red glow */
+.raho-art--flat {
+  background: radial-gradient(closest-side, rgba(148, 0, 4, 0.9), rgba(148, 0, 4, 0.3) 55%, #000 100%);
 }
 
 /* Emergency control buttons */
@@ -286,10 +267,6 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
-  }
-
-  .raho-orb {
-    animation: none;
   }
 
   [data-pipe-item],

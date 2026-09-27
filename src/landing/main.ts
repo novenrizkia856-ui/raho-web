@@ -1,12 +1,14 @@
 /**
  * Landing runtime for the reference markup. The saved page kept only the end
  * state of each animation, so this puts the motion back: the hero intro, the
- * connector draw, blur in reveals, the pinned pipeline and the turning
- * compatibility wheel. Everything is local. Nothing here talks to a chain.
+ * connector draw, blur in reveals, the pinned pipeline, the turning
+ * compatibility wheel and the section artwork. Everything is local. Nothing
+ * here talks to a chain.
  */
 import { chainConfig, contractsReady, tokenDisplay } from "../config/index.ts";
 import { copyText } from "../shared/clipboard.ts";
 import { $, $$, reducedMotion } from "../shared/dom.ts";
+import { initArt } from "./art.ts";
 
 const still = reducedMotion();
 const EASE = "cubic-bezier(.22,1,.36,1)";
@@ -311,5 +313,6 @@ initMenu();
 initReveal();
 initPipeline();
 initWheel();
+initArt();
 initContractAddress();
 initDeployment();
