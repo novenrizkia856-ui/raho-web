@@ -1,7 +1,6 @@
 /**
- * Minimal EIP-1193 wallet connection. Read only: it asks for the account and
- * chain so the app can show who is connected. It never requests a signature
- * and never sends a transaction. Network details come from src/config.
+ * Minimal EIP-1193 wallet connection: account, chain, and network switching.
+ * Transactions are built in src/lib/raho/live.ts. Network details come from src/config.
  */
 import { chainConfig } from "../config/index.ts";
 
@@ -47,6 +46,52 @@ export function onWallet(listener: (s: WalletState) => void): () => void {
   return () => listeners.delete(listener);
 }
 
+let subscribed = false;
+function watch(provider: Eip1193Provider): void {
+  if (subscribed) return;
+  subscribed = true;
+  provider.on?.("accountsChanged", (a) => {
+    const list = a as string[];
+    emit({ status: list[0] ? "connected" : "disconnected", address: list[0] ?? "" });
+  });
+  provider.on?.("chainChanged", (c) => emit({ chainId: parseInt(c as string, 16) }));
+}
+
+/** Reconnect silently if the site was already authorized. Never prompts. */
+export async function restoreWallet(): Promise<void> {
+  const provider = window.ethereum;
+  if (!provider) return;
+  try {
+    const accounts = (await provider.request({ method: "eth_accounts" })) as string[];
+    if (!accounts[0]) return;
+    const chainHex = (await provider.request({ method: "eth_chainId" })) as string;
+    emit({ status: "connected", address: accounts[0], chainId: parseInt(chainHex, 16) });
+    watch(provider);
+  } catch { /* Stay disconnected. */ }
+}
+
+/** Ask the wallet to switch to the configured network, adding it when unknown. */
+export async function switchNetwork(): Promise<void> {
+  const provider = window.ethereum;
+  if (!provider || chainConfig.chainId === null) return;
+  const chainId = `0x${chainConfig.chainId.toString(16)}`;
+  try {
+    await provider.request({ method: "wallet_switchEthereumChain", params: [{ chainId }] });
+  } catch (error) {
+    if ((error as { code?: number }).code !== 4902) throw error;
+    await provider.request({
+      method: "wallet_addEthereumChain",
+      params: [{
+        chainId, chainName: chainConfig.chainName, rpcUrls: [chainConfig.rpcUrl],
+        nativeCurrency: chainConfig.nativeCurrency,
+        blockExplorerUrls: chainConfig.explorerUrl ? [chainConfig.explorerUrl] : [],
+      }],
+    });
+  }
+  const chainHex = (await provider.request({ method: "eth_chainId" })) as string;
+  emit({ chainId: parseInt(chainHex, 16) });
+}
+
 export async function connectWallet(): Promise<WalletState> {
   const provider = window.ethereum;
   if (!provider) {
@@ -58,11 +103,7 @@ export async function connectWallet(): Promise<WalletState> {
     const accounts = (await provider.request({ method: "eth_requestAccounts" })) as string[];
     const chainHex = (await provider.request({ method: "eth_chainId" })) as string;
     emit({ status: accounts[0] ? "connected" : "disconnected", address: accounts[0] ?? "", chainId: parseInt(chainHex, 16) });
-    provider.on?.("accountsChanged", (a) => {
-      const list = a as string[];
-      emit({ status: list[0] ? "connected" : "disconnected", address: list[0] ?? "" });
-    });
-    provider.on?.("chainChanged", (c) => emit({ chainId: parseInt(c as string, 16) }));
+    watch(provider);
   } catch (error) {
     emit({ status: "disconnected", error: (error as { message?: string }).message ?? "Connection was declined." });
   }

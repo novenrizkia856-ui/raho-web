@@ -1,5 +1,7 @@
-import { postQuantumSchemes, schemeName } from "../config/schemes.ts";
-import type { RahoState } from "../lib/raho/types.ts";
+import { formatEther, zeroHash } from "viem";
+import { chainConfig, contracts, explorerLink, shortAddress } from "../config/index.ts";
+import { schemeName } from "../config/schemes.ts";
+import type { LiveState, Stage } from "../lib/raho/index.ts";
 import { esc } from "../shared/dom.ts";
 
 /* Line icons, drawn in the landing's stroke style. No emoji or symbol glyphs. */
@@ -24,58 +26,162 @@ export const routes: { id: Route; label: string }[] = [
 ];
 
 const row = (label: string, value: string, tone = "") => `<div class="rm-row"><span>${esc(label)}</span><strong class="${tone}">${esc(value)}</strong></div>`;
+const linkRow = (label: string, value: string, href: string) =>
+  href ? `<div class="rm-row"><span>${esc(label)}</span><strong><a class="rm-ext" href="${esc(href)}" target="_blank" rel="noopener">${esc(value)} ${icon("out", 11)}</a></strong></div>` : row(label, value);
 const panel = (kicker: string, title: string, content: string, extra = "") =>
   `<section class="rm-panel ${extra}"><div class="rm-panel__head"><span class="rh-kicker">${esc(kicker)}</span><h2 class="rh-subhead">${esc(title)}</h2></div>${content}</section>`;
-const action = (id: string, label: string, secondary = false) => `<button type="button" class="rh-btn ${secondary ? "rh-btn--ghost" : ""}" data-flow="${id}">${esc(label)} ${icon("out", 14)}</button>`;
+const action = (id: string, label: string, s: LiveState, secondary = false, enabled = true) =>
+  `<button type="button" class="rh-btn ${secondary ? "rh-btn--ghost" : ""}" data-flow="${id}" ${!enabled || s.busy ? "disabled" : ""}>${esc(label)} ${icon("out", 14)}</button>`;
 const link = (route: Route, label: string) => `<a class="rh-btn rh-btn--ghost" href="#/${route}">${esc(label)} ${icon("out", 14)}</a>`;
-const schemeOptions = (selected: string) => postQuantumSchemes.map((s) => `<option value="${s.id}" ${selected === s.id ? "selected" : ""}>${esc(s.name)}</option>`).join("");
-const stageLabel = (stage: RahoState["stage"]) => ({ NOT_STARTED: "Not started", DETECTED: "Detected", KEY_PREPARED: "Key prepared", COMPATIBLE: "Compatible", BUILT: "Built", READY: "Ready", SUBMITTED: "Demo executed", VERIFYING: "Demo verified", ACTIVE: "Post quantum active", FAILED: "Action required" })[stage];
-const date = (value?: string) => value ? new Date(value).toLocaleString() : "Not available";
+const foot = (...items: string[]) => `<div class="rm-panel__foot">${items.join("")}</div>`;
+const note = (text: string) => `<p class="rm-note">${esc(text)}</p>`;
+const warn = (text: string) => `<p class="rm-note rm-warn">${esc(text)}</p>`;
+const date = (seconds?: number) => seconds ? new Date(seconds * 1000).toLocaleString() : "Not available";
+const addrLink = (label: string, address: string) => linkRow(label, shortAddress(address), explorerLink("address", address));
+const eth = (wei: bigint) => `${Number(formatEther(wei)).toLocaleString(undefined, { maximumFractionDigits: 6 })} ${chainConfig.nativeCurrency.symbol}`;
+const hash = (value: string) => value === zeroHash ? "None" : `${value.slice(0, 10)}…${value.slice(-6)}`;
 
-export const lifecycle = ["Account", "Detect", "Prepare Key", "Compatibility", "Build", "Execute", "Verify", "Activate"];
-export const progress = (state: RahoState) => {
-  const index = ({ NOT_STARTED: 0, DETECTED: 1, KEY_PREPARED: 2, COMPATIBLE: 3, BUILT: 4, READY: 5, SUBMITTED: 6, VERIFYING: 7, ACTIVE: 8, FAILED: 0 })[state.stage];
+export const authLabel = (s: LiveState) => !s.account?.deployed ? "Not created" : s.account.postQuantum ? schemeName(s.account.authScheme) : "ECDSA (owner wallet)";
+export const stageLabel = (stage: Stage): string => ({
+  OFFLINE: "Not configured", CONNECT: "Wallet not connected", NETWORK: "Wrong network", ACCOUNT: "No smart account",
+  KEY: "PQ key needed", MIGRATE: "Ready to migrate", CREATED: "Migration created", READY: "Migration ready",
+  EXECUTED: "Executed", VERIFIED: "Verified", ACTIVE: "Post quantum active",
+})[stage];
+
+export const lifecycle = ["Account", "Register Key", "Compatibility", "Create", "Prepare", "Execute", "Verify", "Activate"];
+const stepIndex = (stage: Stage) => ({ OFFLINE: 0, CONNECT: 0, NETWORK: 0, ACCOUNT: 0, KEY: 1, MIGRATE: 2, CREATED: 4, READY: 5, EXECUTED: 6, VERIFIED: 7, ACTIVE: 8 })[stage];
+export const progress = (s: LiveState) => {
+  const index = stepIndex(s.stage);
   return `<ol class="rm-progress" aria-label="Migration lifecycle">${lifecycle.map((label, i) => `<li class="${i < index ? "is-done" : i === index ? "is-current" : ""}" ${i === index ? 'aria-current="step"' : ""}><span>${String(i + 1).padStart(2, "0")}</span><strong>${label}</strong></li>`).join("")}</ol>`;
 };
 
-export function overview(state: RahoState): string {
-  const active = state.stage === "ACTIVE";
+function txNote(s: LiveState): string {
+  if (s.busy) return `<div class="rm-signal"><span></span><strong>${esc(s.busy)}</strong></div>`;
+  if (!s.lastTx) return "";
+  return `<div class="rm-data">${linkRow("Last transaction", `${s.lastTx.label}: ${hash(s.lastTx.hash)}`, explorerLink("tx", s.lastTx.hash))}</div>`;
+}
+const errorNote = (s: LiveState) => s.error ? `<p class="rm-note rm-error" role="alert">${esc(s.error)}</p>` : "";
+
+function gate(s: LiveState): string | null {
+  if (s.stage === "OFFLINE") return panel("NETWORK", "Contracts not configured", note("This build has no Raho deployment configured."));
+  if (s.stage === "CONNECT") return panel("01 / WALLET", "Connect your wallet", note(`Raho runs on ${chainConfig.chainName}. Your wallet owns the smart account and pays gas.`) + foot(action("connect", "Connect wallet", s)));
+  if (s.stage === "NETWORK") return panel("01 / NETWORK", `Switch to ${chainConfig.chainName}`, note("Your wallet is on another network.") + foot(action("switch-network", `Switch to ${chainConfig.chainName}`, s)));
+  return null;
+}
+
+function compatibilityChecks(s: LiveState): string {
+  const c = s.compatibility;
+  const checks: [string, boolean | undefined][] = [
+    ["Account and adapter valid", c?.validAddresses], ["Scheme enabled", c?.schemeEnabled ?? s.schemeEnabled],
+    ["PQ key active", c?.keyActive], ["Adapter supports account", c?.adapterSupports],
+  ];
+  return `<div class="rm-checks">${checks.map(([label, ok]) => `<div><span class="rm-check-dot ${ok ? "compatible" : ""}"></span><span>${esc(label)}</span><strong>${ok ? "Pass" : ok === false ? "Fail" : "Pending"}</strong></div>`).join("")}</div>`;
+}
+
+function keyPanel(s: LiveState): string {
+  if (!s.schemeEnabled) return panel("02 / KEY", "Scheme not enabled", note("No post quantum verifier is enabled on this deployment yet."));
+  if (!s.vault.hasSeed) {
+    return panel("02 / KEY", "Generate your PQ key", note("The key is made in this browser from a random seed. It never leaves the device.") +
+      warn("After migration this key is the only way to control the account. You must back it up.") + foot(action("generate", "Generate PQ key", s)));
+  }
+  if (!s.vault.backedUp) {
+    return panel("02 / KEY", "Back up your key", note("Store the backup line offline before registering.") + foot(action("backup", "Show backup", s)));
+  }
+  return panel("02 / KEY", "Register your PQ key", `<div class="rm-auth"><div><span>Current authentication</span><strong>${esc(authLabel(s))}</strong><small>Read from the account</small></div><div class="rm-auth__arrow">${icon("next", 26)}</div><div><span>New key</span><strong>${esc(schemeName(s.schemeId))}</strong><small>Proof of possession checked onchain</small></div></div>` +
+    note("Registration signs a proof with the new key. The registry verifier checks it.") + foot(action("register", "Register PQ key", s)));
+}
+
+function stagePanel(s: LiveState): string {
+  const g = gate(s);
+  if (g) return g;
+  const a = s.account!;
+  const cancel = action("cancel", "Cancel migration", s, true);
+  switch (s.stage) {
+    case "ACCOUNT":
+      return panel("01 / ACCOUNT", "Create your smart account", note("Raho migrates a smart account. Yours is owned by the connected wallet and starts on ECDSA.") +
+        `<div class="rm-data">${row("Owner wallet", shortAddress(s.owner ?? ""))}${row("Account address", a.address)}${row("Status", "Not deployed")}</div>` + foot(action("create-account", "Create smart account", s)));
+    case "KEY": return keyPanel(s);
+    case "MIGRATE": {
+      const mismatch = !s.vault.matchesKey;
+      return panel("03 / COMPATIBILITY", "Check and create", compatibilityChecks(s) +
+        (mismatch ? warn("This browser does not hold the registered key. Import your backup in Keys, or rotate to a new key.") : note("The migration manager runs these checks again at every step.")) +
+        foot(action("create-migration", "Create migration", s, false, !mismatch), mismatch ? link("keys", "Open keys") : ""));
+    }
+    case "CREATED":
+      return panel("04 / PREPARE", "Prepare migration", compatibilityChecks(s) + note("Preparing moves the migration to READY once every check passes.") + foot(action("prepare", "Prepare migration", s), cancel));
+    case "READY":
+      return panel("05 / EXECUTE", "Confirm the transition", `<div class="rm-auth rm-auth--review"><div><span>Current authentication</span><strong>${esc(authLabel(s))}</strong></div><div class="rm-auth__arrow">${icon("next", 26)}</div><div><span>New authentication</span><strong>${esc(schemeName(s.pending!.targetScheme))}</strong></div></div>` +
+        warn("Executing switches the account to the PQ key. Your wallet alone can no longer move it.") +
+        (s.vault.backedUp ? "" : warn("Confirm your key backup first.")) + foot(action("execute", "Execute migration", s, false, s.vault.backedUp), cancel));
+    case "EXECUTED":
+      return panel("06 / VERIFY", "Verify the account", note("Raho asks the adapter which scheme and key the account now uses. It must match the migration.") +
+        note("From here each action is signed with a fresh PQ key. Your wallet only relays it and pays gas.") + keyControl(s) + foot(action("verify", "Verify migration", s, false, s.vault.controlsAccount), cancel));
+    case "VERIFIED":
+      return panel("07 / ACTIVATE", "Activate PQ authentication", note("Activation checks the account state once more and closes the migration.") + keyControl(s) + foot(action("activate", "Activate", s, false, s.vault.controlsAccount), cancel));
+    case "ACTIVE":
+      return panel("08 / ACTIVE", "Post quantum authentication active", `<div class="rm-active-orb" aria-hidden="true"><span></span></div><div class="rm-data">${addrLink("Account", a.address)}${row("Authentication", schemeName(a.authScheme))}${row("Key id", hash(a.authKeyId))}${row("PQ signatures used", a.pqNonce.toString())}${row("Activated", date(s.history.find((m) => m.status === "ACTIVE")?.updatedAt))}</div>` +
+        foot(link("accounts", "Use the account"), link("keys", "Manage keys")));
+    default: return "";
+  }
+}
+
+const keyControl = (s: LiveState) => s.vault.controlsAccount ? "" : warn("This browser does not hold the key that controls the account. Import your backup in Keys.");
+
+function statusAside(s: LiveState): string {
+  const a = s.account;
+  return panel("MIGRATION STATUS", stageLabel(s.stage), `<div class="rm-data">${a ? addrLink("Account", a.address) : row("Account", "Not connected")}${row("Authentication", authLabel(s))}${row("Registry key", s.key ? hash(s.key.keyId) : "None")}${row("Browser key", s.vault.hasSeed ? (s.vault.backedUp ? "Backed up" : "Not backed up") : "None")}${row("Migration", s.pending ? `${s.pending.status}` : "None open")}</div>${txNote(s)}${errorNote(s)}`);
+}
+
+export function overview(s: LiveState): string {
+  const active = s.stage === "ACTIVE";
+  const a = s.account;
   return `<div class="rm-page">
-    <section class="rm-hero"><span class="rh-kicker">POST QUANTUM SMART ACCOUNT MIGRATION LAYER</span><h2>${active ? "Post quantum active." : "Move accounts forward."}</h2><p>${active ? "Your demo migration is complete." : "Detect. Prepare. Migrate. Verify."}</p>${link("migrate", active ? "View migration" : "Start migration")}<div class="rm-hero__orbit" aria-hidden="true"><i></i><i></i><i></i></div></section>
+    <section class="rm-hero"><span class="rh-kicker">POST QUANTUM SMART ACCOUNT MIGRATION LAYER</span><h2>${active ? "Post quantum active." : "Move accounts forward."}</h2><p>${active ? "Your account now answers to a post quantum key." : "Detect. Register. Migrate. Verify."}</p>${link("migrate", active ? "View migration" : "Start migration")}<div class="rm-hero__orbit" aria-hidden="true"><i></i><i></i><i></i></div></section>
     <div class="rm-grid rm-grid--three">
-      ${panel("ACCOUNT", "Current account", row("Account", state.account.address) + row("Network", state.account.network) + row("Type", state.account.accountType) + row("Authentication", state.account.authentication))}
-      ${panel("MIGRATION", "Transition status", row("State", stageLabel(state.stage), active ? "rm-positive" : "") + row("Compatibility", state.compatibility?.status ?? "Pending") + row("Last verification", date(state.verification?.verifiedAt)))}
-      ${panel("KEY", "Post quantum path", row("Scheme", state.key ? schemeName(state.key.schemeId) : "Not selected") + row("Key", state.key?.status ?? "Not prepared") + row("History", `${state.history.length} demo record${state.history.length === 1 ? "" : "s"}`))}
-    </div>${panel("LIFECYCLE", "Migration path", progress(state) + `<div class="rm-panel__foot">${link("migrate", "Open migration")}</div>`, "rm-panel--wide")}</div>`;
+      ${panel("ACCOUNT", "Smart account", `<div class="rm-data">${row("Owner wallet", s.owner ? shortAddress(s.owner) : "Not connected")}${a ? addrLink("Account", a.address) : row("Account", "Not connected")}${row("Balance", a?.deployed ? eth(a.balance) : "Not available")}${row("Authentication", authLabel(s))}</div>`)}
+      ${panel("MIGRATION", "Transition status", `<div class="rm-data">${row("State", stageLabel(s.stage), active ? "rm-positive" : "")}${row("Open migration", s.pending?.status ?? "None")}${row("Completed", String(s.history.filter((m) => m.status === "ACTIVE").length))}</div>`)}
+      ${panel("KEY", "Post quantum path", `<div class="rm-data">${row("Scheme", schemeName(s.schemeId))}${row("Scheme enabled", s.schemeEnabled ? "Yes" : "No")}${row("Registry key", s.key ? hash(s.key.keyId) : "None")}${row("Browser key", s.vault.hasSeed ? "Present" : "None")}</div>`)}
+    </div>${panel("LIFECYCLE", "Migration path", progress(s) + foot(link("migrate", "Open migration")), "rm-panel--wide")}</div>`;
 }
 
-function compatibility(state: RahoState): string {
-  const checks = state.compatibility?.checks ?? ["Account supported", "Authentication detected", "Migration module available", "PQ key prepared", "Network compatible", "Migration path available"].map((label) => ({ label, status: "pending" }));
-  return `<div class="rm-checks">${checks.map((check) => `<div><span class="rm-check-dot ${check.status}"></span><span>${esc(check.label)}</span><strong>${check.status === "compatible" ? "Compatible" : "Pending"}</strong></div>`).join("")}</div>`;
+export function migrate(s: LiveState): string {
+  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">GUIDED MIGRATION / ${esc(chainConfig.chainName.toUpperCase())}</span><h2>Account to post quantum.</h2><p>Every step is a real transaction. Every state is read from the chain.</p></div>${progress(s)}<div class="rm-wizard">${stagePanel(s)}<aside class="rm-aside">${statusAside(s)}</aside></div></div>`;
 }
 
-export function migrate(state: RahoState): string {
-  const s = state.stage;
-  const account = state.account;
-  let content = "";
-  if (s === "NOT_STARTED") content = panel("01 / ACCOUNT", "Select account", `<p class="rm-note">The account and authentication below are controlled demo data. You can also connect a wallet for its address.</p><div class="rm-data">${row("Account", account.address)}${row("Network", account.network)}${row("Account type", account.accountType)}</div><div class="rm-panel__foot">${action("detect", "Detect authentication")}</div>`);
-  if (s === "DETECTED") content = panel("02 / DETECT", "Authentication detected", `<div class="rm-auth"><div><span>Current authentication</span><strong>${esc(account.authentication)}</strong><small>Demo detection</small></div><div class="rm-auth__arrow">${icon("next", 26)}</div><div><span>Next path</span><strong>Post Quantum</strong><small>Prepare a new key</small></div></div><div class="rm-data">${row("Account", account.address)}${row("Key type", account.keyType)}${row("Status", "Detected")}</div><label class="rm-select-label" for="scheme">Signature scheme</label><select class="rh-select" id="scheme">${schemeOptions(state.selectedSchemeId)}</select><p class="rm-note">Scheme options are conceptual. No cryptographic key is generated in demo mode.</p><div class="rm-panel__foot">${action("prepare", "Prepare PQ key")}</div>`);
-  if (s === "KEY_PREPARED") content = panel("03 / PREPARE", "Key path prepared", `<div class="rm-data">${row("Signature scheme", schemeName(state.key!.schemeId))}${row("Key status", "Prepared in demo")}${row("Public key", state.key!.publicKey)}${row("Created", date(state.key!.createdAt))}</div><p class="rm-note">No key material was generated or registered onchain.</p><div class="rm-panel__foot">${action("compatibility", "Check compatibility")}</div>`);
-  if (s === "COMPATIBLE") content = panel("04 / COMPATIBILITY", "Migration ready", `${compatibility(state)}<p class="rm-note">Demo compatibility uses controlled local results.</p><div class="rm-panel__foot">${action("build", "Build migration")}</div>`);
-  if (s === "BUILT") content = panel("05 / BUILD", "Migration constructed", `<div class="rm-auth"><div><span>Current authentication</span><strong>${esc(state.request!.currentAuth)}</strong></div><div class="rm-auth__arrow">${icon("next", 26)}</div><div><span>New authentication</span><strong>${esc(state.request!.newAuth)}</strong></div></div><div class="rm-data">${row("Account", account.address)}${row("PQ key", state.request!.publicKey)}${row("Method", state.request!.method)}${row("Network", account.network)}${row("Estimated fee", state.request!.estimatedFee)}${row("Build status", "Built locally")}</div><div class="rm-panel__foot">${action("review", "Review migration")}</div>`);
-  if (s === "READY") content = panel("06 / REVIEW", "Confirm the transition", `<p class="rm-note">This changes the account's authentication authority in the proposed migration. Demo execution changes local UI state only.</p><div class="rm-auth rm-auth--review"><div><span>Current authentication</span><strong>${esc(state.request!.currentAuth)}</strong></div><div class="rm-auth__arrow">${icon("next", 26)}</div><div><span>New authentication</span><strong>${esc(state.request!.newAuth)}</strong></div></div><div class="rm-data">${row("Account", account.address)}${row("New key", state.request!.publicKey)}${row("Migration method", state.request!.method)}${row("Network", account.network)}${row("Status", "Ready for demo execution")}</div><div class="rm-panel__foot">${action("execute", "Execute demo migration")}</div>`);
-  if (s === "SUBMITTED") content = panel("07 / EXECUTE", "Demo execution recorded", `<div class="rm-signal"><span></span><strong>Local state advanced</strong></div><p class="rm-note">Nothing was submitted to a wallet or blockchain. No transaction hash exists.</p><div class="rm-panel__foot">${action("verify", "Run demo verification")}</div>`);
-  if (s === "VERIFYING") content = panel("08 / VERIFY", "Transition verified in demo", `<div class="rm-checks">${state.verification!.checks.map((c) => `<div><span class="rm-check-dot compatible"></span><span>${esc(c)}</span><strong>Demo pass</strong></div>`).join("")}</div><p class="rm-note">These checks represent the future verification interface. No cryptographic or onchain verification ran.</p><div class="rm-panel__foot">${action("activate", "Activate PQ authentication")}</div>`);
-  if (s === "ACTIVE") content = panel("09 / ACTIVE", "Post Quantum Authentication Active", `<div class="rm-active-orb" aria-hidden="true"><span></span></div><div class="rm-data">${row("Account", account.address)}${row("Authentication scheme", account.authentication)}${row("Key status", "Demo registered")}${row("Migration date", date(state.history[0]?.timestamp))}${row("Verification", "Demo verified")}</div><p class="rm-note">This is a local demonstration. The account has not changed onchain.</p><div class="rm-panel__foot">${link("keys", "View keys")}${link("history", "View history")}</div>`);
-  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">GUIDED MIGRATION / DEMO</span><h2>Account to post quantum.</h2><p>One clear path. Every state visible.</p></div>${progress(state)}<div class="rm-wizard">${content}<aside class="rm-aside">${panel("MIGRATION STATUS", stageLabel(s), `<div class="rm-data">${row("Account", account.address)}${row("Authentication", account.authentication)}${row("PQ key", state.key?.status ?? "Pending")}${row("Compatibility", state.compatibility?.status ?? "Pending")}${row("Execution", s === "SUBMITTED" || s === "VERIFYING" || s === "ACTIVE" ? "Demo only" : "Pending")}</div><p class="rm-note">Local demonstration. No wallet signing or chain activity.</p>`)}</aside></div></div>`;
+export function accounts(s: LiveState): string {
+  const g = gate(s);
+  if (g) return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">ACCOUNTS</span><h2>Authentication, visible.</h2></div>${g}</div>`;
+  const a = s.account!;
+  const canSend = a.deployed && (!a.postQuantum || s.vault.controlsAccount) && !s.pending;
+  const send = a.deployed ? panel("SEND", a.postQuantum ? "Send with your PQ key" : "Send with your wallet", `<div class="rh-field"><label class="rh-label" for="send-to">Recipient</label><input class="rh-input rh-input--mono" id="send-to" autocomplete="off" spellcheck="false" placeholder="0x…"></div><div class="rh-field"><label class="rh-label" for="send-amount">Amount (${chainConfig.nativeCurrency.symbol})</label><input class="rh-input rh-input--mono" id="send-amount" inputmode="decimal" autocomplete="off" placeholder="0.01"></div>` +
+    note(a.postQuantum ? "Signed with the next one time PQ key. Your wallet relays it and pays gas." : "Sent by your owner wallet through the account.") +
+    (s.pending ? warn("Finish or cancel the open migration first.") : "") + foot(action("send", "Send", s, false, canSend))) : "";
+  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">ACCOUNTS</span><h2>Authentication, visible.</h2><p>Read from the account itself.</p></div><div class="rm-grid rm-grid--two">${panel("SMART ACCOUNT", "Account profile", `<div class="rm-data">${addrLink("Account", a.address)}${row("Owner wallet", shortAddress(s.owner ?? ""))}${row("Deployed", a.deployed ? "Yes" : "No")}${row("Balance", eth(a.balance))}${row("Authentication", authLabel(s))}${row("Key id", hash(a.authKeyId))}${row("PQ signatures used", a.postQuantum ? a.pqNonce.toString() : "None")}</div>` +
+    note(`Fund it by sending ${chainConfig.nativeCurrency.symbol} to the account address.`) + foot(a.deployed ? action("copy-account", "Copy address", s, true) : action("create-account", "Create smart account", s), link("migrate", "Open migration")))}${send}</div></div>`;
 }
 
-export function accounts(state: RahoState): string { return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">ACCOUNTS</span><h2>Authentication, visible.</h2><p>Current authority and migration status.</p></div><div class="rm-grid rm-grid--two">${panel("SELECTED ACCOUNT", "Account profile", `<div class="rm-data">${row("Account", state.account.address)}${row("Network", state.account.network)}${row("Account type", state.account.accountType)}${row("Authentication scheme", state.account.authentication)}${row("Key type", state.account.keyType)}${row("Source", state.account.source === "demo" ? "Controlled demo data" : "Wallet address with demo metadata")}</div><div class="rm-panel__foot">${link("migrate", "Open migration")}</div>`)}${panel("DETECTION", "Current state", `<div class="rm-detection"><span class="rm-detection__ring"></span><strong>${esc(stageLabel(state.stage))}</strong><small>${state.stage === "NOT_STARTED" ? "Run demo detection to continue" : "Demo authentication state"}</small></div>${state.stage === "NOT_STARTED" ? `<div class="rm-panel__foot">${action("detect", "Detect authentication")}</div>` : ""}`)}</div></div>`; }
+export function keys(s: LiveState): string {
+  const g = gate(s);
+  if (g) return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">KEYS</span><h2>Register. Back up. Rotate.</h2></div>${g}</div>`;
+  const a = s.account!;
+  const canRotate = !!s.key && !s.pending && s.vault.backedUp && (!a.postQuantum || s.vault.controlsAccount);
+  const registry = panel("REGISTRY", "Onchain PQ key", `<div class="rm-data">${row("Scheme", s.key ? schemeName(s.key.schemeId) : schemeName(s.schemeId))}${row("Key id", s.key ? hash(s.key.keyId) : "None")}${row("Commitment", s.key ? hash(s.key.commitment) : "None")}${row("Registered", date(s.key?.registeredAt))}${row("In this browser", s.vault.matchesKey ? "Yes" : "No")}</div>` +
+    note(a.postQuantum ? "Rotation is signed with your current PQ key. Run a new migration afterwards to switch the account." : "Rotation replaces the key before migration.") +
+    foot(action("rotate", "Rotate key", s, false, canRotate)));
+  const browser = panel("THIS BROWSER", "Key backup", `<div class="rm-data">${row("Seed", s.vault.hasSeed ? "Stored locally" : "None")}${row("Backup confirmed", s.vault.backedUp ? "Yes" : "No")}${row("Controls account", a.postQuantum ? (s.vault.controlsAccount ? "Yes" : "No") : "Not migrated")}</div>` +
+    warn("Anyone with the backup line controls a migrated account. Keep it offline.") +
+    `<div class="rh-field"><label class="rh-label" for="import-backup">Import backup</label><input class="rh-input rh-input--mono" id="import-backup" autocomplete="off" spellcheck="false" placeholder="raho-pq-seed-v1:…"></div>` +
+    foot(s.vault.hasSeed ? action("backup", "Show backup", s, true) : action("generate", "Generate PQ key", s, true, !!a.deployed), action("import", "Import", s, true), s.vault.hasSeed && !(a.postQuantum && s.vault.controlsAccount) && !s.vault.matchesKey ? action("regenerate", "Replace browser key", s, true) : ""));
+  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">KEYS</span><h2>Register. Back up. Rotate.</h2><p>The registry stores a commitment. The seed stays with you.</p></div><div class="rm-grid rm-grid--two">${registry}${browser}</div>${errorNote(s)}</div>`;
+}
 
-export function keys(state: RahoState): string { return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">KEYS</span><h2>Prepare. Register. Rotate.</h2><p>Scheme choices remain open.</p></div><div class="rm-grid rm-grid--two">${panel("CURRENT KEY", "Post quantum key", `<div class="rm-data">${row("Scheme", state.key ? schemeName(state.key.schemeId) : "Not selected")}${row("Status", state.key?.status === "registered" ? "Demo registered" : state.key?.status === "prepared" ? "Prepared in demo" : "Not prepared")}${row("Public key", state.key?.publicKey ?? "Not available")}${row("Created at", date(state.key?.createdAt))}</div><div class="rm-panel__foot">${link("migrate", state.key ? "View migration" : "Prepare key")}</div>`)}${panel("KEY ROTATION", "Prepare a replacement", `<p class="rm-note">Rotation is available after activation. This prepares a local demo intent only.</p><label class="rm-select-label" for="rotation-scheme">New scheme</label><select class="rh-select" id="rotation-scheme" ${state.stage !== "ACTIVE" ? "disabled" : ""}>${schemeOptions(state.rotation?.schemeId ?? state.key?.schemeId ?? state.selectedSchemeId)}</select><div class="rm-data">${row("Current key", state.key?.status ?? "Not available")}${row("New key", state.rotation ? schemeName(state.rotation.schemeId) : "Not prepared")}${row("Compatibility", state.stage === "ACTIVE" ? "Demo compatible" : "Awaiting activation")}${row("Rotation status", state.rotation?.status ?? "Not started")}</div><div class="rm-panel__foot"><button type="button" class="rh-btn" data-flow="rotate" ${state.stage !== "ACTIVE" ? "disabled" : ""}>Prepare rotation ${icon("out", 14)}</button></div>`)}</div></div>`; }
+export function history(s: LiveState): string {
+  const records = s.history;
+  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">HISTORY</span><h2>Migration audit trail.</h2><p>Read from the migration manager.</p></div>${panel("MIGRATION RECORDS", `${records.length} record${records.length === 1 ? "" : "s"}`, records.length ? `<div class="rm-history">${records.map((m) => `<article><div><span>MIGRATION</span><strong>${esc(hash(m.id))}</strong></div><div><span>TRANSITION</span><strong>${esc(schemeName(m.currentScheme))} ${icon("next", 13, "rm-inline-icon")} ${esc(schemeName(m.targetScheme))}</strong></div><div><span>STATUS</span><strong>${esc(m.status)}</strong></div><div><span>KEY</span><strong>${esc(hash(m.keyId))}</strong></div><div><span>CREATED</span><strong>${esc(date(m.createdAt))}</strong></div><div><span>UPDATED</span><strong>${esc(date(m.updatedAt))}</strong></div></article>`).join("")}</div>` : `<div class="rm-empty">No migration records yet.<br><span>Complete a migration to create one.</span></div>${foot(link("migrate", "Start migration"))}`)}</div>`;
+}
 
-export function history(state: RahoState): string { return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">HISTORY</span><h2>Migration audit trail.</h2><p>Local demo records only.</p></div>${panel("MIGRATION RECORDS", `${state.history.length} demo record${state.history.length === 1 ? "" : "s"}`, state.history.length ? `<div class="rm-history">${state.history.map((record) => `<article><div><span>ACCOUNT</span><strong>${esc(record.account)}</strong></div><div><span>TRANSITION</span><strong>${esc(record.previousAuth)} ${icon("next", 13, "rm-inline-icon")} ${esc(record.newAuth)}</strong></div><div><span>NETWORK</span><strong>${esc(record.network)}</strong></div><div><span>STATUS</span><strong>Demo active</strong></div><div><span>VERIFICATION</span><strong>Demo verified</strong></div><div><span>TIME</span><strong>${esc(date(record.timestamp))}</strong></div></article>`).join("")}</div>` : `<div class="rm-empty">No migration records yet.<br><span>Complete the demo flow to create one.</span></div><div class="rm-panel__foot">${link("migrate", "Start migration")}</div>`)}</div>`; }
+export function settings(s: LiveState): string {
+  return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">SETTINGS</span><h2>Deployment.</h2><p>Every address below is verifiable onchain.</p></div><div class="rm-grid rm-grid--two">${panel("NETWORK", chainConfig.chainName, `<div class="rm-data">${row("Chain id", String(chainConfig.chainId ?? "None"))}${linkRow("Explorer", chainConfig.explorerUrl.replace(/^https:\/\//, ""), chainConfig.explorerUrl)}${row("RPC", chainConfig.rpcUrl.replace(/^https:\/\//, ""))}</div>`)}${panel("CONTRACTS", "Raho deployment", `<div class="rm-data">${addrLink("PQKeyRegistry", contracts.registry)}${addrLink("MigrationManager", contracts.manager)}${addrLink("RahoAccountFactory", contracts.factory)}${addrLink("LamportVerifier", contracts.verifier)}${row("PQ scheme", `${schemeName(s.schemeId)}${s.schemeEnabled ? "" : " (disabled)"}`)}</div>`)}</div>${panel("TRUST", "What Raho does and does not do", note("Raho records and verifies the account's authentication switch. The Lamport scheme is hash based and uses each key once.") + note("Security still depends on the verifier, the account contract, and the chain itself. The contracts have had no external audit."))}</div>`;
+}
 
-export function settings(state: RahoState): string { return `<div class="rm-page"><div class="rm-heading"><span class="rh-kicker">SETTINGS</span><h2>Integration status.</h2><p>Deployment configuration lives in one place.</p></div><div class="rm-grid rm-grid--two">${panel("ENVIRONMENT", "Demo mode", `<div class="rm-data">${row("Contracts", "Not deployed")}${row("Chain", "Not configured")}${row("Transactions", "Never submitted")}${row("Account", state.account.address)}</div><p class="rm-note">Future deployment values are read from src/config. The UI uses the Raho adapter interface.</p>`)}${panel("LOCAL DATA", "Reset demonstration", `<p class="rm-note">Clear the current migration and local history in this browser.</p><div class="rm-panel__foot">${action("reset", "Reset demo", true)}</div>`)}</div></div>`; }
-
-export const renderView = (route: Route, state: RahoState): string => ({ overview, migrate, accounts, keys, history, settings })[route](state);
+export const renderView = (route: Route, s: LiveState): string => ({ overview, migrate, accounts, keys, history, settings })[route](s);

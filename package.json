@@ -9,7 +9,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --no-warnings --test test/migration.test.ts",
+    "test": "node --experimental-strip-types --no-warnings --test test/raho.test.ts",
     "audit": "node tools/check-copy.mjs",
     "check": "npm run typecheck && npm test && npm run audit"
   },
@@ -20,5 +20,8 @@
   },
   "engines": {
     "node": "22.x"
+  },
+  "dependencies": {
+    "viem": "^2.56.9"
   }
 }
