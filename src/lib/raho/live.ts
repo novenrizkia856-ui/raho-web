@@ -109,7 +109,13 @@ export function refresh(): Promise<void> {
 async function load(): Promise<void> {
   const wallet = getWallet();
   if (!contractsReady() || wallet.status !== "connected" || wallet.wrongNetwork) {
-    set({ ...blank(), lastTx: state.lastTx, stage: deriveStage(blank()) });
+    let schemeEnabled = false;
+    if (contractsReady()) {
+      try {
+        schemeEnabled = (await publicClient.readContract({ address: addr.registry(), abi: registryAbi, functionName: "getScheme", args: [SCHEME] })).enabled;
+      } catch { /* Shown as disabled until the RPC answers. */ }
+    }
+    set({ ...blank(), schemeEnabled, lastTx: state.lastTx, stage: deriveStage(blank()) });
     return;
   }
   set({ loading: true, error: null });
