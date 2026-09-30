@@ -277,3 +277,17 @@ html {
     transition: none;
   }
 }
+
+/* Brand lockup in the header and footer (public/brand/raho-logo.png). */
+.raho-logo {
+  display: block;
+  flex-shrink: 0;
+  width: auto;
+  height: 32px;
+}
+
+@media (min-width: 1024px) {
+  .raho-logo {
+    height: 40px;
+  }
+}
